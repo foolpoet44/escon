@@ -1,31 +1,33 @@
+"use client";
+
 import { Skill } from '../lib/types';
 import { truncateDescription, extractIdFromUri } from '../lib/skills-data';
 import { SKILL_TYPE_LABELS } from '../lib/constants';
 
 interface SkillCardProps {
-    skill: Skill;
-    domainColor?: string;
+  skill: Skill;
+  domainColor?: string;
 }
 
 export default function SkillCard({ skill, domainColor = 'var(--color-primary)' }: SkillCardProps) {
-    const skillId = extractIdFromUri(skill.uri);
+  const skillId = extractIdFromUri(skill.uri);
 
-    return (
-        <div className="skill-card">
-            <div className="skill-header">
-                <h3 className="skill-label">{skill.label}</h3>
-                <span className="skill-type-badge">{SKILL_TYPE_LABELS[skill.type]}</span>
-            </div>
+  return (
+    <div className="skill-card">
+      <div className="skill-header">
+        <h3 className="skill-label">{skill.label}</h3>
+        <span className="skill-type-badge">{SKILL_TYPE_LABELS[skill.type]}</span>
+      </div>
 
-            <p className="skill-description">
-                {truncateDescription(skill.description, 200)}
-            </p>
+      <p className="skill-description">
+        {truncateDescription(skill.description, 200)}
+      </p>
 
-            <div className="skill-footer">
-                <span className="skill-id">ID: {skillId.substring(0, 8)}...</span>
-            </div>
+      <div className="skill-footer">
+        <span className="skill-id">ID: {skillId.substring(0, 8)}...</span>
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
         .skill-card {
           background: var(--bg-card);
           backdrop-filter: blur(10px);
@@ -113,6 +115,6 @@ export default function SkillCard({ skill, domainColor = 'var(--color-primary)' 
           font-family: monospace;
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 }

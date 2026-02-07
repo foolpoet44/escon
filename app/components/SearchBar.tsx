@@ -3,41 +3,41 @@
 import { useState } from 'react';
 
 interface SearchBarProps {
-    onSearch: (query: string) => void;
-    placeholder?: string;
+  onSearch: (query: string) => void;
+  placeholder?: string;
 }
 
-export default function SearchBar({ onSearch, placeholder = 'Search skills...' }: SearchBarProps) {
-    const [query, setQuery] = useState('');
+export default function SearchBar({ onSearch, placeholder = '스킬 검색...' }: SearchBarProps) {
+  const [query, setQuery] = useState('');
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setQuery(value);
-        onSearch(value);
-    };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setQuery(value);
+    onSearch(value);
+  };
 
-    const handleClear = () => {
-        setQuery('');
-        onSearch('');
-    };
+  const handleClear = () => {
+    setQuery('');
+    onSearch('');
+  };
 
-    return (
-        <div className="search-bar">
-            <span className="search-icon">🔍</span>
-            <input
-                type="text"
-                value={query}
-                onChange={handleChange}
-                placeholder={placeholder}
-                className="search-input"
-            />
-            {query && (
-                <button onClick={handleClear} className="clear-button" aria-label="Clear search">
-                    ✕
-                </button>
-            )}
+  return (
+    <div className="search-bar">
+      <span className="search-icon">🔍</span>
+      <input
+        type="text"
+        value={query}
+        onChange={handleChange}
+        placeholder={placeholder}
+        className="search-input"
+      />
+      {query && (
+        <button onClick={handleClear} className="clear-button" aria-label="Clear search">
+          ✕
+        </button>
+      )}
 
-            <style jsx>{`
+      <style jsx>{`
         .search-bar {
           position: relative;
           display: flex;
@@ -91,6 +91,6 @@ export default function SearchBar({ onSearch, placeholder = 'Search skills...' }
           color: var(--text-primary);
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 }

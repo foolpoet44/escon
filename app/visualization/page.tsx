@@ -1,3 +1,5 @@
+"use client";
+
 import MermaidChart from '../components/MermaidChart';
 
 const mindmapChart = `mindmap
@@ -163,42 +165,42 @@ const networkChart = `graph LR
     style I fill:#52B788`;
 
 export default function VisualizationPage() {
-    return (
-        <main className="page-container">
-            <div className="page-header">
-                <h1 className="page-title">Ontology Visualization</h1>
-                <p className="page-description">
-                    Interactive diagrams showing the structure and relationships of the ESCO Skills Ontology
-                </p>
-            </div>
+  return (
+    <main className="page-container">
+      <div className="page-header">
+        <h1 className="page-title">온톨로지 시각화</h1>
+        <p className="page-description">
+          ESCO 스킬 온톨로지의 구조와 관계를 보여주는 인터랙티브 다이어그램
+        </p>
+      </div>
 
-            <div className="charts-container">
-                <section className="chart-section">
-                    <h2 className="chart-title">📊 Mindmap Overview</h2>
-                    <p className="chart-description">
-                        Complete overview of all 10 domains and their subcategories
-                    </p>
-                    <MermaidChart chart={mindmapChart} id="mindmap" />
-                </section>
+      <div className="charts-container">
+        <section className="chart-section">
+          <h2 className="chart-title">📊 마인드맵 개요</h2>
+          <p className="chart-description">
+            10개 도메인과 하위 카테고리의 전체 개요
+          </p>
+          <MermaidChart chart={mindmapChart} id="mindmap" />
+        </section>
 
-                <section className="chart-section">
-                    <h2 className="chart-title">🌳 Hierarchical Structure</h2>
-                    <p className="chart-description">
-                        Domain hierarchy showing skill counts and main categories
-                    </p>
-                    <MermaidChart chart={hierarchyChart} id="hierarchy" />
-                </section>
+        <section className="chart-section">
+          <h2 className="chart-title">🌳 계층적 구조</h2>
+          <p className="chart-description">
+            스킬 수와 주요 카테고리를 보여주는 도메인 계층 구조
+          </p>
+          <MermaidChart chart={hierarchyChart} id="hierarchy" />
+        </section>
 
-                <section className="chart-section">
-                    <h2 className="chart-title">🔗 Domain Relationships</h2>
-                    <p className="chart-description">
-                        Network diagram showing connections between core, support, and application domains
-                    </p>
-                    <MermaidChart chart={networkChart} id="network" />
-                </section>
-            </div>
+        <section className="chart-section">
+          <h2 className="chart-title">🔗 도메인 관계</h2>
+          <p className="chart-description">
+            핵심, 지원, 응용 도메인 간의 연결을 보여주는 네트워크 다이어그램
+          </p>
+          <MermaidChart chart={networkChart} id="network" />
+        </section>
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
         .page-container {
           max-width: 1400px;
           margin: 0 auto;
@@ -252,6 +254,6 @@ export default function VisualizationPage() {
           margin: 0;
         }
       `}</style>
-        </main>
-    );
+    </main>
+  );
 }

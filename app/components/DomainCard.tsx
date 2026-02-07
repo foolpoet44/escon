@@ -1,22 +1,24 @@
+"use client";
+
 import Link from 'next/link';
 import { Domain } from '../lib/types';
 
 interface DomainCardProps {
-    domain: Domain;
+  domain: Domain;
 }
 
 export default function DomainCard({ domain }: DomainCardProps) {
-    return (
-        <Link href={`/domains/${domain.key}`} className="domain-card">
-            <div className="domain-icon">{domain.icon}</div>
-            <h3 className="domain-name">{domain.name}</h3>
-            <p className="domain-description">{domain.description}</p>
-            <div className="domain-stats">
-                <span className="skill-count">{domain.skillCount}</span>
-                <span className="skill-label">skills</span>
-            </div>
+  return (
+    <Link href={`/domains/${domain.key}`} className="domain-card">
+      <div className="domain-icon">{domain.icon}</div>
+      <h3 className="domain-name">{domain.name}</h3>
+      <p className="domain-description">{domain.description}</p>
+      <div className="domain-stats">
+        <span className="skill-count">{domain.skillCount}</span>
+        <span className="skill-label">스킬</span>
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
         .domain-card {
           background: var(--bg-card);
           backdrop-filter: blur(10px);
@@ -101,6 +103,6 @@ export default function DomainCard({ domain }: DomainCardProps) {
           letter-spacing: 0.05em;
         }
       `}</style>
-        </Link>
-    );
+    </Link>
+  );
 }

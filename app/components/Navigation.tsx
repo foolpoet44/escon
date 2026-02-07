@@ -4,44 +4,47 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navItems = [
-    { href: '/', label: 'Home', icon: '🏠' },
-    { href: '/domains', label: 'Domains', icon: '📂' },
-    { href: '/skills', label: 'Skills', icon: '⚡' },
-    { href: '/visualization', label: 'Visualization', icon: '📊' },
-    { href: '/analytics', label: 'Analytics', icon: '📈' }
+  { href: '/', label: '홈', icon: '🏠' },
+  { href: '/domains', label: '도메인', icon: '📂' },
+  { href: '/skills', label: '스킬', icon: '⚡' },
+  { href: '/compare', label: '비교', icon: '⚖️' },
+  { href: '/network', label: '네트워크', icon: '🕸️' },
+  { href: '/tree', label: '트리', icon: '🌳' },
+  { href: '/visualization', label: '시각화', icon: '📊' },
+  { href: '/analytics', label: '분석', icon: '📈' }
 ];
 
 export default function Navigation() {
-    const pathname = usePathname();
+  const pathname = usePathname();
 
-    return (
-        <nav className="navigation">
-            <div className="nav-container">
-                <Link href="/" className="nav-logo">
-                    <span className="logo-icon">🎯</span>
-                    <span className="logo-text">ESCO Skills</span>
-                </Link>
+  return (
+    <nav className="navigation">
+      <div className="nav-container">
+        <Link href="/" className="nav-logo">
+          <span className="logo-icon">🎯</span>
+          <span className="logo-text">ESCO Skills</span>
+        </Link>
 
-                <div className="nav-links">
-                    {navItems.map((item) => {
-                        const isActive = pathname === item.href ||
-                            (item.href !== '/' && pathname.startsWith(item.href));
+        <div className="nav-links">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href ||
+              (item.href !== '/' && pathname.startsWith(item.href));
 
-                        return (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className={`nav-link ${isActive ? 'active' : ''}`}
-                            >
-                                <span className="nav-icon">{item.icon}</span>
-                                <span className="nav-label">{item.label}</span>
-                            </Link>
-                        );
-                    })}
-                </div>
-            </div>
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`nav-link ${isActive ? 'active' : ''}`}
+              >
+                <span className="nav-icon">{item.icon}</span>
+                <span className="nav-label">{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
         .navigation {
           position: sticky;
           top: 0;
@@ -153,6 +156,6 @@ export default function Navigation() {
           }
         }
       `}</style>
-        </nav>
-    );
+    </nav>
+  );
 }

@@ -7,47 +7,46 @@ import { loadSkillsData, calculateStatistics } from '../lib/skills-data';
 import { Statistics } from '../lib/types';
 
 export default function DomainsPage() {
-    const [stats, setStats] = useState<Statistics | null>(null);
-    const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState<Statistics | null>(null);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        loadSkillsData()
-            .then((data) => {
-                const statistics = calculateStatistics(data);
-                setStats(statistics);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error('Failed to load skills data:', error);
-                setLoading(false);
-            });
-    }, []);
+  useEffect(() => {
+    loadSkillsData()
+      .then((data) => {
+        const statistics = calculateStatistics(data);
+        setStats(statistics);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Failed to load skills data:', error);
+        setLoading(false);
+      });
+  }, []);
 
-    if (loading) {
-        return (
-            <main className="page-container">
-                <div className="loading">Loading domains...</div>
-            </main>
-        );
-    }
-
+  if (loading) {
     return (
-        <main className="page-container">
-            <div className="page-header">
-                <h1 className="page-title">Explore Domains</h1>
-                <p className="page-description">
-                    Browse through {DOMAINS.length} specialized domains covering {stats?.totalSkills || 1640} skills
-                    in the Physical AI and ESCO ontology
-                </p>
-            </div>
+      <main className="page-container">
+        <div className="loading">도메인 로딩 중...</div>
+      </main>
+    );
+  }
 
-            <div className="domains-grid">
-                {DOMAINS.map((domain) => (
-                    <DomainCard key={domain.key} domain={domain} />
-                ))}
-            </div>
+  return (
+    <main className="page-container">
+      <div className="page-header">
+        <h1 className="page-title">도메인 탐색</h1>
+        <p className="page-description">
+          물리적 AI와 ESCO 온톨로지의 {stats?.totalSkills || 1640}개 스킬을 포함하는 {DOMAINS.length}개의 전문 도메인을 둘러보세요
+        </p>
+      </div>
 
-            <style jsx>{`
+      <div className="domains-grid">
+        {DOMAINS.map((domain) => (
+          <DomainCard key={domain.key} domain={domain} />
+        ))}
+      </div>
+
+      <style jsx>{`
         .page-container {
           max-width: 1400px;
           margin: 0 auto;
@@ -95,6 +94,6 @@ export default function DomainsPage() {
           }
         }
       `}</style>
-        </main>
-    );
+    </main>
+  );
 }

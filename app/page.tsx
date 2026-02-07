@@ -5,23 +5,23 @@ export default function Home() {
         <main className="main-container">
             <div className="hero-section">
                 <h1 className="hero-title">
-                    ESCO Skills Ontology
+                    ESCO 스킬 온톨로지 탐색기
                 </h1>
                 <p className="hero-subtitle">
-                    Interactive visualization of digital skills and competencies
+                    물리적 AI 도메인의 스킬과 역량 탐색
                 </p>
                 <div className="hero-description">
                     <p>
-                        Explore the European Skills, Competences, Qualifications and Occupations (ESCO)
-                        classification system with an intuitive, interactive interface.
+                        로보틱스, AI & ML, 제조 등 10개 도메인에 걸친 1,640개 이상의 스킬을
+                        직관적이고 인터랙티브한 인터페이스로 탐색하세요.
                     </p>
                 </div>
                 <div className="cta-buttons">
                     <Link href="/domains" className="btn-primary">
-                        Explore Skills
+                        탐색 시작
                     </Link>
                     <Link href="/visualization" className="btn-secondary">
-                        View Documentation
+                        시각화 보기
                     </Link>
                 </div>
             </div>
@@ -29,23 +29,23 @@ export default function Home() {
             <div className="features-grid">
                 <Link href="/domains" className="feature-card">
                     <div className="feature-icon">🎯</div>
-                    <h3>Digital Skills</h3>
-                    <p>Browse and explore digital competencies mapped to the ESCO framework</p>
+                    <h3>도메인 탐색</h3>
+                    <p>10개의 물리적 AI 도메인과 관련 스킬 살펴보기</p>
                 </Link>
-                <Link href="/visualization" className="feature-card">
+                <Link href="/compare" className="feature-card">
                     <div className="feature-icon">🔗</div>
-                    <h3>Relationships</h3>
-                    <p>Visualize connections between skills, occupations, and qualifications</p>
+                    <h3>도메인 비교</h3>
+                    <p>도메인 간 스킬 중복과 고유 역량 시각화</p>
                 </Link>
                 <Link href="/analytics" className="feature-card">
                     <div className="feature-icon">📊</div>
-                    <h3>Analytics</h3>
-                    <p>Gain insights from skill trends and competency distributions</p>
+                    <h3>분석</h3>
+                    <p>스킬 트렌드와 역량 분포에서 인사이트 도출</p>
                 </Link>
-                <Link href="/skills" className="feature-card">
+                <Link href="/network" className="feature-card">
                     <div className="feature-icon">🚀</div>
-                    <h3>Fast Prototype</h3>
-                    <p>Quick and intuitive demonstration of core functionalities</p>
+                    <h3>네트워크 그래프</h3>
+                    <p>스킬 간 관계를 인터랙티브하게 시각화</p>
                 </Link>
             </div>
         </main>
