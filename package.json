@@ -8,7 +8,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.95.3",
     "d3": "^7.9.0",
+    "dotenv": "^17.2.4",
     "force-graph": "^1.51.1",
     "mermaid": "^11.12.2",
     "next": "13.4.9",

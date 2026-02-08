@@ -164,7 +164,7 @@ module.exports = require("next/dist/shared/lib/utils");
 
 /***/ }),
 
-/***/ 48267:
+/***/ 79645:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -192,7 +192,7 @@ __webpack_require__.r(__webpack_exports__);
         'domains',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 2711)), "/Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/app/domains/page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 2711)), "C:\\download\\2026\\escon\\escon\\app\\domains\\page.tsx"],
           
         }]
       },
@@ -203,12 +203,12 @@ __webpack_require__.r(__webpack_exports__);
       ]
       },
         {
-          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 60374)), "/Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/app/layout.tsx"],
+          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 60374)), "C:\\download\\2026\\escon\\escon\\app\\layout.tsx"],
           
         }
       ]
       }.children;
-    const pages = ["/Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/app/domains/page.tsx"];
+    const pages = ["C:\\download\\2026\\escon\\escon\\app\\domains\\page.tsx"];
     
     const originalPathname = "/domains/page"
     const __next_app__ = {
@@ -222,7 +222,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 50938:
+/***/ 48071:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 75665))
@@ -263,7 +263,7 @@ function DomainCard({ domain }) {
             /*#__PURE__*/ jsx_runtime_.jsx("div", {
                 className: style_default().dynamic([
                     [
-                        "e3edc060086f2751",
+                        "2e378f235b98682d",
                         [
                             domain.color,
                             domain.color,
@@ -276,7 +276,7 @@ function DomainCard({ domain }) {
             /*#__PURE__*/ jsx_runtime_.jsx("h3", {
                 className: style_default().dynamic([
                     [
-                        "e3edc060086f2751",
+                        "2e378f235b98682d",
                         [
                             domain.color,
                             domain.color,
@@ -289,7 +289,7 @@ function DomainCard({ domain }) {
             /*#__PURE__*/ jsx_runtime_.jsx("p", {
                 className: style_default().dynamic([
                     [
-                        "e3edc060086f2751",
+                        "2e378f235b98682d",
                         [
                             domain.color,
                             domain.color,
@@ -302,7 +302,7 @@ function DomainCard({ domain }) {
             /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
                 className: style_default().dynamic([
                     [
-                        "e3edc060086f2751",
+                        "2e378f235b98682d",
                         [
                             domain.color,
                             domain.color,
@@ -314,7 +314,7 @@ function DomainCard({ domain }) {
                     /*#__PURE__*/ jsx_runtime_.jsx("span", {
                         className: style_default().dynamic([
                             [
-                                "e3edc060086f2751",
+                                "2e378f235b98682d",
                                 [
                                     domain.color,
                                     domain.color,
@@ -327,7 +327,7 @@ function DomainCard({ domain }) {
                     /*#__PURE__*/ jsx_runtime_.jsx("span", {
                         className: style_default().dynamic([
                             [
-                                "e3edc060086f2751",
+                                "2e378f235b98682d",
                                 [
                                     domain.color,
                                     domain.color,
@@ -340,7 +340,7 @@ function DomainCard({ domain }) {
                 ]
             }),
             jsx_runtime_.jsx((style_default()), {
-                id: "e3edc060086f2751",
+                id: "2e378f235b98682d",
                 dynamic: [
                     domain.color,
                     domain.color,
@@ -386,17 +386,17 @@ function DomainsPage() {
         });
     }
     return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("main", {
-        className: "jsx-72f572af63ae3a7a" + " " + "page-container",
+        className: "jsx-b6d53b418d323799" + " " + "page-container",
         children: [
             /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                className: "jsx-72f572af63ae3a7a" + " " + "page-header",
+                className: "jsx-b6d53b418d323799" + " " + "page-header",
                 children: [
                     /*#__PURE__*/ jsx_runtime_.jsx("h1", {
-                        className: "jsx-72f572af63ae3a7a" + " " + "page-title",
+                        className: "jsx-b6d53b418d323799" + " " + "page-title",
                         children: "도메인 탐색"
                     }),
                     /*#__PURE__*/ (0,jsx_runtime_.jsxs)("p", {
-                        className: "jsx-72f572af63ae3a7a" + " " + "page-description",
+                        className: "jsx-b6d53b418d323799" + " " + "page-description",
                         children: [
                             "물리적 AI와 ESCO 온톨로지의 ",
                             stats?.totalSkills || 1640,
@@ -408,14 +408,14 @@ function DomainsPage() {
                 ]
             }),
             /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                className: "jsx-72f572af63ae3a7a" + " " + "domains-grid",
+                className: "jsx-b6d53b418d323799" + " " + "domains-grid",
                 children: constants/* DOMAINS */.w7.map((domain)=>/*#__PURE__*/ jsx_runtime_.jsx(DomainCard, {
                         domain: domain
                     }, domain.key))
             }),
             jsx_runtime_.jsx((style_default()), {
-                id: "72f572af63ae3a7a",
-                children: ".page-container.jsx-72f572af63ae3a7a{max-width:1400px;margin:0 auto;padding:var(--spacing-2xl)var(--spacing-lg)}.page-header.jsx-72f572af63ae3a7a{text-align:center;margin-bottom:var(--spacing-2xl)}.page-title.jsx-72f572af63ae3a7a{font-size:max(2rem,min(5vw,3rem));font-size:clamp(2rem,5vw,3rem);font-weight:800;background:-webkit-linear-gradient(315deg,var(--color-primary),var(--color-secondary));background:-moz-linear-gradient(315deg,var(--color-primary),var(--color-secondary));background:-o-linear-gradient(315deg,var(--color-primary),var(--color-secondary));background:linear-gradient(135deg,var(--color-primary),var(--color-secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:var(--spacing-md)}.page-description.jsx-72f572af63ae3a7a{font-size:1.1rem;color:var(--text-secondary);max-width:700px;margin:0 auto}.domains-grid.jsx-72f572af63ae3a7a{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:var(--spacing-lg)}.loading.jsx-72f572af63ae3a7a{text-align:center;padding:var(--spacing-2xl);font-size:1.2rem;color:var(--text-secondary)}@media(max-width:768px){.domains-grid.jsx-72f572af63ae3a7a{grid-template-columns:1fr}}"
+                id: "b6d53b418d323799",
+                children: ".page-container.jsx-b6d53b418d323799{max-width:1400px;margin:0 auto;padding:var(--spacing-2xl)var(--spacing-lg)}.page-header.jsx-b6d53b418d323799{text-align:center;margin-bottom:var(--spacing-2xl)}.page-title.jsx-b6d53b418d323799{font-size:max(2rem,min(5vw,3rem));font-size:clamp(2rem,5vw,3rem);font-weight:800;background:-webkit-linear-gradient(315deg,var(--color-primary),var(--color-secondary));background:-moz-linear-gradient(315deg,var(--color-primary),var(--color-secondary));background:-o-linear-gradient(315deg,var(--color-primary),var(--color-secondary));background:linear-gradient(135deg,var(--color-primary),var(--color-secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:var(--spacing-md)}.page-description.jsx-b6d53b418d323799{font-size:1.1rem;color:var(--text-secondary);max-width:700px;margin:0 auto}.domains-grid.jsx-b6d53b418d323799{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:var(--spacing-lg)}.loading.jsx-b6d53b418d323799{text-align:center;padding:var(--spacing-2xl);font-size:1.2rem;color:var(--text-secondary)}@media(max-width:768px){.domains-grid.jsx-b6d53b418d323799{grid-template-columns:1fr}}"
             })
         ]
     });
@@ -436,7 +436,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(21913);
 
-const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/app/domains/page.tsx`)
+const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\download\2026\escon\escon\app\domains\page.tsx`)
 
 // Accessing the __esModule property and exporting $$typeof are required here.
 // The __esModule getter forces the proxy target to create the default export
@@ -457,7 +457,7 @@ const __default__ = proxy.default;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [926,576,7110,6906], () => (__webpack_exec__(48267)));
+var __webpack_exports__ = __webpack_require__.X(0, [384,247,110], () => (__webpack_exec__(79645)));
 module.exports = __webpack_exports__;
 
 })();

@@ -1,93 +1,147 @@
-"use client";
+'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import Tree from 'react-d3-tree';
-import { TreeNode } from '../lib/skill-tree';
+import type { TreeData, TreeNode } from '../lib/tree-data';
 
 interface SkillTreeProps {
-    data: TreeNode;
+    data: TreeData;
     width?: number;
     height?: number;
+    onNodeClick?: (node: any) => void;
 }
 
-export default function SkillTree({ data, width = 1200, height = 800 }: SkillTreeProps) {
-    const [selectedNode, setSelectedNode] = useState<any>(null);
+export default function SkillTree({
+    data,
+    width = 800,
+    height = 600,
+    onNodeClick
+}: SkillTreeProps) {
+    const [translate, setTranslate] = useState({ x: width / 2, y: 50 });
+    const [zoom, setZoom] = useState(0.8);
 
-    // 노드 클릭 핸들러
     const handleNodeClick = useCallback((nodeData: any) => {
-        setSelectedNode(nodeData);
+        if (onNodeClick) {
+            onNodeClick(nodeData);
+        }
+    }, [onNodeClick]);
+
+    // Update translate on resize
+    useEffect(() => {
+        if (width) {
+            setTranslate({ x: width / 2, y: 50 });
+        }
+    }, [width]);
+
+    const handleZoomIn = useCallback(() => {
+        setZoom(prev => Math.min(prev + 0.2, 2.5));
     }, []);
 
-    // 노드 스타일 커스터마이징
-    const getNodeColor = (nodeData: any) => {
-        const type = nodeData.attributes?.type;
-        switch (type) {
-            case 'root':
-                return '#667eea';
-            case 'domain':
-                return '#4ECDC4';
-            case 'skill-group':
-                return '#98D8C8';
-            case 'knowledge':
-                return '#98D8C8';
-            case 'skill/competence':
-                return '#667eea';
-            case 'skill-type':
-                return '#F6AD55';
-            default:
-                return '#aaa';
-        }
-    };
+    const handleZoomOut = useCallback(() => {
+        setZoom(prev => Math.max(prev - 0.2, 0.3));
+    }, []);
+
+    const handleReset = useCallback(() => {
+        setZoom(0.8);
+        setTranslate({ x: width / 2, y: 50 });
+    }, [width]);
 
     const renderCustomNode = ({ nodeDatum, toggleNode }: any) => {
-        const nodeColor = getNodeColor(nodeDatum);
-        const isSelected = selectedNode?.name === nodeDatum.name;
-        const hasChildren = nodeDatum.children && nodeDatum.children.length > 0;
+        // ... (existing renderCustomNode logic - no changes here, just keeping context)
+        const isOrganization = nodeDatum.attributes?.type === 'organization';
+        const isEnabler = nodeDatum.attributes?.type === 'enabler';
+        const isSkillType = nodeDatum.attributes?.type === 'skill-type';
+        const isSkill = nodeDatum.attributes?.type === 'skill';
+
+        // Node size and color
+        let nodeSize = 10;
+        let nodeColor = '#4ECDC4';
+        let textColor = '#333';
+        let fontSize = 14;
+
+        if (isOrganization) {
+            nodeSize = 20;
+            nodeColor = '#6C5CE7';
+            fontSize = 18;
+        } else if (isEnabler) {
+            nodeSize = 15;
+            nodeColor = nodeDatum.nodeSvgShape?.shapeProps?.fill || '#FF6B6B';
+            fontSize = 16;
+        } else if (isSkillType) {
+            nodeSize = 12;
+            nodeColor = nodeDatum.nodeSvgShape?.shapeProps?.fill || '#4ECDC4';
+            fontSize = 14;
+        } else if (isSkill) {
+            nodeSize = nodeDatum.nodeSvgShape?.shapeProps?.r || 10;
+            nodeColor = nodeDatum.nodeSvgShape?.shapeProps?.fill || '#95E1D3';
+            fontSize = 12;
+        }
 
         return (
             <g>
-                {/* 노드 원 */}
                 <circle
-                    r={hasChildren ? 12 : 8}
+                    r={nodeSize}
                     fill={nodeColor}
-                    stroke={isSelected ? '#ffffff' : nodeColor}
-                    strokeWidth={isSelected ? 3 : 1}
-                    onClick={() => {
-                        handleNodeClick(nodeDatum);
-                        if (hasChildren) toggleNode();
-                    }}
+                    stroke={nodeDatum.nodeSvgShape?.shapeProps?.stroke || '#333'}
+                    strokeWidth={nodeDatum.nodeSvgShape?.shapeProps?.strokeWidth || 1}
+                    onClick={toggleNode}
                     style={{ cursor: 'pointer' }}
                 />
-
-                {/* 노드 라벨 */}
                 <text
-                    fill="#ffffff"
+                    fill={textColor}
                     strokeWidth="0"
-                    x={20}
+                    x={nodeSize + 10}
                     y={5}
-                    style={{
-                        fontSize: hasChildren ? '14px' : '12px',
-                        fontWeight: hasChildren ? 'bold' : 'normal',
-                        cursor: 'pointer'
-                    }}
-                    onClick={() => {
-                        handleNodeClick(nodeDatum);
-                        if (hasChildren) toggleNode();
-                    }}
+                    fontSize={fontSize}
+                    fontWeight={isOrganization || isEnabler ? 'bold' : 'normal'}
+                    style={{ cursor: 'pointer' }}
+                    onClick={toggleNode}
                 >
                     {nodeDatum.name}
                 </text>
-
-                {/* 카운트 표시 */}
-                {nodeDatum.attributes?.count && (
+                {isEnabler && nodeDatum.attributes && (
                     <text
-                        fill="#aaa"
+                        fill="#666"
                         strokeWidth="0"
-                        x={20}
+                        x={nodeSize + 10}
                         y={20}
-                        style={{ fontSize: '10px' }}
+                        fontSize={11}
                     >
-                        ({nodeDatum.attributes.count} items)
+                        {`P${nodeDatum.attributes.priority} • ${nodeDatum.attributes.skillCount} skills`}
+                    </text>
+                )}
+                {isSkill && nodeDatum.attributes && (
+                    <>
+                        <text
+                            fill="#666"
+                            strokeWidth="0"
+                            x={nodeSize + 10}
+                            y={18}
+                            fontSize={10}
+                        >
+                            {`⭐`.repeat(nodeDatum.attributes.importance || 1)}
+                        </text>
+                        <text
+                            fill="#666"
+                            strokeWidth="0"
+                            x={nodeSize + 10}
+                            y={30}
+                            fontSize={9}
+                        >
+                            {nodeDatum.attributes.proficiency}
+                        </text>
+                    </>
+                )}
+                {nodeDatum.children && nodeDatum.children.length > 0 && (
+                    <text
+                        fill="#999"
+                        strokeWidth="0"
+                        x={0}
+                        y={-nodeSize - 5}
+                        fontSize={12}
+                        textAnchor="middle"
+                    >
+                        {nodeDatum.__rd3t?.collapsed ? '▶' : '▼'}
                     </text>
                 )}
             </g>
@@ -95,203 +149,71 @@ export default function SkillTree({ data, width = 1200, height = 800 }: SkillTre
     };
 
     return (
-        <div className="skill-tree-container">
-            <div className="tree-wrapper">
-                <Tree
-                    data={data}
-                    orientation="vertical"
-                    pathFunc="step"
-                    translate={{ x: width / 2, y: 50 }}
-                    nodeSize={{ x: 200, y: 150 }}
-                    renderCustomNodeElement={renderCustomNode}
-                    separation={{ siblings: 1, nonSiblings: 1.5 }}
-                    zoom={0.8}
-                    enableLegacyTransitions
-                    transitionDuration={500}
-                    collapsible={true}
-                    initialDepth={2}
-                    depthFactor={150}
-                />
+        <div style={{ width: '100%', height: '100%', background: '#f8f9fa', borderRadius: '8px', position: 'relative' }}>
+            <Tree
+                data={data}
+                translate={translate}
+                zoom={zoom}
+                onNodeClick={handleNodeClick}
+                renderCustomNodeElement={renderCustomNode}
+                orientation="vertical"
+                pathFunc="step"
+                separation={{ siblings: 2, nonSiblings: 2.5 }}
+                nodeSize={{ x: 250, y: 150 }}
+                collapsible={true}
+                initialDepth={2}
+                zoomable={true}
+                draggable={true}
+                enableLegacyTransitions={true}
+                transitionDuration={500}
+                depthFactor={150}
+            />
+
+            <div className="tree-controls">
+                <button onClick={handleZoomIn} title="Zoom In">➕</button>
+                <button onClick={handleZoomOut} title="Zoom Out">➖</button>
+                <button onClick={handleReset} title="Reset View">⤢</button>
             </div>
 
-            {selectedNode && (
-                <div className="node-details-panel">
-                    <div className="panel-header">
-                        <h3 className="panel-title">{selectedNode.name}</h3>
-                        <button
-                            className="close-button"
-                            onClick={() => setSelectedNode(null)}
-                        >
-                            ✕
-                        </button>
-                    </div>
-
-                    <div className="panel-content">
-                        {selectedNode.attributes?.type && (
-                            <div className="detail-row">
-                                <span className="detail-label">Type:</span>
-                                <span className="detail-value">{selectedNode.attributes.type}</span>
-                            </div>
-                        )}
-
-                        {selectedNode.attributes?.count !== undefined && (
-                            <div className="detail-row">
-                                <span className="detail-label">Count:</span>
-                                <span className="detail-value">{selectedNode.attributes.count}</span>
-                            </div>
-                        )}
-
-                        {selectedNode.attributes?.description && (
-                            <div className="detail-row">
-                                <span className="detail-label">Description:</span>
-                                <p className="detail-description">{selectedNode.attributes.description}</p>
-                            </div>
-                        )}
-
-                        {selectedNode.attributes?.uri && (
-                            <div className="detail-row">
-                                <span className="detail-label">URI:</span>
-                                <code className="detail-uri">{selectedNode.attributes.uri}</code>
-                            </div>
-                        )}
-
-                        {selectedNode.children && selectedNode.children.length > 0 && (
-                            <div className="detail-row">
-                                <span className="detail-label">Children:</span>
-                                <span className="detail-value">{selectedNode.children.length}</span>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
-
             <style jsx>{`
-        .skill-tree-container {
-          position: relative;
-          background: #0f0f1e;
-          border-radius: var(--radius-lg);
-          overflow: hidden;
-          border: 1px solid var(--border-color);
-        }
-
-        .tree-wrapper {
-          width: ${width}px;
-          height: ${height}px;
-        }
-
-        .node-details-panel {
-          position: absolute;
-          top: 20px;
-          right: 20px;
-          width: 320px;
-          max-height: calc(100% - 40px);
-          background: rgba(26, 26, 46, 0.95);
-          border: 1px solid var(--border-color);
-          border-radius: var(--radius-lg);
-          padding: var(--spacing-lg);
-          backdrop-filter: blur(10px);
-          overflow-y: auto;
-          z-index: 10;
-        }
-
-        .panel-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin-bottom: var(--spacing-md);
-          padding-bottom: var(--spacing-md);
-          border-bottom: 1px solid var(--border-color);
-        }
-
-        .panel-title {
-          font-size: 1.1rem;
-          font-weight: 700;
-          color: var(--text-primary);
-          margin: 0;
-          flex-grow: 1;
-          padding-right: var(--spacing-sm);
-        }
-
-        .close-button {
-          background: transparent;
-          border: none;
-          color: var(--text-muted);
-          font-size: 1.5rem;
-          cursor: pointer;
-          padding: 0;
-          width: 24px;
-          height: 24px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: color var(--transition-base);
-        }
-
-        .close-button:hover {
-          color: var(--text-primary);
-        }
-
-        .panel-content {
-          display: flex;
-          flex-direction: column;
-          gap: var(--spacing-md);
-        }
-
-        .detail-row {
-          display: flex;
-          flex-direction: column;
-          gap: var(--spacing-xs);
-        }
-
-        .detail-label {
-          font-size: 0.85rem;
-          color: var(--text-muted);
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-          font-weight: 600;
-        }
-
-        .detail-value {
-          font-size: 1rem;
-          color: var(--text-primary);
-          font-weight: 600;
-        }
-
-        .detail-description {
-          font-size: 0.95rem;
-          color: var(--text-secondary);
-          line-height: 1.5;
-          margin: 0;
-        }
-
-        .detail-uri {
-          font-size: 0.85rem;
-          color: var(--text-secondary);
-          background: var(--bg-tertiary);
-          padding: var(--spacing-xs) var(--spacing-sm);
-          border-radius: var(--radius-sm);
-          word-break: break-all;
-          display: block;
-        }
-
-        /* 스크롤바 스타일 */
-        .node-details-panel::-webkit-scrollbar {
-          width: 6px;
-        }
-
-        .node-details-panel::-webkit-scrollbar-track {
-          background: transparent;
-        }
-
-        .node-details-panel::-webkit-scrollbar-thumb {
-          background: var(--border-color);
-          border-radius: 3px;
-        }
-
-        .node-details-panel::-webkit-scrollbar-thumb:hover {
-          background: var(--color-primary);
-        }
-      `}</style>
+                .tree-controls {
+                    position: absolute;
+                    bottom: 30px;
+                    right: 30px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    background: rgba(255, 255, 255, 0.9);
+                    padding: 8px;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                    border: 1px solid #e2e8f0;
+                }
+                .tree-controls button {
+                    background: white;
+                    border: 1px solid #cbd5e1;
+                    color: #475569;
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.2rem;
+                    transition: all 0.2s ease;
+                }
+                .tree-controls button:hover {
+                    background: #f1f5f9;
+                    border-color: #94a3b8;
+                    color: #1e293b;
+                    transform: translateY(-1px);
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                }
+                .tree-controls button:active {
+                    transform: translateY(0);
+                }
+            `}</style>
         </div>
     );
 }

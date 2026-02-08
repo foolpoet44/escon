@@ -1,302 +1,232 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { DomainKey, SkillsData } from '../lib/types';
-import { loadSkillsData } from '../lib/skills-data';
-import { compareDomains, DomainComparison } from '../lib/comparison';
+import { DOMAINS } from '../lib/constants';
+import { loadSkillsData, getSkillsByDomain } from '../lib/skills-data';
+import { compareDomains, ComparisonResult } from '../lib/comparison';
 import DomainSelector from '../components/DomainSelector';
 import ComparisonChart from '../components/ComparisonChart';
-import SkillCard from '../components/SkillCard';
-import ExportButton from '../components/ExportButton';
 
 export default function ComparePage() {
   const [skillsData, setSkillsData] = useState<SkillsData | null>(null);
-  const [selectedDomains, setSelectedDomains] = useState<DomainKey[]>([]);
-  const [comparison, setComparison] = useState<DomainComparison | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'common' | 'unique1' | 'unique2'>('common');
+  const [domain1, setDomain1] = useState<DomainKey | ''>('');
+  const [domain2, setDomain2] = useState<DomainKey | ''>('');
+  const [comparisonResult, setComparisonResult] = useState<ComparisonResult | null>(null);
 
   useEffect(() => {
     loadSkillsData()
-      .then((data) => {
+      .then(data => {
         setSkillsData(data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.error('Failed to load skills data:', error);
+      .catch(err => {
+        console.error("Failed to load skills data", err);
         setLoading(false);
       });
   }, []);
 
   useEffect(() => {
-    if (skillsData && selectedDomains.length === 2) {
-      const result = compareDomains(skillsData, selectedDomains[0], selectedDomains[1]);
-      setComparison(result);
-      setActiveTab('common');
+    if (skillsData && domain1 && domain2) {
+      const d1Info = DOMAINS.find(d => d.key === domain1);
+      const d2Info = DOMAINS.find(d => d.key === domain2);
+
+      if (d1Info && d2Info) {
+        const skills1 = getSkillsByDomain(skillsData, domain1);
+        const skills2 = getSkillsByDomain(skillsData, domain2);
+
+        const result = compareDomains(
+          domain1, d1Info.name, skills1,
+          domain2, d2Info.name, skills2
+        );
+        setComparisonResult(result);
+      }
     } else {
-      setComparison(null);
+      setComparisonResult(null);
     }
-  }, [selectedDomains, skillsData]);
+  }, [skillsData, domain1, domain2]);
 
   if (loading) {
-    return (
-      <main className="page-container">
-        <div className="loading">비교 도구 로딩 중...</div>
-      </main>
-    );
+    return <LoadingSpinner text="데이터 로딩 중..." />;
   }
 
-  const getActiveSkills = () => {
-    if (!comparison) return [];
-    switch (activeTab) {
-      case 'common':
-        return comparison.commonSkills;
-      case 'unique1':
-        return comparison.uniqueToDomain1;
-      case 'unique2':
-        return comparison.uniqueToDomain2;
-      default:
-        return [];
-    }
-  };
-
-  const activeSkills = getActiveSkills();
-
   return (
-    <main className="page-container">
-      <div className="page-header">
-        <div className="header-content">
-          <h1 className="page-title">도메인 비교</h1>
-          <p className="page-description">
-            서로 다른 도메인 간 스킬을 비교하여 중복 및 고유 역량을 파악하세요
-          </p>
-        </div>
+    <div className="compare-page">
+      <div className="header">
+        <h1>⚖️ 도메인 비교 분석</h1>
+        <p>두 도메인 간의 스킬 구성과 유사도를 비교 분석합니다.</p>
       </div>
 
-      <DomainSelector
-        selectedDomains={selectedDomains}
-        onDomainChange={setSelectedDomains}
-        maxSelections={2}
-      />
+      <div className="selector-section">
+        <DomainSelector
+          selectedDomain1={domain1}
+          selectedDomain2={domain2}
+          onSelectDomain1={setDomain1}
+          onSelectDomain2={setDomain2}
+        />
+      </div>
 
-      {selectedDomains.length < 2 && (
-        <div className="instruction-card">
-          <span className="instruction-icon">👆</span>
-          <div className="instruction-content">
-            <h3>시작하기</h3>
-            <p>위에서 2개 도메인을 선택하여 스킬과 역량을 비교하세요</p>
+      {comparisonResult ? (
+        <div className="results-container">
+          <div className="similarity-card">
+            <h3>유사도 점수 (Jaccard Similarity)</h3>
+            <div className="score">
+              {(comparisonResult.similarityScore * 100).toFixed(1)}%
+            </div>
+            <p>두 도메인 간의 스킬 구성 유사성</p>
+          </div>
+
+          <ComparisonChart result={comparisonResult} />
+
+          <div className="common-skills-section">
+            <h3>🔗 공통 스킬 ({comparisonResult.commonCount}개)</h3>
+            {comparisonResult.commonCount > 0 ? (
+              <div className="skills-grid">
+                {comparisonResult.commonSkills.map(skill => (
+                  <div key={skill.uri} className="skill-card">
+                    <div
+                      className="skill-type"
+                      style={{
+                        backgroundColor: skill.type === 'knowledge' ? '#4ECDC4' : '#FFA500'
+                      }}
+                    >
+                      {skill.type === 'knowledge' ? 'K' : 'S'}
+                    </div>
+                    <div className="skill-name">{skill.label}</div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="no-data">공통된 스킬이 없습니다.</p>
+            )}
           </div>
         </div>
-      )}
-
-      {comparison && (
-        <>
-          <ComparisonChart comparison={comparison} />
-
-          <div className="skills-section">
-            <div className="section-header">
-              <h2 className="section-title">상세 스킬 분석</h2>
-              <ExportButton
-                skills={activeSkills}
-                filename={`comparison_${activeTab}_skills`}
-                label="현재 보기 내보내기"
-              />
-            </div>
-
-            <div className="tabs">
-              <button
-                className={`tab ${activeTab === 'common' ? 'active' : ''}`}
-                onClick={() => setActiveTab('common')}
-              >
-                <span className="tab-icon">🔗</span>
-                공통 스킬 ({comparison.commonSkills.length})
-              </button>
-              <button
-                className={`tab ${activeTab === 'unique1' ? 'active' : ''}`}
-                onClick={() => setActiveTab('unique1')}
-              >
-                <span className="tab-icon">🎯</span>
-                {comparison.domain1Name} 고유 ({comparison.uniqueToDomain1.length})
-              </button>
-              <button
-                className={`tab ${activeTab === 'unique2' ? 'active' : ''}`}
-                onClick={() => setActiveTab('unique2')}
-              >
-                <span className="tab-icon">🎯</span>
-                {comparison.domain2Name} 고유 ({comparison.uniqueToDomain2.length})
-              </button>
-            </div>
-
-            <div className="skills-grid">
-              {activeSkills.length === 0 ? (
-                <div className="empty-state">
-                  <span className="empty-icon">📭</span>
-                  <p>이 카테고리에서 스킬을 찾을 수 없습니다</p>
-                </div>
-              ) : (
-                activeSkills.map((skill) => (
-                  <SkillCard key={skill.uri} skill={skill} />
-                ))
-              )}
-            </div>
-          </div>
-        </>
+      ) : (
+        <div className="placeholder-message">
+          비교할 두 도메인을 선택해주세요.
+        </div>
       )}
 
       <style jsx>{`
-        .page-container {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: var(--spacing-2xl) var(--spacing-lg);
-        }
-
-        .page-header {
-          margin-bottom: var(--spacing-2xl);
-        }
-
-        .header-content {
-          text-align: center;
-        }
-
-        .page-title {
-          font-size: clamp(2rem, 5vw, 3rem);
-          font-weight: 800;
-          background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          margin-bottom: var(--spacing-sm);
-        }
-
-        .page-description {
-          font-size: 1.1rem;
-          color: var(--text-secondary);
-          max-width: 600px;
-          margin: 0 auto;
-        }
-
-        .instruction-card {
-          display: flex;
-          align-items: center;
-          gap: var(--spacing-lg);
-          padding: var(--spacing-2xl);
-          background: var(--bg-card);
-          border-radius: var(--radius-lg);
-          border: 2px dashed var(--border-color);
-          margin: var(--spacing-2xl) 0;
-        }
-
-        .instruction-icon {
-          font-size: 3rem;
-        }
-
-        .instruction-content h3 {
-          font-size: 1.5rem;
-          color: var(--text-primary);
-          margin-bottom: var(--spacing-xs);
-        }
-
-        .instruction-content p {
-          color: var(--text-secondary);
-        }
-
-        .skills-section {
-          margin-top: var(--spacing-2xl);
-        }
-
-        .section-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: var(--spacing-lg);
-        }
-
-        .section-title {
-          font-size: 1.75rem;
-          font-weight: 700;
-          color: var(--text-primary);
-        }
-
-        .tabs {
-          display: flex;
-          gap: var(--spacing-sm);
-          margin-bottom: var(--spacing-xl);
-          border-bottom: 2px solid var(--border-color);
-          overflow-x: auto;
-        }
-
-        .tab {
-          display: flex;
-          align-items: center;
-          gap: var(--spacing-xs);
-          padding: var(--spacing-md) var(--spacing-lg);
-          background: transparent;
-          border: none;
-          border-bottom: 3px solid transparent;
-          cursor: pointer;
-          transition: all var(--transition-base);
-          color: var(--text-secondary);
-          font-weight: 600;
-          white-space: nowrap;
-        }
-
-        .tab:hover {
-          color: var(--text-primary);
-          background: var(--bg-tertiary);
-        }
-
-        .tab.active {
-          color: var(--color-primary);
-          border-bottom-color: var(--color-primary);
-        }
-
-        .tab-icon {
-          font-size: 1.2rem;
-        }
-
-        .skills-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: var(--spacing-lg);
-        }
-
-        .empty-state {
-          grid-column: 1 / -1;
-          text-align: center;
-          padding: var(--spacing-2xl);
-          color: var(--text-muted);
-        }
-
-        .empty-icon {
-          font-size: 4rem;
-          display: block;
-          margin-bottom: var(--spacing-md);
-        }
-
-        .loading {
-          text-align: center;
-          padding: var(--spacing-2xl);
-          font-size: 1.2rem;
-          color: var(--text-secondary);
-        }
-
-        @media (max-width: 768px) {
-          .instruction-card {
-            flex-direction: column;
-            text-align: center;
-          }
-
-          .section-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: var(--spacing-md);
-          }
-
-          .tabs {
-            flex-wrap: wrap;
-          }
-        }
-      `}</style>
-    </main>
+                .compare-page {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 2rem;
+                    min-height: 100vh;
+                    background-color: var(--bg-primary);
+                }
+                .header {
+                    text-align: center;
+                    margin-bottom: 3rem;
+                }
+                .header h1 {
+                    font-size: 2.5rem;
+                    margin-bottom: 0.5rem;
+                    background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+                .header p {
+                    color: var(--text-secondary);
+                    font-size: 1.1rem;
+                }
+                .loading-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    font-size: 1.2rem;
+                    color: var(--text-secondary);
+                }
+                .placeholder-message {
+                    text-align: center;
+                    padding: 4rem;
+                    background: var(--bg-card);
+                    border-radius: 12px;
+                    color: var(--text-secondary);
+                    border: 2px dashed var(--border-color);
+                }
+                .results-container {
+                    animation: fadeIn 0.5s ease-out;
+                }
+                .similarity-card {
+                    background: var(--bg-card);
+                    padding: 1.5rem;
+                    border-radius: 12px;
+                    text-align: center;
+                    margin-bottom: 2rem;
+                    box-shadow: var(--shadow-sm);
+                    border: 1px solid var(--border-color);
+                }
+                .similarity-card h3 {
+                    color: var(--text-secondary);
+                    font-size: 1rem;
+                    margin-bottom: 0.5rem;
+                }
+                .similarity-card .score {
+                    font-size: 3rem;
+                    font-weight: 800;
+                    color: var(--color-primary);
+                }
+                .common-skills-section {
+                    margin-top: 3rem;
+                }
+                .common-skills-section h3 {
+                    margin-bottom: 1.5rem;
+                    font-size: 1.25rem;
+                    color: var(--text-primary);
+                }
+                .skills-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                    gap: 1rem;
+                }
+                .skill-card {
+                    background: var(--bg-tertiary);
+                    padding: 1rem;
+                    border-radius: 8px;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    border: 1px solid var(--border-color);
+                    transition: transform 0.2s;
+                }
+                .skill-card:hover {
+                    transform: translateY(-2px);
+                    box-shadow: var(--shadow-sm);
+                }
+                .skill-type {
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 4px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 0.75rem;
+                    font-weight: bold;
+                    color: white;
+                    flex-shrink: 0;
+                }
+                .skill-name {
+                    font-size: 0.9rem;
+                    color: var(--text-primary);
+                    line-height: 1.4;
+                    word-break: break-word;
+                }
+                .no-data {
+                    text-align: center;
+                    color: var(--text-secondary);
+                    padding: 2rem;
+                    background: var(--bg-tertiary);
+                    border-radius: 8px;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            `}</style>
+    </div>
   );
 }

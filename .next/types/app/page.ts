@@ -1,4 +1,4 @@
-// File: /Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/app/page.tsx
+// File: C:\download\2026\escon\escon\app\page.tsx
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

@@ -1,7 +1,7 @@
 (() => {
 var exports = {};
-exports.id = 9731;
-exports.ids = [9731];
+exports.id = 731;
+exports.ids = [731];
 exports.modules = {
 
 /***/ 18038:
@@ -164,7 +164,7 @@ module.exports = require("next/dist/shared/lib/utils");
 
 /***/ }),
 
-/***/ 7144:
+/***/ 54046:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -195,7 +195,7 @@ __webpack_require__.r(__webpack_exports__);
         '[domain]',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 44002)), "/Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/app/domains/[domain]/page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 44002)), "C:\\download\\2026\\escon\\escon\\app\\domains\\[domain]\\page.tsx"],
           
         }]
       },
@@ -212,12 +212,12 @@ __webpack_require__.r(__webpack_exports__);
       ]
       },
         {
-          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 60374)), "/Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/app/layout.tsx"],
+          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 60374)), "C:\\download\\2026\\escon\\escon\\app\\layout.tsx"],
           
         }
       ]
       }.children;
-    const pages = ["/Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/app/domains/[domain]/page.tsx"];
+    const pages = ["C:\\download\\2026\\escon\\escon\\app\\domains\\[domain]\\page.tsx"];
     
     const originalPathname = "/domains/[domain]/page"
     const __next_app__ = {
@@ -231,33 +231,204 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 36473:
+/***/ 83822:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 17071))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 36702))
 
 /***/ }),
 
-/***/ 17071:
+/***/ 36702:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ DomainDetailPage)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(56786);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var styled_jsx_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14667);
-/* harmony import */ var styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(styled_jsx_style__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18038);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var next_navigation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(59483);
-/* harmony import */ var next_navigation__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_navigation__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _components_SkillCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(71304);
-/* harmony import */ var _components_SearchBar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(57621);
-/* harmony import */ var _lib_skills_data__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(37110);
-/* harmony import */ var _lib_constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(93978);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ DomainDetailPage)
+});
+
+// EXTERNAL MODULE: external "next/dist/compiled/react/jsx-runtime"
+var jsx_runtime_ = __webpack_require__(56786);
+// EXTERNAL MODULE: ./node_modules/styled-jsx/style.js
+var style = __webpack_require__(14667);
+var style_default = /*#__PURE__*/__webpack_require__.n(style);
+// EXTERNAL MODULE: external "next/dist/compiled/react"
+var react_ = __webpack_require__(18038);
+// EXTERNAL MODULE: ./node_modules/next/navigation.js
+var navigation = __webpack_require__(59483);
+// EXTERNAL MODULE: ./app/lib/skills-data.ts
+var skills_data = __webpack_require__(37110);
+// EXTERNAL MODULE: ./app/lib/constants.ts
+var constants = __webpack_require__(93978);
+;// CONCATENATED MODULE: ./app/components/SkillCard.tsx
+/* __next_internal_client_entry_do_not_use__ default auto */ 
+
+
+
+function SkillCard({ skill, domainColor = "var(--color-primary)" }) {
+    const skillId = (0,skills_data/* extractIdFromUri */.fM)(skill.uri);
+    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+        className: style_default().dynamic([
+            [
+                "1c5cabe775214d83",
+                [
+                    domainColor,
+                    domainColor,
+                    domainColor,
+                    domainColor
+                ]
+            ]
+        ]) + " " + "skill-card",
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                className: style_default().dynamic([
+                    [
+                        "1c5cabe775214d83",
+                        [
+                            domainColor,
+                            domainColor,
+                            domainColor,
+                            domainColor
+                        ]
+                    ]
+                ]) + " " + "skill-header",
+                children: [
+                    /*#__PURE__*/ jsx_runtime_.jsx("h3", {
+                        className: style_default().dynamic([
+                            [
+                                "1c5cabe775214d83",
+                                [
+                                    domainColor,
+                                    domainColor,
+                                    domainColor,
+                                    domainColor
+                                ]
+                            ]
+                        ]) + " " + "skill-label",
+                        children: skill.label
+                    }),
+                    /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                        className: style_default().dynamic([
+                            [
+                                "1c5cabe775214d83",
+                                [
+                                    domainColor,
+                                    domainColor,
+                                    domainColor,
+                                    domainColor
+                                ]
+                            ]
+                        ]) + " " + "skill-type-badge",
+                        children: constants/* SKILL_TYPE_LABELS */.dn[skill.type]
+                    })
+                ]
+            }),
+            /*#__PURE__*/ jsx_runtime_.jsx("p", {
+                className: style_default().dynamic([
+                    [
+                        "1c5cabe775214d83",
+                        [
+                            domainColor,
+                            domainColor,
+                            domainColor,
+                            domainColor
+                        ]
+                    ]
+                ]) + " " + "skill-description",
+                children: (0,skills_data/* truncateDescription */.Nt)(skill.description, 200)
+            }),
+            /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                className: style_default().dynamic([
+                    [
+                        "1c5cabe775214d83",
+                        [
+                            domainColor,
+                            domainColor,
+                            domainColor,
+                            domainColor
+                        ]
+                    ]
+                ]) + " " + "skill-footer",
+                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("span", {
+                    className: style_default().dynamic([
+                        [
+                            "1c5cabe775214d83",
+                            [
+                                domainColor,
+                                domainColor,
+                                domainColor,
+                                domainColor
+                            ]
+                        ]
+                    ]) + " " + "skill-id",
+                    children: [
+                        "ID: ",
+                        skillId.substring(0, 8),
+                        "..."
+                    ]
+                })
+            }),
+            jsx_runtime_.jsx((style_default()), {
+                id: "1c5cabe775214d83",
+                dynamic: [
+                    domainColor,
+                    domainColor,
+                    domainColor,
+                    domainColor
+                ],
+                children: `.skill-card.__jsx-style-dynamic-selector{background:var(--bg-card);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--border-color);-webkit-border-radius:var(--radius-md);-moz-border-radius:var(--radius-md);border-radius:var(--radius-md);padding:var(--spacing-lg);-webkit-transition:all var(--transition-base);-moz-transition:all var(--transition-base);-o-transition:all var(--transition-base);transition:all var(--transition-base);display:-webkit-box;display:-webkit-flex;display:-moz-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-moz-box-orient:vertical;-moz-box-direction:normal;-ms-flex-direction:column;flex-direction:column;gap:var(--spacing-md);position:relative;overflow:hidden}.skill-card.__jsx-style-dynamic-selector::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:${domainColor};-webkit-transform:scaley(0);-moz-transform:scaley(0);-ms-transform:scaley(0);-o-transform:scaley(0);transform:scaley(0);-webkit-transition:-webkit-transform var(--transition-base);-moz-transition:-moz-transform var(--transition-base);-o-transition:-o-transform var(--transition-base);transition:-webkit-transform var(--transition-base);transition:-moz-transform var(--transition-base);transition:-o-transform var(--transition-base);transition:transform var(--transition-base)}.skill-card.__jsx-style-dynamic-selector:hover::before{-webkit-transform:scaley(1);-moz-transform:scaley(1);-ms-transform:scaley(1);-o-transform:scaley(1);transform:scaley(1)}.skill-card.__jsx-style-dynamic-selector:hover{-webkit-transform:translatex(4px);-moz-transform:translatex(4px);-ms-transform:translatex(4px);-o-transform:translatex(4px);transform:translatex(4px);border-color:${domainColor};-webkit-box-shadow:var(--shadow-md);-moz-box-shadow:var(--shadow-md);box-shadow:var(--shadow-md);background:var(--bg-tertiary)}.skill-header.__jsx-style-dynamic-selector{display:-webkit-box;display:-webkit-flex;display:-moz-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;-moz-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:start;-webkit-align-items:flex-start;-moz-box-align:start;-ms-flex-align:start;align-items:flex-start;gap:var(--spacing-md)}.skill-label.__jsx-style-dynamic-selector{font-size:1.1rem;font-weight:600;margin:0;color:var(--text-primary);-webkit-box-flex:1;-webkit-flex-grow:1;-moz-box-flex:1;-ms-flex-positive:1;flex-grow:1;line-height:1.4}.skill-type-badge.__jsx-style-dynamic-selector{font-size:.75rem;padding:var(--spacing-xs)var(--spacing-sm);background:${domainColor}22;color:${domainColor};-webkit-border-radius:var(--radius-sm);-moz-border-radius:var(--radius-sm);border-radius:var(--radius-sm);font-weight:600;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0}.skill-description.__jsx-style-dynamic-selector{font-size:.9rem;color:var(--text-secondary);line-height:1.6;margin:0}.skill-footer.__jsx-style-dynamic-selector{display:-webkit-box;display:-webkit-flex;display:-moz-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;-moz-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-webkit-align-items:center;-moz-box-align:center;-ms-flex-align:center;align-items:center;padding-top:var(--spacing-sm);border-top:1px solid var(--border-color)}.skill-id.__jsx-style-dynamic-selector{font-size:.75rem;color:var(--text-muted);font-family:monospace}`
+            })
+        ]
+    });
+}
+
+;// CONCATENATED MODULE: ./app/components/SearchBar.tsx
+/* __next_internal_client_entry_do_not_use__ default auto */ 
+
+
+function SearchBar({ onSearch, placeholder = "스킬 검색..." }) {
+    const [query, setQuery] = (0,react_.useState)("");
+    const handleChange = (e)=>{
+        const value = e.target.value;
+        setQuery(value);
+        onSearch(value);
+    };
+    const handleClear = ()=>{
+        setQuery("");
+        onSearch("");
+    };
+    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+        className: "jsx-b273f5e1f179224c" + " " + "search-bar",
+        children: [
+            /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                className: "jsx-b273f5e1f179224c" + " " + "search-icon",
+                children: "\uD83D\uDD0D"
+            }),
+            /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                type: "text",
+                value: query,
+                onChange: handleChange,
+                placeholder: placeholder,
+                className: "jsx-b273f5e1f179224c" + " " + "search-input"
+            }),
+            query && /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                onClick: handleClear,
+                "aria-label": "Clear search",
+                className: "jsx-b273f5e1f179224c" + " " + "clear-button",
+                children: "✕"
+            }),
+            jsx_runtime_.jsx((style_default()), {
+                id: "b273f5e1f179224c",
+                children: ".search-bar.jsx-b273f5e1f179224c{position:relative;display:-webkit-box;display:-webkit-flex;display:-moz-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-moz-box-align:center;-ms-flex-align:center;align-items:center;background:var(--bg-tertiary);border:1px solid var(--border-color);-webkit-border-radius:var(--radius-md);-moz-border-radius:var(--radius-md);border-radius:var(--radius-md);padding:var(--spacing-sm)var(--spacing-md);-webkit-transition:all var(--transition-base);-moz-transition:all var(--transition-base);-o-transition:all var(--transition-base);transition:all var(--transition-base)}.search-bar.jsx-b273f5e1f179224c:focus-within{border-color:var(--color-primary);-webkit-box-shadow:0 0 0 3px rgba(138,43,226,.1);-moz-box-shadow:0 0 0 3px rgba(138,43,226,.1);box-shadow:0 0 0 3px rgba(138,43,226,.1)}.search-icon.jsx-b273f5e1f179224c{font-size:1.2rem;margin-right:var(--spacing-sm);color:var(--text-muted)}.search-input.jsx-b273f5e1f179224c{-webkit-box-flex:1;-webkit-flex-grow:1;-moz-box-flex:1;-ms-flex-positive:1;flex-grow:1;background:transparent;border:none;outline:none;color:var(--text-primary);font-size:1rem;padding:var(--spacing-xs)0}.search-input.jsx-b273f5e1f179224c::-webkit-input-placeholder{color:var(--text-muted)}.search-input.jsx-b273f5e1f179224c:-moz-placeholder{color:var(--text-muted)}.search-input.jsx-b273f5e1f179224c::-moz-placeholder{color:var(--text-muted)}.search-input.jsx-b273f5e1f179224c:-ms-input-placeholder{color:var(--text-muted)}.search-input.jsx-b273f5e1f179224c::-ms-input-placeholder{color:var(--text-muted)}.search-input.jsx-b273f5e1f179224c::placeholder{color:var(--text-muted)}.clear-button.jsx-b273f5e1f179224c{background:transparent;border:none;color:var(--text-muted);cursor:pointer;padding:var(--spacing-xs);font-size:1.2rem;line-height:1;-webkit-transition:all var(--transition-fast);-moz-transition:all var(--transition-fast);-o-transition:all var(--transition-fast);transition:all var(--transition-fast);-webkit-border-radius:var(--radius-sm);-moz-border-radius:var(--radius-sm);border-radius:var(--radius-sm)}.clear-button.jsx-b273f5e1f179224c:hover{background:var(--bg-secondary);color:var(--text-primary)}"
+            })
+        ]
+    });
+}
+
+;// CONCATENATED MODULE: ./app/domains/[domain]/page.tsx
 /* __next_internal_client_entry_do_not_use__ default auto */ 
 
 
@@ -267,18 +438,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function DomainDetailPage() {
-    const params = (0,next_navigation__WEBPACK_IMPORTED_MODULE_3__.useParams)();
+    const params = (0,navigation.useParams)();
     const domainKey = params.domain;
-    const [allSkills, setAllSkills] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]);
-    const [filteredSkills, setFilteredSkills] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]);
-    const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true);
-    const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("");
-    const [selectedTypes, setSelectedTypes] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]);
-    const domain = _lib_constants__WEBPACK_IMPORTED_MODULE_7__/* .DOMAINS */ .w7.find((d)=>d.key === domainKey);
-    const domainColor = domain ? _lib_constants__WEBPACK_IMPORTED_MODULE_7__/* .DOMAIN_COLORS */ .UL[domainKey] : "var(--color-primary)";
-    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
-        (0,_lib_skills_data__WEBPACK_IMPORTED_MODULE_6__/* .loadSkillsData */ .Si)().then((data)=>{
-            const skills = (0,_lib_skills_data__WEBPACK_IMPORTED_MODULE_6__/* .getSkillsByDomain */ .Q$)(data, domainKey);
+    const [allSkills, setAllSkills] = (0,react_.useState)([]);
+    const [filteredSkills, setFilteredSkills] = (0,react_.useState)([]);
+    const [loading, setLoading] = (0,react_.useState)(true);
+    const [searchQuery, setSearchQuery] = (0,react_.useState)("");
+    const [selectedTypes, setSelectedTypes] = (0,react_.useState)([]);
+    const domain = constants/* DOMAINS */.w7.find((d)=>d.key === domainKey);
+    const domainColor = domain ? constants/* DOMAIN_COLORS */.UL[domainKey] : "var(--color-primary)";
+    (0,react_.useEffect)(()=>{
+        (0,skills_data/* loadSkillsData */.Si)().then((data)=>{
+            const skills = (0,skills_data/* getSkillsByDomain */.Q$)(data, domainKey);
             setAllSkills(skills);
             setFilteredSkills(skills);
             setLoading(false);
@@ -289,13 +460,13 @@ function DomainDetailPage() {
     }, [
         domainKey
     ]);
-    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+    (0,react_.useEffect)(()=>{
         let result = allSkills;
         if (selectedTypes.length > 0) {
-            result = (0,_lib_skills_data__WEBPACK_IMPORTED_MODULE_6__/* .filterSkillsByType */ .vr)(result, selectedTypes);
+            result = (0,skills_data/* filterSkillsByType */.vr)(result, selectedTypes);
         }
         if (searchQuery) {
-            result = (0,_lib_skills_data__WEBPACK_IMPORTED_MODULE_6__/* .searchSkills */ .Mr)(result, searchQuery);
+            result = (0,skills_data/* searchSkills */.Mr)(result, searchQuery);
         }
         setFilteredSkills(result);
     }, [
@@ -310,18 +481,18 @@ function DomainDetailPage() {
             ]);
     };
     if (loading) {
-        return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("main", {
+        return /*#__PURE__*/ jsx_runtime_.jsx("main", {
             className: "page-container",
-            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+            children: /*#__PURE__*/ jsx_runtime_.jsx("div", {
                 className: "loading",
                 children: "Loading skills..."
             })
         });
     }
     if (!domain) {
-        return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("main", {
+        return /*#__PURE__*/ jsx_runtime_.jsx("main", {
             className: "page-container",
-            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+            children: /*#__PURE__*/ jsx_runtime_.jsx("div", {
                 className: "error",
                 children: "Domain not found"
             })
@@ -329,10 +500,10 @@ function DomainDetailPage() {
     }
     const knowledgeCount = allSkills.filter((s)=>s.type === "knowledge").length;
     const competenceCount = allSkills.filter((s)=>s.type === "skill/competence").length;
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("main", {
-        className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("main", {
+        className: style_default().dynamic([
             [
-                "688d59b3a7281725",
+                "6c8501917f81",
                 [
                     domainColor,
                     domainColor,
@@ -341,13 +512,13 @@ function DomainDetailPage() {
             ]
         ]) + " " + "page-container",
         children: [
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
                 style: {
                     borderColor: domainColor
                 },
-                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                className: style_default().dynamic([
                     [
-                        "688d59b3a7281725",
+                        "6c8501917f81",
                         [
                             domainColor,
                             domainColor,
@@ -356,10 +527,10 @@ function DomainDetailPage() {
                     ]
                 ]) + " " + "domain-header",
                 children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                        className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                    /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                        className: style_default().dynamic([
                             [
-                                "688d59b3a7281725",
+                                "6c8501917f81",
                                 [
                                     domainColor,
                                     domainColor,
@@ -369,10 +540,10 @@ function DomainDetailPage() {
                         ]) + " " + "domain-icon-large",
                         children: domain.icon
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                        className: style_default().dynamic([
                             [
-                                "688d59b3a7281725",
+                                "6c8501917f81",
                                 [
                                     domainColor,
                                     domainColor,
@@ -381,10 +552,10 @@ function DomainDetailPage() {
                             ]
                         ]) + " " + "domain-info",
                         children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h1", {
-                                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                            /*#__PURE__*/ jsx_runtime_.jsx("h1", {
+                                className: style_default().dynamic([
                                     [
-                                        "688d59b3a7281725",
+                                        "6c8501917f81",
                                         [
                                             domainColor,
                                             domainColor,
@@ -394,10 +565,10 @@ function DomainDetailPage() {
                                 ]) + " " + "domain-title",
                                 children: domain.name
                             }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
-                                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                            /*#__PURE__*/ jsx_runtime_.jsx("p", {
+                                className: style_default().dynamic([
                                     [
-                                        "688d59b3a7281725",
+                                        "6c8501917f81",
                                         [
                                             domainColor,
                                             domainColor,
@@ -407,10 +578,10 @@ function DomainDetailPage() {
                                 ]) + " " + "domain-desc",
                                 children: domain.description
                             }),
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                className: style_default().dynamic([
                                     [
-                                        "688d59b3a7281725",
+                                        "6c8501917f81",
                                         [
                                             domainColor,
                                             domainColor,
@@ -419,10 +590,10 @@ function DomainDetailPage() {
                                     ]
                                 ]) + " " + "domain-stats-row",
                                 children: [
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                        className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                        className: style_default().dynamic([
                                             [
-                                                "688d59b3a7281725",
+                                                "6c8501917f81",
                                                 [
                                                     domainColor,
                                                     domainColor,
@@ -431,10 +602,10 @@ function DomainDetailPage() {
                                             ]
                                         ]) + " " + "stat-item",
                                         children: [
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                                            /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                                className: style_default().dynamic([
                                                     [
-                                                        "688d59b3a7281725",
+                                                        "6c8501917f81",
                                                         [
                                                             domainColor,
                                                             domainColor,
@@ -444,10 +615,10 @@ function DomainDetailPage() {
                                                 ]) + " " + "stat-value",
                                                 children: allSkills.length
                                             }),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                                            /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                                className: style_default().dynamic([
                                                     [
-                                                        "688d59b3a7281725",
+                                                        "6c8501917f81",
                                                         [
                                                             domainColor,
                                                             domainColor,
@@ -459,10 +630,10 @@ function DomainDetailPage() {
                                             })
                                         ]
                                     }),
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                        className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                        className: style_default().dynamic([
                                             [
-                                                "688d59b3a7281725",
+                                                "6c8501917f81",
                                                 [
                                                     domainColor,
                                                     domainColor,
@@ -471,10 +642,10 @@ function DomainDetailPage() {
                                             ]
                                         ]) + " " + "stat-item",
                                         children: [
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                                            /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                                className: style_default().dynamic([
                                                     [
-                                                        "688d59b3a7281725",
+                                                        "6c8501917f81",
                                                         [
                                                             domainColor,
                                                             domainColor,
@@ -484,10 +655,10 @@ function DomainDetailPage() {
                                                 ]) + " " + "stat-value",
                                                 children: knowledgeCount
                                             }),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                                            /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                                className: style_default().dynamic([
                                                     [
-                                                        "688d59b3a7281725",
+                                                        "6c8501917f81",
                                                         [
                                                             domainColor,
                                                             domainColor,
@@ -499,10 +670,10 @@ function DomainDetailPage() {
                                             })
                                         ]
                                     }),
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                        className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                        className: style_default().dynamic([
                                             [
-                                                "688d59b3a7281725",
+                                                "6c8501917f81",
                                                 [
                                                     domainColor,
                                                     domainColor,
@@ -511,10 +682,10 @@ function DomainDetailPage() {
                                             ]
                                         ]) + " " + "stat-item",
                                         children: [
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                                            /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                                className: style_default().dynamic([
                                                     [
-                                                        "688d59b3a7281725",
+                                                        "6c8501917f81",
                                                         [
                                                             domainColor,
                                                             domainColor,
@@ -524,10 +695,10 @@ function DomainDetailPage() {
                                                 ]) + " " + "stat-value",
                                                 children: competenceCount
                                             }),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                                            /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                                className: style_default().dynamic([
                                                     [
-                                                        "688d59b3a7281725",
+                                                        "6c8501917f81",
                                                         [
                                                             domainColor,
                                                             domainColor,
@@ -545,10 +716,10 @@ function DomainDetailPage() {
                     })
                 ]
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                className: style_default().dynamic([
                     [
-                        "688d59b3a7281725",
+                        "6c8501917f81",
                         [
                             domainColor,
                             domainColor,
@@ -557,14 +728,14 @@ function DomainDetailPage() {
                     ]
                 ]) + " " + "filters-section",
                 children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_SearchBar__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+                    /*#__PURE__*/ jsx_runtime_.jsx(SearchBar, {
                         onSearch: setSearchQuery,
                         placeholder: "Search skills in this domain..."
                     }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                        className: style_default().dynamic([
                             [
-                                "688d59b3a7281725",
+                                "6c8501917f81",
                                 [
                                     domainColor,
                                     domainColor,
@@ -573,14 +744,14 @@ function DomainDetailPage() {
                             ]
                         ]) + " " + "type-filters",
                         children: [
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("button", {
                                 onClick: ()=>handleTypeToggle("knowledge"),
                                 style: {
                                     borderColor: selectedTypes.includes("knowledge") ? domainColor : undefined
                                 },
-                                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                                className: style_default().dynamic([
                                     [
-                                        "688d59b3a7281725",
+                                        "6c8501917f81",
                                         [
                                             domainColor,
                                             domainColor,
@@ -594,14 +765,14 @@ function DomainDetailPage() {
                                     ")"
                                 ]
                             }),
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("button", {
                                 onClick: ()=>handleTypeToggle("skill/competence"),
                                 style: {
                                     borderColor: selectedTypes.includes("skill/competence") ? domainColor : undefined
                                 },
-                                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+                                className: style_default().dynamic([
                                     [
-                                        "688d59b3a7281725",
+                                        "6c8501917f81",
                                         [
                                             domainColor,
                                             domainColor,
@@ -619,10 +790,10 @@ function DomainDetailPage() {
                     })
                 ]
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                className: style_default().dynamic([
                     [
-                        "688d59b3a7281725",
+                        "6c8501917f81",
                         [
                             domainColor,
                             domainColor,
@@ -638,10 +809,10 @@ function DomainDetailPage() {
                     " skills"
                 ]
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+            /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                className: style_default().dynamic([
                     [
-                        "688d59b3a7281725",
+                        "6c8501917f81",
                         [
                             domainColor,
                             domainColor,
@@ -649,15 +820,15 @@ function DomainDetailPage() {
                         ]
                     ]
                 ]) + " " + "skills-grid",
-                children: filteredSkills.map((skill)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_SkillCard__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
+                children: filteredSkills.map((skill)=>/*#__PURE__*/ jsx_runtime_.jsx(SkillCard, {
                         skill: skill,
                         domainColor: domainColor
                     }, skill.uri))
             }),
-            filteredSkills.length === 0 && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                className: styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default().dynamic([
+            filteredSkills.length === 0 && /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                className: style_default().dynamic([
                     [
-                        "688d59b3a7281725",
+                        "6c8501917f81",
                         [
                             domainColor,
                             domainColor,
@@ -667,8 +838,8 @@ function DomainDetailPage() {
                 ]) + " " + "no-results",
                 children: "No skills found matching your criteria"
             }),
-            react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((styled_jsx_style__WEBPACK_IMPORTED_MODULE_1___default()), {
-                id: "688d59b3a7281725",
+            jsx_runtime_.jsx((style_default()), {
+                id: "6c8501917f81",
                 dynamic: [
                     domainColor,
                     domainColor,
@@ -695,7 +866,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(21913);
 
-const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/app/domains/[domain]/page.tsx`)
+const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\download\2026\escon\escon\app\domains\[domain]\page.tsx`)
 
 // Accessing the __esModule property and exporting $$typeof are required here.
 // The __esModule getter forces the proxy target to create the default export
@@ -716,7 +887,7 @@ const __default__ = proxy.default;
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [926,576,7110,6906,1304,7621], () => (__webpack_exec__(7144)));
+var __webpack_exports__ = __webpack_require__.X(0, [384,247,110], () => (__webpack_exec__(54046)));
 module.exports = __webpack_exports__;
 
 })();

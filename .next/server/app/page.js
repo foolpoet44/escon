@@ -1,7 +1,7 @@
 (() => {
 var exports = {};
-exports.id = 1931;
-exports.ids = [1931];
+exports.id = 931;
+exports.ids = [931];
 exports.modules = {
 
 /***/ 18038:
@@ -164,7 +164,7 @@ module.exports = require("next/dist/shared/lib/utils");
 
 /***/ }),
 
-/***/ 45347:
+/***/ 79897:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -189,17 +189,17 @@ __webpack_require__.r(__webpack_exports__);
         '',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 85654)), "/Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/app/page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 85654)), "C:\\download\\2026\\escon\\escon\\app\\page.tsx"],
           
         }]
       },
         {
-          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 60374)), "/Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/app/layout.tsx"],
+          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 60374)), "C:\\download\\2026\\escon\\escon\\app\\layout.tsx"],
           
         }
       ]
       }.children;
-    const pages = ["/Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/app/page.tsx"];
+    const pages = ["C:\\download\\2026\\escon\\escon\\app\\page.tsx"];
     
     const originalPathname = "/page"
     const __next_app__ = {
@@ -213,7 +213,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 53850:
+/***/ 52345:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 95457, 23))
@@ -354,7 +354,7 @@ function Home() {
 "use strict";
 /* __next_internal_client_entry_do_not_use__  cjs */ 
 const { createProxy } = __webpack_require__(21913);
-module.exports = createProxy("/Users/dkmac/Library/CloudStorage/GoogleDrive-foolpoet44@gmail.com/내 드라이브/26년/프로젝트/escon/escon/node_modules/next/dist/client/link.js");
+module.exports = createProxy("C:\\download\\2026\\escon\\escon\\node_modules\\next\\dist\\client\\link.js");
  //# sourceMappingURL=link.js.map
 
 
@@ -377,7 +377,7 @@ module.exports = __webpack_require__(77538);
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [926,576,3914], () => (__webpack_exec__(45347)));
+var __webpack_exports__ = __webpack_require__.X(0, [384,247], () => (__webpack_exec__(79897)));
 module.exports = __webpack_exports__;
 
 })();

@@ -1,208 +1,183 @@
-"use client";
+'use client';
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { DomainComparison } from '../lib/comparison';
-import { DOMAINS } from '../lib/constants';
+import {
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+    PieChart, Pie, Cell
+} from 'recharts';
+import { ComparisonResult } from '../lib/comparison';
 
 interface ComparisonChartProps {
-    comparison: DomainComparison;
+    result: ComparisonResult;
 }
 
-export default function ComparisonChart({ comparison }: ComparisonChartProps) {
-    const domain1Color = DOMAINS.find(d => d.key === comparison.domain1)?.color || '#667eea';
-    const domain2Color = DOMAINS.find(d => d.key === comparison.domain2)?.color || '#4ECDC4';
+const COLORS = {
+    knowledge: '#4ECDC4',
+    competence: '#FFA500',
+    domain1: '#FF6B6B',
+    domain2: '#1A535C',
+    common: '#FFE66D'
+};
 
-    // 스킬 수 비교 데이터
-    const skillCountData = [
+export default function ComparisonChart({ result }: ComparisonChartProps) {
+
+    // Bar Chart Data
+    const countData = [
         {
-            name: 'Total Skills',
-            [comparison.domain1Name]: comparison.domain1Count,
-            [comparison.domain2Name]: comparison.domain2Count
+            name: '전체 스킬',
+            [result.domain1Name]: result.totalSkills1,
+            [result.domain2Name]: result.totalSkills2,
         },
         {
-            name: 'Knowledge',
-            [comparison.domain1Name]: comparison.domain1Knowledge,
-            [comparison.domain2Name]: comparison.domain2Knowledge
-        },
-        {
-            name: 'Competence',
-            [comparison.domain1Name]: comparison.domain1Competence,
-            [comparison.domain2Name]: comparison.domain2Competence
+            name: '고유 스킬',
+            [result.domain1Name]: result.uniqueCount1,
+            [result.domain2Name]: result.uniqueCount2,
         }
     ];
 
-    // 공통/고유 스킬 데이터
-    const overlapData = [
-        { name: `Unique to ${comparison.domain1Name}`, value: comparison.uniqueToDomain1.length, color: domain1Color },
-        { name: 'Common Skills', value: comparison.commonSkills.length, color: '#98D8C8' },
-        { name: `Unique to ${comparison.domain2Name}`, value: comparison.uniqueToDomain2.length, color: domain2Color }
+    const typeData1 = [
+        { name: 'Knowledge', value: result.typeDistribution1.knowledge },
+        { name: 'Competence', value: result.typeDistribution1['skill/competence'] }
     ];
 
-    // 유사도 계산
-    const totalUnique = comparison.domain1Count + comparison.domain2Count - comparison.commonSkills.length;
-    const similarity = totalUnique === 0 ? 0 : (comparison.commonSkills.length / totalUnique) * 100;
+    const typeData2 = [
+        { name: 'Knowledge', value: result.typeDistribution2.knowledge },
+        { name: 'Competence', value: result.typeDistribution2['skill/competence'] }
+    ];
 
     return (
-        <div className="comparison-chart">
-            {/* 요약 통계 */}
-            <div className="stats-summary">
-                <div className="stat-card">
-                    <div className="stat-icon">🔗</div>
-                    <div className="stat-content">
-                        <div className="stat-value">{comparison.commonSkills.length}</div>
-                        <div className="stat-label">Common Skills</div>
-                    </div>
-                </div>
-                <div className="stat-card">
-                    <div className="stat-icon">📊</div>
-                    <div className="stat-content">
-                        <div className="stat-value">{similarity.toFixed(1)}%</div>
-                        <div className="stat-label">Similarity (Jaccard)</div>
-                    </div>
-                </div>
-                <div className="stat-card">
-                    <div className="stat-icon">🎯</div>
-                    <div className="stat-content">
-                        <div className="stat-value">{comparison.uniqueToDomain1.length}</div>
-                        <div className="stat-label">Unique to {comparison.domain1Name}</div>
-                    </div>
-                </div>
-                <div className="stat-card">
-                    <div className="stat-icon">🎯</div>
-                    <div className="stat-content">
-                        <div className="stat-value">{comparison.uniqueToDomain2.length}</div>
-                        <div className="stat-label">Unique to {comparison.domain2Name}</div>
-                    </div>
-                </div>
-            </div>
-
-            {/* 차트 그리드 */}
-            <div className="charts-grid">
-                {/* 스킬 수 비교 바 차트 */}
-                <div className="chart-container">
-                    <h3 className="chart-title">Skill Count Comparison</h3>
-                    <ResponsiveContainer width="100%" height={300}>
-                        <BarChart data={skillCountData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                            <XAxis dataKey="name" stroke="#aaa" />
-                            <YAxis stroke="#aaa" />
+        <div className="comparison-charts">
+            <div className="chart-section">
+                <h3>📊 스킬 수 비교</h3>
+                <div style={{ width: '100%', height: 300 }}>
+                    <ResponsiveContainer>
+                        <BarChart data={countData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
                             <Tooltip
-                                contentStyle={{
-                                    backgroundColor: '#1a1a2e',
-                                    border: '1px solid #333',
-                                    borderRadius: '8px'
-                                }}
+                                contentStyle={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
                             />
                             <Legend />
-                            <Bar dataKey={comparison.domain1Name} fill={domain1Color} />
-                            <Bar dataKey={comparison.domain2Name} fill={domain2Color} />
+                            <Bar dataKey={result.domain1Name} fill={COLORS.domain1} radius={[4, 4, 0, 0]} />
+                            <Bar dataKey={result.domain2Name} fill={COLORS.domain2} radius={[4, 4, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
+            </div>
 
-                {/* 공통/고유 스킬 파이 차트 */}
-                <div className="chart-container">
-                    <h3 className="chart-title">Skill Overlap Distribution</h3>
-                    <ResponsiveContainer width="100%" height={300}>
-                        <PieChart>
-                            <Pie
-                                data={overlapData}
-                                cx="50%"
-                                cy="50%"
-                                labelLine={false}
-                                label={({ name, percent }) => `${name}: ${((percent || 0) * 100).toFixed(0)}%`}
-                                outerRadius={100}
-                                fill="#8884d8"
-                                dataKey="value"
-                            >
-                                {overlapData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={entry.color} />
-                                ))}
-                            </Pie>
-                            <Tooltip
-                                contentStyle={{
-                                    backgroundColor: '#1a1a2e',
-                                    border: '1px solid #333',
-                                    borderRadius: '8px'
-                                }}
-                            />
-                        </PieChart>
-                    </ResponsiveContainer>
+            <div className="chart-section">
+                <h3>🧩 스킬 유형 분포</h3>
+                <div className="pie-charts-row">
+                    <div className="pie-chart-wrapper">
+                        <h4>{result.domain1Name}</h4>
+                        <div style={{ width: '100%', height: 250 }}>
+                            <ResponsiveContainer>
+                                <PieChart>
+                                    <Pie
+                                        data={typeData1}
+                                        cx="50%"
+                                        cy="50%"
+                                        innerRadius={60}
+                                        outerRadius={80}
+                                        paddingAngle={5}
+                                        dataKey="value"
+                                    >
+                                        <Cell key="knowledge" fill={COLORS.knowledge} />
+                                        <Cell key="competence" fill={COLORS.competence} />
+                                    </Pie>
+                                    <Tooltip
+                                        contentStyle={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
+                                    />
+                                    <Legend />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </div>
+                        <div className="distribution-stats">
+                            <div>Knowledge: {result.typeDistribution1.knowledge}</div>
+                            <div>Competence: {result.typeDistribution1['skill/competence']}</div>
+                        </div>
+                    </div>
+
+                    <div className="pie-chart-wrapper">
+                        <h4>{result.domain2Name}</h4>
+                        <div style={{ width: '100%', height: 250 }}>
+                            <ResponsiveContainer>
+                                <PieChart>
+                                    <Pie
+                                        data={typeData2}
+                                        cx="50%"
+                                        cy="50%"
+                                        innerRadius={60}
+                                        outerRadius={80}
+                                        paddingAngle={5}
+                                        dataKey="value"
+                                    >
+                                        <Cell key="knowledge" fill={COLORS.knowledge} />
+                                        <Cell key="competence" fill={COLORS.competence} />
+                                    </Pie>
+                                    <Tooltip
+                                        contentStyle={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
+                                    />
+                                    <Legend />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </div>
+                        <div className="distribution-stats">
+                            <div>Knowledge: {result.typeDistribution2.knowledge}</div>
+                            <div>Competence: {result.typeDistribution2['skill/competence']}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <style jsx>{`
-        .comparison-chart {
-          margin-top: var(--spacing-xl);
-        }
-
-        .stats-summary {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: var(--spacing-md);
-          margin-bottom: var(--spacing-xl);
-        }
-
-        .stat-card {
-          display: flex;
-          align-items: center;
-          gap: var(--spacing-md);
-          padding: var(--spacing-lg);
-          background: var(--bg-card);
-          border-radius: var(--radius-lg);
-          border: 1px solid var(--border-color);
-        }
-
-        .stat-icon {
-          font-size: 2rem;
-        }
-
-        .stat-content {
-          flex-grow: 1;
-        }
-
-        .stat-value {
-          font-size: 1.75rem;
-          font-weight: 700;
-          color: var(--color-primary);
-        }
-
-        .stat-label {
-          font-size: 0.85rem;
-          color: var(--text-muted);
-          margin-top: var(--spacing-xs);
-        }
-
-        .charts-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-          gap: var(--spacing-xl);
-        }
-
-        .chart-container {
-          background: var(--bg-card);
-          padding: var(--spacing-xl);
-          border-radius: var(--radius-lg);
-          border: 1px solid var(--border-color);
-        }
-
-        .chart-title {
-          font-size: 1.25rem;
-          font-weight: 600;
-          color: var(--text-primary);
-          margin-bottom: var(--spacing-lg);
-        }
-
-        @media (max-width: 768px) {
-          .stats-summary {
-            grid-template-columns: 1fr;
-          }
-
-          .charts-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-      `}</style>
+                .comparison-charts {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2rem;
+                }
+                .chart-section {
+                    background: var(--bg-card);
+                    padding: 1.5rem;
+                    border-radius: 12px;
+                    box-shadow: var(--shadow-sm);
+                    border: 1px solid var(--border-color);
+                }
+                .chart-section h3 {
+                    margin-bottom: 1.5rem;
+                    color: var(--text-primary);
+                    font-size: 1.25rem;
+                }
+                .pie-charts-row {
+                    display: flex;
+                    gap: 2rem;
+                }
+                .pie-chart-wrapper {
+                    flex: 1;
+                    text-align: center;
+                    background: var(--bg-tertiary);
+                    padding: 1rem;
+                    border-radius: 8px;
+                }
+                .pie-chart-wrapper h4 {
+                    margin-bottom: 1rem;
+                    color: var(--text-primary);
+                    font-weight: 600;
+                }
+                .distribution-stats {
+                    margin-top: 1rem;
+                    display: flex;
+                    justify-content: center;
+                    gap: 1.5rem;
+                    font-size: 0.9rem;
+                    color: var(--text-secondary);
+                }
+                @media (max-width: 768px) {
+                    .pie-charts-row {
+                        flex-direction: column;
+                    }
+                }
+            `}</style>
         </div>
     );
 }

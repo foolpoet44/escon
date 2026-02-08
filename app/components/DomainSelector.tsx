@@ -1,162 +1,144 @@
-"use client";
+'use client';
 
 import { DomainKey } from '../lib/types';
 import { DOMAINS } from '../lib/constants';
 
 interface DomainSelectorProps {
-    selectedDomains: DomainKey[];
-    onDomainChange: (domains: DomainKey[]) => void;
-    maxSelections?: number;
+  selectedDomain1: DomainKey | '';
+  selectedDomain2: DomainKey | '';
+  onSelectDomain1: (key: DomainKey) => void;
+  onSelectDomain2: (key: DomainKey) => void;
 }
 
 export default function DomainSelector({
-    selectedDomains,
-    onDomainChange,
-    maxSelections = 3
+  selectedDomain1,
+  selectedDomain2,
+  onSelectDomain1,
+  onSelectDomain2
 }: DomainSelectorProps) {
-    const handleDomainToggle = (domainKey: DomainKey) => {
-        if (selectedDomains.includes(domainKey)) {
-            // 선택 해제
-            onDomainChange(selectedDomains.filter(d => d !== domainKey));
-        } else {
-            // 선택 추가 (최대 개수 제한)
-            if (selectedDomains.length < maxSelections) {
-                onDomainChange([...selectedDomains, domainKey]);
-            }
-        }
-    };
+  return (
+    <div className="domain-selector-container">
+      <div className="selector-group">
+        <label className="selector-label">도메인 1</label>
+        <select
+          className="selector-input"
+          value={selectedDomain1}
+          onChange={(e) => onSelectDomain1(e.target.value as DomainKey)}
+        >
+          <option value="" disabled>도메인 선택</option>
+          {DOMAINS.map((domain) => (
+            <option key={`d1-${domain.key}`} value={domain.key}>
+              {domain.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
-    return (
-        <div className="domain-selector">
-            <div className="selector-header">
-                <h3 className="selector-title">Select Domains to Compare</h3>
-                <p className="selector-description">
-                    Choose up to {maxSelections} domains ({selectedDomains.length}/{maxSelections} selected)
-                </p>
-            </div>
+      <div className="vs-badge">VS</div>
 
-            <div className="domains-grid">
-                {DOMAINS.map((domain) => {
-                    const isSelected = selectedDomains.includes(domain.key);
-                    const isDisabled = !isSelected && selectedDomains.length >= maxSelections;
+      <div className="selector-group">
+        <label className="selector-label">도메인 2</label>
+        <select
+          className="selector-input"
+          value={selectedDomain2}
+          onChange={(e) => onSelectDomain2(e.target.value as DomainKey)}
+        >
+          <option value="" disabled>도메인 선택</option>
+          {DOMAINS.map((domain) => (
+            <option key={`d2-${domain.key}`} value={domain.key} disabled={domain.key === selectedDomain1}>
+              {domain.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
-                    return (
-                        <button
-                            key={domain.key}
-                            className={`domain-button ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`}
-                            onClick={() => handleDomainToggle(domain.key)}
-                            disabled={isDisabled}
-                        >
-                            <span className="domain-icon">{domain.icon}</span>
-                            <span className="domain-name">{domain.name}</span>
-                            {isSelected && <span className="check-icon">✓</span>}
-                        </button>
-                    );
-                })}
-            </div>
+      <style jsx>{`
+                .domain-selector-container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 2rem;
+                    padding: 1.5rem;
+                    background: var(--bg-card);
+                    border-radius: var(--radius-lg);
+                    border: 1px solid var(--border-color);
+                    margin-bottom: 2rem;
+                    box-shadow: var(--shadow-sm);
+                }
+                
+                .selector-group {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    flex: 1;
+                    max-width: 300px;
+                }
+                
+                .selector-label {
+                    font-size: 0.875rem;
+                    font-weight: 600;
+                    color: var(--text-primary);
+                    margin-left: 0.25rem;
+                }
+                
+                .selector-input {
+                    padding: 0.75rem 1rem;
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--radius-md);
+                    background-color: var(--bg-tertiary);
+                    font-size: 1rem;
+                    color: var(--text-primary);
+                    transition: all var(--transition-base);
+                    cursor: pointer;
+                    appearance: none;
+                    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+                    background-position: right 0.75rem center;
+                    background-repeat: no-repeat;
+                    background-size: 1.25em 1.25em;
+                }
+                
+                .selector-input:hover {
+                    border-color: var(--text-secondary);
+                }
+                
+                .selector-input:focus {
+                    outline: none;
+                    border-color: var(--color-primary);
+                    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+                }
 
-            {selectedDomains.length >= 2 && (
-                <div className="selection-summary">
-                    <strong>Comparing:</strong> {selectedDomains.map(key =>
-                        DOMAINS.find(d => d.key === key)?.name
-                    ).join(' vs ')}
-                </div>
-            )}
+                .vs-badge {
+                    font-size: 1.25rem;
+                    font-weight: 800;
+                    color: #fbbf24;
+                    background-color: #78350f;
+                    padding: 0.5rem;
+                    border-radius: 50%;
+                    width: 3rem;
+                    height: 3rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: var(--shadow-md);
+                    margin-top: 1.5rem;
+                    border: 2px solid #fbbf24;
+                }
 
-            <style jsx>{`
-        .domain-selector {
-          background: var(--bg-card);
-          border-radius: var(--radius-lg);
-          padding: var(--spacing-xl);
-          margin-bottom: var(--spacing-xl);
-        }
-
-        .selector-header {
-          margin-bottom: var(--spacing-lg);
-        }
-
-        .selector-title {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: var(--text-primary);
-          margin-bottom: var(--spacing-xs);
-        }
-
-        .selector-description {
-          color: var(--text-secondary);
-          font-size: 0.95rem;
-        }
-
-        .domains-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-          gap: var(--spacing-md);
-          margin-bottom: var(--spacing-lg);
-        }
-
-        .domain-button {
-          display: flex;
-          align-items: center;
-          gap: var(--spacing-sm);
-          padding: var(--spacing-md) var(--spacing-lg);
-          background: var(--bg-tertiary);
-          border: 2px solid var(--border-color);
-          border-radius: var(--radius-md);
-          cursor: pointer;
-          transition: all var(--transition-base);
-          position: relative;
-        }
-
-        .domain-button:hover:not(.disabled) {
-          background: var(--bg-secondary);
-          border-color: var(--color-primary);
-          transform: translateY(-2px);
-        }
-
-        .domain-button.selected {
-          background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-          border-color: var(--color-primary);
-          color: white;
-        }
-
-        .domain-button.disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-
-        .domain-icon {
-          font-size: 1.5rem;
-        }
-
-        .domain-name {
-          flex-grow: 1;
-          font-weight: 600;
-          text-align: left;
-        }
-
-        .check-icon {
-          font-size: 1.2rem;
-          font-weight: bold;
-        }
-
-        .selection-summary {
-          padding: var(--spacing-md);
-          background: var(--bg-tertiary);
-          border-radius: var(--radius-md);
-          border-left: 4px solid var(--color-primary);
-          color: var(--text-secondary);
-        }
-
-        .selection-summary strong {
-          color: var(--text-primary);
-        }
-
-        @media (max-width: 768px) {
-          .domains-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-      `}</style>
-        </div>
-    );
+                @media (max-width: 640px) {
+                    .domain-selector-container {
+                        flex-direction: column;
+                        gap: 1rem;
+                    }
+                    .vs-badge {
+                        margin-top: 0;
+                        transform: rotate(90deg);
+                    }
+                    .selector-group {
+                        max-width: 100%;
+                        width: 100%;
+                    }
+                }
+            `}</style>
+    </div>
+  );
 }
