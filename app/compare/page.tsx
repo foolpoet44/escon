@@ -89,7 +89,7 @@ export default function ComparePage() {
                     <div
                       className="skill-type"
                       style={{
-                        backgroundColor: skill.type === 'knowledge' ? '#4ECDC4' : '#FFA500'
+                        backgroundColor: skill.type === 'knowledge' ? 'var(--color-skill-knowledge)' : 'var(--color-skill-competence)'
                       }}
                     >
                       {skill.type === 'knowledge' ? 'K' : 'S'}
