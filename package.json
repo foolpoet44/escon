@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@google/genai": "^1.40.0",
     "@supabase/supabase-js": "^2.95.3",
     "d3": "^7.9.0",
     "dotenv": "^17.2.4",

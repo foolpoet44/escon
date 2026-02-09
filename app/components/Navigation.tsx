@@ -12,6 +12,7 @@ const navItems = [
   { href: '/network', label: '네트워크', icon: '🕸️' },
   { href: '/tree', label: '트리', icon: '🌳' },
   { href: '/visualization', label: '시각화', icon: '📊' },
+  { href: '/ai-match', label: 'AI 매칭', icon: '🤖' },
   { href: '/analytics', label: '분석', icon: '📈' }
 ];
 
