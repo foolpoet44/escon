@@ -274,7 +274,7 @@ export default function RobotSolutionPage() {
                                                 background: skill.match_type === 'exact' ? '#6BCF7F22' : '#FFA50022',
                                                 color: skill.match_type === 'exact' ? '#6BCF7F' : '#FFA500'
                                             }}>
-                                                {skill.match_type.toUpperCase()}
+                                                {skill.match_type?.toUpperCase() || 'N/A'}
                                             </span>
                                         </div>
                                         <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', margin: 0 }}>{skill.label}</p>
