@@ -4,69 +4,69 @@ import Link from 'next/link';
 
 // Enabler 타입 정의
 export interface Enabler {
-    id: string;
-    name: string;
-    name_en: string;
-    description: string;
-    priority: number;
-    skillCount: number;
-    expertSkillCount?: number;
-    color?: string;
+  id: string;
+  name: string;
+  name_en: string;
+  description: string;
+  priority: number;
+  skillCount: number;
+  expertSkillCount?: number;
+  color?: string;
 }
 
 interface EnablerCardProps {
-    enabler: Enabler;
-    organizationId?: string;
-    onClick?: () => void;
+  enabler: Enabler;
+  organizationId?: string;
+  onClick?: () => void;
 }
 
 export default function EnablerCard({
-    enabler,
-    organizationId = 'robot-solution',
-    onClick
+  enabler,
+  organizationId,
+  onClick
 }: EnablerCardProps) {
-    const cardColor = enabler.color || getPriorityColor(enabler.priority);
-    const href = `/organizations/${organizationId}/enablers/${enabler.id}`;
+  const cardColor = enabler.color || getPriorityColor(enabler.priority);
+  const href = `/organizations/${organizationId}/enablers/${enabler.id}`;
 
-    return (
-        <Link
-            href={href}
-            className="enabler-card"
-            onClick={onClick}
-        >
-            {/* Priority Badge */}
-            <div className="priority-badge">
-                <span className="priority-icon">🎯</span>
-                <span className="priority-text">Priority {enabler.priority}</span>
-            </div>
+  return (
+    <Link
+      href={href}
+      className="enabler-card"
+      onClick={onClick}
+    >
+      {/* Priority Badge */}
+      <div className="priority-badge">
+        <span className="priority-icon">🎯</span>
+        <span className="priority-text">Priority {enabler.priority}</span>
+      </div>
 
-            {/* Enabler Header */}
-            <div className="enabler-header">
-                <h3 className="enabler-name">{enabler.name}</h3>
-                <p className="enabler-subtitle">{enabler.name_en}</p>
-            </div>
+      {/* Enabler Header */}
+      <div className="enabler-header">
+        <h3 className="enabler-name">{enabler.name}</h3>
+        <p className="enabler-subtitle">{enabler.name_en}</p>
+      </div>
 
-            {/* Description */}
-            <p className="enabler-description">{enabler.description}</p>
+      {/* Description */}
+      <p className="enabler-description">{enabler.description}</p>
 
-            {/* Stats */}
-            <div className="enabler-stats">
-                <div className="stat-item">
-                    <span className="stat-value">{enabler.skillCount}</span>
-                    <span className="stat-label">스킬</span>
-                </div>
-                {enabler.expertSkillCount !== undefined && (
-                    <div className="stat-item highlight">
-                        <span className="stat-value">{enabler.expertSkillCount}</span>
-                        <span className="stat-label">Expert 필요</span>
-                    </div>
-                )}
-            </div>
+      {/* Stats */}
+      <div className="enabler-stats">
+        <div className="stat-item">
+          <span className="stat-value">{enabler.skillCount}</span>
+          <span className="stat-label">스킬</span>
+        </div>
+        {enabler.expertSkillCount !== undefined && (
+          <div className="stat-item highlight">
+            <span className="stat-value">{enabler.expertSkillCount}</span>
+            <span className="stat-label">Expert 필요</span>
+          </div>
+        )}
+      </div>
 
-            {/* Hover Arrow */}
-            <div className="arrow-icon">→</div>
+      {/* Hover Arrow */}
+      <div className="arrow-icon">→</div>
 
-            <style jsx>{`
+      <style jsx>{`
         .enabler-card {
           background: var(--bg-card);
           backdrop-filter: blur(10px);
@@ -241,18 +241,18 @@ export default function EnablerCard({
           }
         }
       `}</style>
-        </Link>
-    );
+    </Link>
+  );
 }
 
 // Priority에 따른 색상 매핑
 function getPriorityColor(priority: number): string {
-    const colors: Record<number, string> = {
-        1: '#FF6B6B', // 빨강 (최우선)
-        2: '#FFA500', // 주황
-        3: '#4ECDC4', // 틸
-        4: '#45B7D1', // 스카이블루
-        5: '#95E1D3', // 민트
-    };
-    return colors[priority] || '#4ECDC4';
+  const colors: Record<number, string> = {
+    1: '#FF6B6B', // 빨강 (최우선)
+    2: '#FFA500', // 주황
+    3: '#4ECDC4', // 틸
+    4: '#45B7D1', // 스카이블루
+    5: '#95E1D3', // 민트
+  };
+  return colors[priority] || '#4ECDC4';
 }
