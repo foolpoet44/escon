@@ -16,10 +16,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body className={inter.className}>
+        <a href="#main-content" className="skip-link">
+          메인 콘텐츠로 바로가기
+        </a>
         <Navigation />
-        {children}
+        <main id="main-content">
+          {children}
+        </main>
       </body>
     </html>
   )

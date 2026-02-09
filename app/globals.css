@@ -227,6 +227,31 @@ body {
   line-height: 1.7;
 }
 
+/* Featured Card Styles */
+.feature-card.featured {
+  background: linear-gradient(135deg, hsla(262, 83%, 58%, 0.15) 0%, var(--bg-card) 100%);
+  border-color: hsla(262, 83%, 58%, 0.3);
+}
+
+.feature-card.featured::before {
+  transform: scaleX(1);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+}
+
+.feature-badge {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 100%);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 /* Animations */
 @keyframes fadeInUp {
   from {
@@ -269,4 +294,40 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Skill Type Colors */
+--color-skill-knowledge: #4ECDC4;
+--color-skill-competence: #FFA500;
+
+/* Focus Styles for Accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(138, 43, 226, 0.2);
+}
+
+/* Skip to main content link for screen readers */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-primary);
+  color: white;
+  padding: 1rem 2rem;
+  z-index: 1000;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 1rem;
 }
