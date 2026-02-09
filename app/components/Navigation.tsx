@@ -7,10 +7,12 @@ const navItems = [
   { href: '/', label: '홈', icon: '🏠' },
   { href: '/organizations', label: '조직', icon: '🏢' },
   { href: '/domains', label: '도메인', icon: '📂' },
+  { href: '/search', label: '검색', icon: '🔍' },
   { href: '/skills', label: '스킬', icon: '⚡' },
   { href: '/compare', label: '비교', icon: '⚖️' },
   { href: '/network', label: '네트워크', icon: '🕸️' },
   { href: '/tree', label: '트리', icon: '🌳' },
+  { href: '/collaborate', label: '협업', icon: '👥' },
   { href: '/visualization', label: '시각화', icon: '📊' },
   { href: '/ai-match', label: 'AI 매칭', icon: '🤖' },
   { href: '/analytics', label: '분석', icon: '📈' }
