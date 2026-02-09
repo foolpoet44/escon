@@ -10,6 +10,7 @@
   "dependencies": {
     "@google/genai": "^1.40.0",
     "@supabase/supabase-js": "^2.95.3",
+    "bufferutil": "^4.1.0",
     "d3": "^7.9.0",
     "dotenv": "^17.2.4",
     "force-graph": "^1.51.1",
@@ -23,6 +24,7 @@
     "recharts": "^3.7.0",
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3",
+    "utf-8-validate": "^6.0.6",
     "y-indexeddb": "^9.0.12",
     "y-websocket": "^3.0.0",
     "yjs": "^13.6.29"

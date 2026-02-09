@@ -12,7 +12,6 @@ const navItems = [
   { href: '/compare', label: '비교', icon: '⚖️' },
   { href: '/network', label: '네트워크', icon: '🕸️' },
   { href: '/tree', label: '트리', icon: '🌳' },
-  { href: '/collaborate', label: '협업', icon: '👥' },
   { href: '/visualization', label: '시각화', icon: '📊' },
   { href: '/ai-match', label: 'AI 매칭', icon: '🤖' },
   { href: '/analytics', label: '분석', icon: '📈' }
