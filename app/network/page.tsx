@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorState from '../components/ErrorState';
 import { loadRobotSolutionData, getEnrichedSkills } from '../lib/org-skills-data';
 import { createGraphData, filterGraphByEnabler, getGraphStats, type GraphData, type GraphNode } from '../lib/graph-data';
 import type { Enabler } from '../lib/types';
@@ -20,6 +21,7 @@ export default function NetworkPage() {
   const [loading, setLoading] = useState(true);
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [graphWidth, setGraphWidth] = useState(1200);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadData() {
@@ -32,8 +34,9 @@ export default function NetworkPage() {
         setFilteredGraphData(graph);
         setEnablers(data.enablers);
         setLoading(false);
-      } catch (error) {
-        console.error('Failed to load graph data:', error);
+      } catch (err) {
+        console.error('Failed to load graph data:', err);
+        setError('그래프 데이터를 불러오는데 실패했습니다');
         setLoading(false);
       }
     }
@@ -78,6 +81,16 @@ export default function NetworkPage() {
   const handleNodeClick = (node: GraphNode) => {
     setSelectedNode(node);
   };
+
+  if (error) {
+    return (
+      <ErrorState 
+        title="그래프를 불러올 수 없습니다"
+        message={error}
+        onRetry={() => window.location.reload()}
+      />
+    );
+  }
 
   if (loading) {
     return (
