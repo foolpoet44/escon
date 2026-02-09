@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 const navItems = [
   { href: '/', label: '홈', icon: '🏠' },
+  { href: '/organizations', label: '조직', icon: '🏢' },
   { href: '/domains', label: '도메인', icon: '📂' },
   { href: '/skills', label: '스킬', icon: '⚡' },
   { href: '/compare', label: '비교', icon: '⚖️' },
@@ -18,9 +19,9 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="navigation">
+    <nav className="navigation" aria-label="주요 메뉴">
       <div className="nav-container">
-        <Link href="/" className="nav-logo">
+        <Link href="/" className="nav-logo" aria-label="홈으로">
           <span className="logo-icon">🎯</span>
           <span className="logo-text">ESCO Skills</span>
         </Link>
@@ -35,6 +36,7 @@ export default function Navigation() {
                 key={item.href}
                 href={item.href}
                 className={`nav-link ${isActive ? 'active' : ''}`}
+                aria-current={isActive ? "page" : undefined}
               >
                 <span className="nav-icon">{item.icon}</span>
                 <span className="nav-label">{item.label}</span>

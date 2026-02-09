@@ -5,7 +5,7 @@ export default function Home() {
         <main className="main-container">
             <div className="hero-section">
                 <h1 className="hero-title">
-                    ESCO 스킬 온톨로지 탐색기
+                    Physical AI skill Ontology
                 </h1>
                 <p className="hero-subtitle">
                     물리적 AI 도메인의 스킬과 역량 탐색
@@ -20,6 +20,9 @@ export default function Home() {
                     <Link href="/domains" className="btn-primary">
                         탐색 시작
                     </Link>
+                    <Link href="/organizations" className="btn-secondary">
+                        조직 스킬 보기
+                    </Link>
                     <Link href="/visualization" className="btn-secondary">
                         시각화 보기
                     </Link>
@@ -27,10 +30,16 @@ export default function Home() {
             </div>
 
             <div className="features-grid">
+                <Link href="/organizations" className="feature-card featured">
+                    <div className="feature-icon">🏢</div>
+                    <h3>조직 스킬 매칭</h3>
+                    <p>로봇솔루션 등 조직별 Enabler와 스킬 매칭 시스템</p>
+                    <span className="feature-badge">NEW</span>
+                </Link>
                 <Link href="/domains" className="feature-card">
                     <div className="feature-icon">🎯</div>
                     <h3>도메인 탐색</h3>
-                    <p>10개의 물리적 AI 도메인과 관련 스킬 살펴보기</p>
+                    <p>10개의 물리적 AI 도메인과 관련 스킬 살펴�기</p>
                 </Link>
                 <Link href="/compare" className="feature-card">
                     <div className="feature-icon">🔗</div>
