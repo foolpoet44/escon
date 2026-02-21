@@ -318,39 +318,60 @@ export default function RobotSmartFactoryPage() {
                     </div>
                 ) : (
                     <div className="skills-grid">
-                        {filteredSkills.map((skill) => (
-                            <div key={skill.skill_id} className="skill-card">
-                                <div className="skill-header">
-                                    <h3 className="skill-name">{skill.preferred_label_ko}</h3>
-                                    <div className="skill-badges">
-                                        <span className="badge domain-badge">
-                                            {domainNames[skill.domain]}
-                                        </span>
-                                        <span className="badge type-badge">{skill.skill_type}</span>
-                                    </div>
-                                </div>
-                                <p className="skill-description">{skill.description_ko}</p>
-                                <div className="skill-footer">
-                                    <div className="skill-meta">
-                                        <span className="meta-item">
-                                            Level {skill.proficiency_level}
-                                        </span>
-                                        <span className="meta-item">{skill.skill_id}</span>
-                                    </div>
-                                    <div className="skill-roles">
-                                        {skill.role_mapping.map((role) => (
-                                            <span key={role} className="role-badge">
-                                                {role === 'operator'
-                                                    ? 'OP'
-                                                    : role === 'engineer'
-                                                      ? 'ENG'
-                                                      : 'DEV'}
+                        {filteredSkills.map((skill) => {
+                            const rawDataUrl = `/data/robot-smartfactory/skills/${skill.skill_id}.json`;
+                            return (
+                                <div key={skill.skill_id} className="skill-card">
+                                    <div className="skill-header">
+                                        <h3 className="skill-name">{skill.preferred_label_ko}</h3>
+                                        <div className="skill-badges">
+                                            <span className="badge domain-badge">
+                                                {domainNames[skill.domain]}
                                             </span>
-                                        ))}
+                                            <span className="badge type-badge">{skill.skill_type}</span>
+                                        </div>
+                                    </div>
+                                    <p className="skill-description">{skill.description_ko}</p>
+                                    <div className="skill-footer">
+                                        <div className="skill-meta">
+                                            <span className="meta-item">
+                                                Level {skill.proficiency_level}
+                                            </span>
+                                            <span className="meta-item">{skill.skill_id}</span>
+                                            <a
+                                                className="meta-link"
+                                                href={rawDataUrl}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                            >
+                                                Raw
+                                            </a>
+                                            {skill.esco_uri && (
+                                                <a
+                                                    className="meta-link"
+                                                    href={skill.esco_uri}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                >
+                                                    ESCO
+                                                </a>
+                                            )}
+                                        </div>
+                                        <div className="skill-roles">
+                                            {skill.role_mapping.map((role) => (
+                                                <span key={role} className="role-badge">
+                                                    {role === 'operator'
+                                                        ? 'OP'
+                                                        : role === 'engineer'
+                                                          ? 'ENG'
+                                                          : 'DEV'}
+                                                </span>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 )}
             </div>
@@ -596,12 +617,23 @@ export default function RobotSmartFactoryPage() {
                 .skill-meta {
                     display: flex;
                     gap: 12px;
+                    flex-wrap: wrap;
                     font-size: 0.85rem;
                     color: #9ca3af;
                 }
 
                 .meta-item {
                     font-weight: 500;
+                }
+
+                .meta-link {
+                    color: #4f46e5;
+                    font-weight: 600;
+                    text-decoration: none;
+                }
+
+                .meta-link:hover {
+                    text-decoration: underline;
                 }
 
                 .skill-roles {
