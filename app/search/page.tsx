@@ -120,7 +120,10 @@ export default function SearchPage() {
 
   const toggleFilter = (type: keyof SearchFilters, value: string) => {
     setFilters((prev) => {
-      const current = prev[type];
+      if (type === 'smartFactoryFocus') {
+        return { ...prev, [type]: !prev[type] };
+      }
+      const current = prev[type] as (DomainKey | SkillType)[];
       const updated = current.includes(value as never)
         ? current.filter((v) => v !== (value as never))
         : [...current, value as never];
