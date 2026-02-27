@@ -34,16 +34,42 @@ export default function DomainsPage() {
   return (
     <main className="page-container">
       <div className="page-header">
-        <h1 className="page-title">도메인 탐색</h1>
+        <h1 className="page-title">Factory Robotics 도메인 탐색</h1>
         <p className="page-description">
-          물리적 AI와 ESCO 온톨로지의 {stats?.totalSkills || 1640}개 스킬을 포함하는 {DOMAINS.length}개의 전문 도메인을 둘러보세요
+          스마트 팩토리 로봇기술 스택의 {stats?.totalSkills || 1640}개 스킬과 {DOMAINS.length}개 전문 도메인
         </p>
       </div>
 
-      <div className="domains-grid">
-        {DOMAINS.map((domain) => (
-          <DomainCard key={domain.key} domain={domain} />
-        ))}
+      <div className="domains-container">
+        {/* Robot Core Systems */}
+        <section className="domain-group">
+          <h2 className="group-title">🦾 Robot Core Systems (로봇 핵심 시스템)</h2>
+          <div className="domains-grid">
+            {DOMAINS.filter(d => ['robotics', 'manipulation', 'control'].includes(d.key)).map(domain => (
+              <DomainCard key={domain.key} domain={domain} />
+            ))}
+          </div>
+        </section>
+
+        {/* Sensing & Autonomy */}
+        <section className="domain-group">
+          <h2 className="group-title">👁️ Sensing & Autonomy (인지/자율)</h2>
+          <div className="domains-grid">
+            {DOMAINS.filter(d => ['perception', 'navigation', 'ai_ml'].includes(d.key)).map(domain => (
+              <DomainCard key={domain.key} domain={domain} />
+            ))}
+          </div>
+        </section>
+
+        {/* Factory Integration */}
+        <section className="domain-group">
+          <h2 className="group-title">🏭 Factory Integration (현장 통합)</h2>
+          <div className="domains-grid">
+            {DOMAINS.filter(d => ['integration', 'safety', 'mechatronics', 'manufacturing'].includes(d.key)).map(domain => (
+              <DomainCard key={domain.key} domain={domain} />
+            ))}
+          </div>
+        </section>
       </div>
 
       <style jsx>{`
@@ -75,6 +101,28 @@ export default function DomainsPage() {
           margin: 0 auto;
         }
 
+        .domains-container {
+          display: flex;
+          flex-direction: column;
+          gap: var(--spacing-2xl);
+        }
+
+        .domain-group {
+          background: rgba(255, 255, 255, 0.03);
+          border-radius: 16px;
+          padding: var(--spacing-xl);
+        }
+
+        .group-title {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--text-primary);
+          margin-bottom: var(--spacing-lg);
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-sm);
+        }
+
         .domains-grid {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -91,6 +139,10 @@ export default function DomainsPage() {
         @media (max-width: 768px) {
           .domains-grid {
             grid-template-columns: 1fr;
+          }
+          
+          .domain-group {
+            padding: var(--spacing-md);
           }
         }
       `}</style>

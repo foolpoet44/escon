@@ -105,6 +105,21 @@ export interface OrganizationInfo {
     name_en: string;
     description: string;
     mission?: string;
+    mission_detail?: string;
+    challenges?: {
+        title: string;
+        items: string[];
+    }[];
+    value_propositions?: {
+        title: string;
+        description: string;
+    }[];
+    roles?: string[];
+    expectations?: string[];
+    conclusion?: {
+        slogan: string;
+        description: string;
+    };
 }
 
 // 조직 데이터 (전체)

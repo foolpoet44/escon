@@ -25,7 +25,7 @@ export default function Navigation() {
       <div className="nav-container">
         <Link href="/" className="nav-logo" aria-label="홈으로">
           <span className="logo-icon">🎯</span>
-          <span className="logo-text">ESCO Skills</span>
+          <span className="logo-text">Factory Robotics</span>
         </Link>
 
         <div className="nav-links">

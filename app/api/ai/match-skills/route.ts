@@ -1,9 +1,13 @@
 import { GoogleGenAI } from '@google/genai';
 import { NextRequest, NextResponse } from 'next/server';
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY || '',
-});
+const getAI = () => {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error('GEMINI_API_KEY environment variable is not set');
+  }
+  return new GoogleGenAI({ apiKey });
+};
 
 const SKILLS_DATABASE = [
   { id: 'python', name: 'Python', category: 'programming', domain: ['ai_ml', 'robotics'] },
@@ -67,6 +71,7 @@ ${currentSkills.length > 0 ? currentSkills.join(', ') : '없음'}
 ESCO 표준을 참고하여 가장 관련성 높은 스킬을 추천해주세요.
 `;
 
+    const ai = getAI();
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: prompt,

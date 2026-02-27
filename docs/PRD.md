@@ -9,7 +9,8 @@
 **ESCO Skills Ontology Explorer** (에스코 스킬 온톨로지 익스플로러)
 
 ### 1.2 제품 비전
-유럽 기술·역량·자격·직업 분류체계(ESCO)의 디지털 스킬 및 역량 데이터를 직관적이고 인터랙티브한 웹 인터페이스를 통해 시각화하고 탐색할 수 있는 플랫폼
+유럽 기술·역량·자격·직업 분류체계(ESCO)의 디지털 스킬 및 역량 데이터를 **Factory Robotics(스마트 팩토리 로봇기술)** 관점에서 시각화하고 탐색할 수 있는 플랫폼.
+**Robotics Tech for Smart Factory**를 실현하기 위한 핵심 역량(Skills)과 직무(Occupations)의 관계를 규명하고, 제조 현장에 최적화된 인재 양성 및 기술 매칭을 지원합니다.
 
 ### 1.3 버전
 - **현재 버전**: v0.1.0 (Phase 1 MVP)
@@ -21,8 +22,8 @@
 
 ### 2.1 문제 정의
 - ESCO(European Skills, Competences, Qualifications and Occupations) 프레임워크는 방대한 양의 스킬 데이터를 포함하고 있으나, 기존 인터페이스는 사용자 친화적이지 않음
-- Physical AI(물리적 AI) 관련 스킬과 역량을 체계적으로 탐색하기 어려움
-- 도메인 간 스킬 연관성을 파악하기 어려움
+- 로봇기술(Robot Tech Stack) 관련 스킬과 역량을 체계적으로 탐색하기 어려움
+- **Smart Factory** 환경에서 요구되는 로봇 공정, 제어, 센싱/인지, 통합 기술의 연관성을 파악하기 어려움
 
 ### 2.2 목표
 1. **접근성 향상**: 복잡한 온톨로지 데이터를 직관적인 UI로 제공
@@ -277,7 +278,7 @@ escon/
 |------|------|
 | ESCO | European Skills, Competences, Qualifications and Occupations의 약자로, EU의 표준 스킬 분류체계 |
 | 온톨로지 | 특정 도메인의 개념과 관계를 정의한 형식적 모델 |
-| Physical AI | 물리적 환경과 상호작용하는 AI 시스템 (로보틱스, 자율주행 등) |
+| Factory Robotics | 스마트 팩토리 현장에서 적용되는 로봇기술 스택 (로봇, 제어, 센싱/인지, 통합, 안전 등) |
 | 도메인 | 스킬이 속하는 상위 카테고리 (예: Robotics, AI/ML) |
 | MVP | Minimum Viable Product, 최소 기능 제품 |
 

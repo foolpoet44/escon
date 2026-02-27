@@ -5,82 +5,82 @@ export const DOMAINS: Domain[] = [
     {
         key: 'robotics',
         name: 'Robotics',
-        description: 'Robot assembly, maintenance, human-robot collaboration, and robotic components',
+        description: '로봇 기계/구조, 조립/유지보수, HRC (Robot assembly, maintenance, HRC, mechanics)',
         icon: '🤖',
         color: '#FF6B6B',
         skillCount: 72
     },
     {
-        key: 'perception',
-        name: 'Perception',
-        description: 'Computer vision, sensors, image processing, and detection systems',
-        icon: '👁️',
-        color: '#4ECDC4',
-        skillCount: 593
-    },
-    {
-        key: 'control',
-        name: 'Control',
-        description: 'Control systems, actuators, motion control, and feedback mechanisms',
-        icon: '🎮',
-        color: '#45B7D1',
-        skillCount: 155
-    },
-    {
-        key: 'mechatronics',
-        name: 'Mechatronics',
-        description: 'Electromechanical systems, hydraulics, pneumatics, and mechanisms',
-        icon: '⚙️',
-        color: '#FFA07A',
-        skillCount: 234
-    },
-    {
-        key: 'ai_ml',
-        name: 'AI & ML',
-        description: 'Machine learning, neural networks, deep learning, and computer vision',
-        icon: '🧠',
-        color: '#98D8C8',
-        skillCount: 3472
-    },
-    {
-        key: 'manufacturing',
-        name: 'Manufacturing',
-        description: 'Industrial automation, production systems, assembly, and quality control',
-        icon: '🏭',
-        color: '#F7DC6F',
-        skillCount: 561
-    },
-    {
         key: 'manipulation',
         name: 'Manipulation',
-        description: 'Grasping, pick and place operations, handling, and end effectors',
+        description: '조작/핸들링, 그리핑, EOAT (Grasping, handling, end effectors)',
         icon: '🦾',
         color: '#BB8FCE',
         skillCount: 81
     },
     {
+        key: 'control',
+        name: 'Control',
+        description: '제어 시스템, 구동기, 모션 제어 (Control systems, actuators, motion control)',
+        icon: '🎮',
+        color: '#45B7D1',
+        skillCount: 155
+    },
+    {
+        key: 'perception',
+        name: 'Perception',
+        description: '센서/비전/인지, 객체 감지 (Sensors, vision, detection, perception)',
+        icon: '👁️',
+        color: '#4ECDC4',
+        skillCount: 593
+    },
+    {
         key: 'navigation',
         name: 'Navigation',
-        description: 'Path planning, localization, mapping, and SLAM',
+        description: '경로계획, 자율 주행, SLAM (Path planning, autonomous, SLAM)',
         icon: '🧭',
         color: '#85C1E2',
         skillCount: 69
     },
     {
+        key: 'ai_ml',
+        name: 'AI & ML',
+        description: '로봇지능, 기계학습, 예측 (ML, AI, intelligence, planning)',
+        icon: '🧠',
+        color: '#98D8C8',
+        skillCount: 3472
+    },
+    {
+        key: 'integration',
+        name: 'Integration',
+        description: '셀/라인 통합, PLC/SCADA (System integration, MES, middleware)',
+        icon: '🔗',
+        color: '#52B788',
+        skillCount: 62
+    },
+    {
         key: 'safety',
         name: 'Safety',
-        description: 'Safety systems, collision avoidance, risk assessment, and emergency stop',
+        description: '안전 규격, 충돌 회피, 위험 평가 (Safety, compliance, risk assessment)',
         icon: '🛡️',
         color: '#F8B739',
         skillCount: 99
     },
     {
-        key: 'integration',
-        name: 'Integration',
-        description: 'System integration, embedded systems, PLC/SCADA, and real-time systems',
-        icon: '🔗',
-        color: '#52B788',
-        skillCount: 62
+        key: 'mechatronics',
+        name: 'Mechatronics',
+        description: '메카트로닉스, 유공압, 구동 (Electromechanics, hydraulics, pneumatics)',
+        icon: '⚙️',
+        color: '#FFA07A',
+        skillCount: 234
+    },
+    {
+        key: 'manufacturing',
+        name: 'Manufacturing',
+        description: '공정 관리, 품질 관리, 생산 시스템 (Process, QC, production systems)',
+        icon: '🏭',
+        color: '#F7DC6F',
+        skillCount: 561
     }
 ];
 
