@@ -1,20 +1,21 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import Link from 'next/link';
+import { DOMAINS, SKILL_TYPE_LABELS } from '../lib/constants';
+import { DomainKey, SkillType } from '../lib/types';
 
 interface Skill {
   id: string;
-  name: string;
-  category: string;
-  domain: string[];
-  level: string;
+  label: string;
+  type: SkillType;
+  domain: DomainKey[];
+  description: string;
 }
 
 interface SearchFilters {
-  domains: string[];
-  categories: string[];
-  levels: string[];
+  domains: DomainKey[];
+  types: SkillType[];
+  smartFactoryFocus: boolean;
 }
 
 interface SearchResponse {
@@ -26,52 +27,16 @@ interface SearchResponse {
     offset: number;
     hasMore: boolean;
     facets: {
-      domains: Record<string, number>;
-      categories: Record<string, number>;
-      levels: Record<string, number>;
+      domains: Record<DomainKey, number>;
+      types: Record<SkillType, number>;
     };
   };
 }
 
-const LEVEL_COLORS: Record<string, string> = {
-  beginner: '#4ECDC4',
-  intermediate: '#FFA500',
-  advanced: '#FF6B6B',
-  expert: '#9B59B6',
-};
-
-const LEVEL_LABELS: Record<string, string> = {
-  beginner: '입문',
-  intermediate: '중급',
-  advanced: '고급',
-  expert: '전문가',
-};
-
-const DOMAIN_LABELS: Record<string, string> = {
-  ai_ml: 'AI/ML',
-  robotics: '로보틱스',
-  perception: '인식',
-  control: '제어',
-  navigation: '납법',
-  manipulation: '조작',
-  manufacturing: '제조',
-  mechatronics: '메카트로닉스',
-  safety: '안전',
-  integration: '통합',
-};
-
-const CATEGORY_ICONS: Record<string, string> = {
-  programming: '💻',
-  robotics: '🤖',
-  ai_ml: '🧠',
-  computer_vision: '👁️',
-  ai_framework: '📊',
-  design: '🎨',
-  control: '🎮',
-  navigation: '🧭',
-  safety: '🛡️',
-  perception: '🔍',
-};
+const DOMAIN_LABELS = DOMAINS.reduce<Record<DomainKey, string>>((acc, domain) => {
+  acc[domain.key] = domain.name;
+  return acc;
+}, {} as Record<DomainKey, string>);
 
 export default function SearchPage() {
   const [query, setQuery] = useState('');
@@ -80,8 +45,8 @@ export default function SearchPage() {
   const [facets, setFacets] = useState<SearchResponse['meta']['facets'] | null>(null);
   const [filters, setFilters] = useState<SearchFilters>({
     domains: [],
-    categories: [],
-    levels: [],
+    types: [],
+    smartFactoryFocus: true,
   });
   const [total, setTotal] = useState(0);
   const [hasMore, setHasMore] = useState(false);
@@ -89,7 +54,12 @@ export default function SearchPage() {
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const search = useCallback(async (searchQuery: string, searchFilters: SearchFilters, searchOffset = 0) => {
-    if (!searchQuery.trim() && searchFilters.domains.length === 0 && searchFilters.categories.length === 0 && searchFilters.levels.length === 0) {
+    if (
+      !searchQuery.trim() &&
+      searchFilters.domains.length === 0 &&
+      searchFilters.types.length === 0 &&
+      !searchFilters.smartFactoryFocus
+    ) {
       setResults([]);
       setTotal(0);
       return;
@@ -118,7 +88,7 @@ export default function SearchPage() {
       if (searchOffset === 0) {
         setResults(data.data);
       } else {
-        setResults(prev => [...prev, ...data.data]);
+        setResults((prev) => [...prev, ...data.data]);
       }
 
       setTotal(data.meta.total);
@@ -149,18 +119,30 @@ export default function SearchPage() {
   }, [query, filters, search]);
 
   const toggleFilter = (type: keyof SearchFilters, value: string) => {
-    setFilters(prev => {
+    setFilters((prev) => {
       const current = prev[type];
-      const updated = current.includes(value)
-        ? current.filter(v => v !== value)
-        : [...current, value];
+      const updated = current.includes(value as never)
+        ? current.filter((v) => v !== (value as never))
+        : [...current, value as never];
       return { ...prev, [type]: updated };
     });
     setOffset(0);
   };
 
   const clearFilters = () => {
-    setFilters({ domains: [], categories: [], levels: [] });
+    setFilters((prev) => ({
+      domains: [],
+      types: [],
+      smartFactoryFocus: prev.smartFactoryFocus,
+    }));
+    setOffset(0);
+  };
+
+  const toggleSmartFactoryFocus = (enabled: boolean) => {
+    setFilters((prev) => ({
+      ...prev,
+      smartFactoryFocus: enabled,
+    }));
     setOffset(0);
   };
 
@@ -170,16 +152,16 @@ export default function SearchPage() {
     search(query, filters, newOffset);
   };
 
-  const activeFiltersCount = filters.domains.length + filters.categories.length + filters.levels.length;
+  const activeFiltersCount = filters.domains.length + filters.types.length;
 
   return (
     <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem' }}>
       <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
         <h1 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '1rem' }}>
-          🔍 고급 스킬 검색
+          Smart Factory Robotics Search
         </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>
-          ESCO 스킬 데이터베이스에서 원하는 스킬을 빠르게 찾아보세요
+          Search ESCO-based skills for smart factory robotics.
         </p>
       </div>
 
@@ -189,11 +171,11 @@ export default function SearchPage() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="스킬 이름, 카테고리, 도메인으로 검색..."
+            placeholder="Search by skill name or description..."
             style={{
               width: '100%',
               padding: '1.25rem 1.5rem',
-              paddingLeft: '3.5rem',
+              paddingLeft: '8rem',
               fontSize: '1.1rem',
               borderRadius: '12px',
               border: '2px solid var(--border-color)',
@@ -201,14 +183,19 @@ export default function SearchPage() {
               color: 'var(--text-primary)',
             }}
           />
-          <span style={{
-            position: 'absolute',
-            left: '1.25rem',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            fontSize: '1.25rem',
-          }}>
-            🔍
+          <span
+            style={{
+              position: 'absolute',
+              left: '1.25rem',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              fontSize: '0.95rem',
+              color: 'var(--text-muted)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+            }}
+          >
+            Search
           </span>
           {query && (
             <button
@@ -221,11 +208,11 @@ export default function SearchPage() {
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
-                fontSize: '1.25rem',
+                fontSize: '0.9rem',
                 color: 'var(--text-muted)',
               }}
             >
-              ✕
+              Clear
             </button>
           )}
         </div>
@@ -233,15 +220,44 @@ export default function SearchPage() {
 
       <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '2rem' }}>
         <div>
-          <div style={{
-            background: 'var(--bg-card)',
-            borderRadius: '12px',
-            padding: '1.5rem',
-            border: '1px solid var(--border-color)',
-            marginBottom: '1rem',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <h3 style={{ margin: 0, fontSize: '1.1rem' }}>필터</h3>
+          <div
+            style={{
+              background: 'var(--bg-card)',
+              borderRadius: '12px',
+              padding: '1.5rem',
+              border: '1px solid var(--border-color)',
+              marginBottom: '1rem',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: '1.5rem',
+                paddingBottom: '1rem',
+                borderBottom: '1px solid var(--border-color)',
+              }}
+            >
+              <div>
+                <div style={{ fontWeight: 700 }}>Smart Factory Focus</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+                  Boost PLC/SCADA/MES, integration, safety, and automation skills.
+                </div>
+              </div>
+              <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <input
+                  type="checkbox"
+                  checked={filters.smartFactoryFocus}
+                  onChange={(e) => toggleSmartFactoryFocus(e.target.checked)}
+                />
+                <span style={{ fontSize: '0.9rem' }}>{filters.smartFactoryFocus ? 'On' : 'Off'}</span>
+              </label>
+            </div>
+            <div
+              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}
+            >
+              <h3 style={{ margin: 0, fontSize: '1.1rem' }}>Filters</h3>
               {activeFiltersCount > 0 && (
                 <button
                   onClick={clearFilters}
@@ -253,7 +269,7 @@ export default function SearchPage() {
                     fontSize: '0.9rem',
                   }}
                 >
-                  초기화 ({activeFiltersCount})
+                  Clear ({activeFiltersCount})
                 </button>
               )}
             </div>
@@ -261,8 +277,15 @@ export default function SearchPage() {
             {facets && (
               <>
                 <div style={{ marginBottom: '1.5rem' }}>
-                  <h4 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.75rem', textTransform: 'uppercase' }}>
-                    도메인
+                  <h4
+                    style={{
+                      fontSize: '0.9rem',
+                      color: 'var(--text-muted)',
+                      marginBottom: '0.75rem',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    Domains
                   </h4>
                   {Object.entries(facets.domains).map(([domain, count]) => (
                     <label
@@ -274,31 +297,36 @@ export default function SearchPage() {
                         padding: '0.5rem',
                         cursor: 'pointer',
                         borderRadius: '6px',
-                        background: filters.domains.includes(domain) ? 'var(--color-primary)22' : 'transparent',
+                        background: filters.domains.includes(domain as DomainKey) ? 'var(--color-primary)22' : 'transparent',
                       }}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <input
                           type="checkbox"
-                          checked={filters.domains.includes(domain)}
+                          checked={filters.domains.includes(domain as DomainKey)}
                           onChange={() => toggleFilter('domains', domain)}
                         />
-                        <span>{DOMAIN_LABELS[domain] || domain}</span>
+                        <span>{DOMAIN_LABELS[domain as DomainKey] || domain}</span>
                       </div>
-                      <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-                        {count}
-                      </span>
+                      <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{count}</span>
                     </label>
                   ))}
                 </div>
 
                 <div style={{ marginBottom: '1.5rem' }}>
-                  <h4 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.75rem', textTransform: 'uppercase' }}>
-                    난이도
+                  <h4
+                    style={{
+                      fontSize: '0.9rem',
+                      color: 'var(--text-muted)',
+                      marginBottom: '0.75rem',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    Types
                   </h4>
-                  {Object.entries(facets.levels).map(([level, count]) => (
+                  {Object.entries(facets.types).map(([type, count]) => (
                     <label
-                      key={level}
+                      key={type}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -306,60 +334,18 @@ export default function SearchPage() {
                         padding: '0.5rem',
                         cursor: 'pointer',
                         borderRadius: '6px',
-                        background: filters.levels.includes(level) ? 'var(--color-primary)22' : 'transparent',
+                        background: filters.types.includes(type as SkillType) ? 'var(--color-primary)22' : 'transparent',
                       }}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <input
                           type="checkbox"
-                          checked={filters.levels.includes(level)}
-                          onChange={() => toggleFilter('levels', level)}
+                          checked={filters.types.includes(type as SkillType)}
+                          onChange={() => toggleFilter('types', type)}
                         />
-                        <span style={{ 
-                          display: 'inline-block',
-                          width: '8px',
-                          height: '8px',
-                          borderRadius: '50%',
-                          background: LEVEL_COLORS[level],
-                          marginRight: '0.25rem',
-                        }} />
-                        <span>{LEVEL_LABELS[level] || level}</span>
+                        <span>{SKILL_TYPE_LABELS[type as SkillType] || type}</span>
                       </div>
-                      <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-                        {count}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-
-                <div>
-                  <h4 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.75rem', textTransform: 'uppercase' }}>
-                    카테고리
-                  </h4>
-                  {Object.entries(facets.categories).map(([category, count]) => (
-                    <label
-                      key={category}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        padding: '0.5rem',
-                        cursor: 'pointer',
-                        borderRadius: '6px',
-                        background: filters.categories.includes(category) ? 'var(--color-primary)22' : 'transparent',
-                      }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <input
-                          type="checkbox"
-                          checked={filters.categories.includes(category)}
-                          onChange={() => toggleFilter('categories', category)}
-                        />
-                        <span>{CATEGORY_ICONS[category] || '📁'} {category}</span>
-                      </div>
-                      <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-                        {count}
-                      </span>
+                      <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{count}</span>
                     </label>
                   ))}
                 </div>
@@ -371,19 +357,17 @@ export default function SearchPage() {
         <div>
           {loading && results.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '4rem' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔍</div>
-              <p style={{ color: 'var(--text-secondary)' }}>검색 중...</p>
+              <div style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>Searching...</div>
+              <p style={{ color: 'var(--text-secondary)' }}>Loading results</p>
             </div>
           ) : results.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '4rem' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📭</div>
-              <p style={{ color: 'var(--text-secondary)' }}>검색 결과가 없습니다</p>
+              <div style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>No results</div>
+              <p style={{ color: 'var(--text-secondary)' }}>Try adjusting filters or search terms.</p>
             </div>
           ) : (
             <>
-              <div style={{ marginBottom: '1rem', color: 'var(--text-secondary)' }}>
-                총 {total}개 결과
-              </div>
+              <div style={{ marginBottom: '1rem', color: 'var(--text-secondary)' }}>Total {total} results</div>
 
               <div style={{ display: 'grid', gap: '1rem' }}>
                 {results.map((skill) => (
@@ -406,23 +390,24 @@ export default function SearchPage() {
                       e.currentTarget.style.transform = 'translateX(0)';
                     }}
                   >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
-                      <h3 style={{ margin: 0, fontSize: '1.25rem' }}>
-                        {CATEGORY_ICONS[skill.category] || '📁'} {skill.name}
-                      </h3>
+                    <div
+                      style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}
+                    >
+                      <h3 style={{ margin: 0, fontSize: '1.25rem' }}>{skill.label}</h3>
                       <span
                         style={{
                           padding: '0.25rem 0.75rem',
                           borderRadius: '20px',
                           fontSize: '0.75rem',
                           fontWeight: 600,
-                          background: LEVEL_COLORS[skill.level] + '22',
-                          color: LEVEL_COLORS[skill.level],
+                          background: 'var(--color-primary)22',
+                          color: 'var(--color-primary)',
                         }}
                       >
-                        {LEVEL_LABELS[skill.level] || skill.level}
+                        {SKILL_TYPE_LABELS[skill.type] || skill.type}
                       </span>
                     </div>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '0.75rem' }}>{skill.description}</p>
 
                     <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                       {skill.domain.map((d) => (
@@ -459,7 +444,7 @@ export default function SearchPage() {
                       fontWeight: 600,
                     }}
                   >
-                    {loading ? '로딩 중...' : '더 보기'}
+                    {loading ? 'Loading...' : 'Load more'}
                   </button>
                 </div>
               )}
