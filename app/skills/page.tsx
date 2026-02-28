@@ -64,8 +64,14 @@ function sortSkills(skills: FlatSkill[], sortBy: SortBy): FlatSkill[] {
   const copy = [...skills];
   if (sortBy === 'alpha') return copy.sort((a, b) => a.label.localeCompare(b.label));
   if (sortBy === 'alpha-desc') return copy.sort((a, b) => b.label.localeCompare(a.label));
-  if (sortBy === 'type-k') return copy.sort((a) => (a.type === 'knowledge' ? -1 : 1));
-  if (sortBy === 'type-c') return copy.sort((a) => (a.type === 'skill/competence' ? -1 : 1));
+  if (sortBy === 'type-k') return copy.sort((a, b) => {
+    if (a.type === b.type) return a.label.localeCompare(b.label);
+    return a.type === 'knowledge' ? -1 : 1;
+  });
+  if (sortBy === 'type-c') return copy.sort((a, b) => {
+    if (a.type === b.type) return a.label.localeCompare(b.label);
+    return a.type === 'skill/competence' ? -1 : 1;
+  });
   return copy;
 }
 
@@ -511,7 +517,13 @@ export default function SkillExplorerPage() {
   // ── Derived ───────────────────────────────────────────────────────────────
   const sorted = sortBy === 'domain' ? displaySkills : sortSkills(displaySkills, sortBy);
   const paged = sorted.slice(0, page * PAGE_SIZE);
-  const hasMore = paged.length < sorted.length;
+
+  // 도메인 그룹뷰: per-domain 슬라이싱 기준으로 hasMore/remaining 계산
+  const domainGroups = sortBy === 'domain' ? groupByDomain(displaySkills) : [];
+  const domainHasMore = sortBy === 'domain' && domainGroups.some(({ skills: ds }) => ds.length > page * PAGE_SIZE);
+  const domainRemaining = domainGroups.reduce((acc, { skills: ds }) => acc + Math.max(0, ds.length - page * PAGE_SIZE), 0);
+  const hasMore = sortBy === 'domain' ? domainHasMore : paged.length < sorted.length;
+  const remaining = sortBy === 'domain' ? domainRemaining : sorted.length - paged.length;
 
   const knowledgeCount = displaySkills.filter((s) => s.type === 'knowledge').length;
   const competenceCount = displaySkills.filter((s) => s.type === 'skill/competence').length;
@@ -735,12 +747,12 @@ export default function SkillExplorerPage() {
             <>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>{displaySkills.length.toLocaleString()}개 스킬</div>
               <SkillTable skills={paged} selectedSkill={selectedSkill} onSelect={(s) => setSelectedSkill(selectedSkill?.id === s.id ? null : s)} />
-              {hasMore && <LoadMoreButton onClick={() => setPage((p) => p + 1)} remaining={sorted.length - paged.length} />}
+              {hasMore && <LoadMoreButton onClick={() => setPage((p) => p + 1)} remaining={remaining} />}
             </>
           ) : sortBy === 'domain' ? (
             /* Domain-grouped view */
             <>
-              {groupByDomain(displaySkills).map(({ domain, skills: ds }) => {
+              {domainGroups.map(({ domain, skills: ds }) => {
                 const domainInfo = DOMAINS.find((d) => d.key === domain)!;
                 const pagedDs = ds.slice(0, page * PAGE_SIZE);
                 return (
@@ -766,7 +778,7 @@ export default function SkillExplorerPage() {
                   </div>
                 );
               })}
-              {hasMore && <LoadMoreButton onClick={() => setPage((p) => p + 1)} remaining={sorted.length - paged.length} />}
+              {hasMore && <LoadMoreButton onClick={() => setPage((p) => p + 1)} remaining={remaining} />}
             </>
           ) : (
             /* Flat sorted view */
@@ -785,7 +797,7 @@ export default function SkillExplorerPage() {
                   ))}
                 </div>
               )}
-              {hasMore && <LoadMoreButton onClick={() => setPage((p) => p + 1)} remaining={sorted.length - paged.length} />}
+              {hasMore && <LoadMoreButton onClick={() => setPage((p) => p + 1)} remaining={remaining} />}
             </>
           )}
         </div>
