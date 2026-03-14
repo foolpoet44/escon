@@ -1,4 +1,5 @@
 import type { EnrichedSkill, Enabler } from './types';
+import { ALGORITHM_CONFIG } from './constants';
 
 export interface GraphNode {
     id: string;
@@ -111,34 +112,52 @@ function addSkillToSkillLinks(skills: EnrichedSkill[], links: GraphLink[]) {
 
 /**
  * Calculate relationship strength between two skills
+ *
+ * 가중치 근거:
+ * - SAME_ENABLER (0.3): 동일 Enabler 소속은 업무적 연관성을 직접 반영
+ * - SAME_TYPE (0.2): knowledge/competence 동일은 학습 경로 유사성 의미
+ * - SIMILAR_IMPORTANCE (0.2): 중요도 차이 ≤1이면 유사한 역할 수준
+ * - SAME_PROFICIENCY (0.3): 동일 목표 숙련도는 학습 단계 동기화 의미
  */
-function calculateRelationshipStrength(skill1: EnrichedSkill, skill2: EnrichedSkill): number {
+export interface RelationshipDetail {
+    strength: number;
+    factors: {
+        sameEnabler: boolean;
+        sameType: boolean;
+        similarImportance: boolean;
+        sameProficiency: boolean;
+    };
+}
+
+export function calculateRelationshipStrengthWithDetail(
+    skill1: EnrichedSkill,
+    skill2: EnrichedSkill
+): RelationshipDetail {
+    const { WEIGHTS, RELATIONSHIP_THRESHOLD } = ALGORITHM_CONFIG;
     let strength = 0;
 
-    // Same enabler
-    if (skill1.org_context?.enabler === skill2.org_context?.enabler) {
-        strength += 0.3;
-    }
+    const sameEnabler = skill1.org_context?.enabler === skill2.org_context?.enabler;
+    if (sameEnabler) strength += WEIGHTS.SAME_ENABLER;
 
-    // Same type
-    if (skill1.type === skill2.type) {
-        strength += 0.2;
-    }
+    const sameType = skill1.type === skill2.type;
+    if (sameType) strength += WEIGHTS.SAME_TYPE;
 
-    // Similar importance
     const imp1 = skill1.org_context?.importance || 0;
     const imp2 = skill2.org_context?.importance || 0;
-    if (Math.abs(imp1 - imp2) <= 1) {
-        strength += 0.2;
-    }
+    const similarImportance = Math.abs(imp1 - imp2) <= 1;
+    if (similarImportance) strength += WEIGHTS.SIMILAR_IMPORTANCE;
 
-    // Same proficiency level
-    if (skill1.org_context?.target_proficiency === skill2.org_context?.target_proficiency) {
-        strength += 0.3;
-    }
+    const sameProficiency = skill1.org_context?.target_proficiency === skill2.org_context?.target_proficiency;
+    if (sameProficiency) strength += WEIGHTS.SAME_PROFICIENCY;
 
-    // Only return if strength is significant
-    return strength >= 0.5 ? strength : 0;
+    return {
+        strength: strength >= RELATIONSHIP_THRESHOLD ? strength : 0,
+        factors: { sameEnabler, sameType, similarImportance, sameProficiency },
+    };
+}
+
+function calculateRelationshipStrength(skill1: EnrichedSkill, skill2: EnrichedSkill): number {
+    return calculateRelationshipStrengthWithDetail(skill1, skill2).strength;
 }
 
 /**

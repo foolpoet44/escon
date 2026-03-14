@@ -1,0 +1,280 @@
+{
+    "organization": {
+        "id": "smart_factory",
+        "name": "스마트팩토리 구축 Task",
+        "name_en": "Smart Factory Implementation Task Force",
+        "description": "제조 현장의 디지털 전환을 위한 스마트팩토리 시스템 구축 및 운영",
+        "mission": "제조 데이터 기반의 실시간 품질 관리 및 생산성 향상 체계 구축",
+        "mission_detail": "스마트팩토리 구축 Task는 제조 현장에 IoT 센서, PLC/SCADA 연동, MES 시스템을 통합하여 실시간 데이터 기반의 품질 관리와 생산성 향상을 실현한다. 기존 설비의 디지털 전환부터 AI 기반 예측 보전까지, 현장 엔지니어가 직접 운영 가능한 시스템 구축에 초점을 맞춘다.",
+        "challenges": [
+            {
+                "title": "레거시 설비 연동",
+                "items": [
+                    "다양한 제조사의 PLC/센서 프로토콜 통합 필요",
+                    "기존 설비에 센서 추가 시 공정 중단 최소화"
+                ]
+            },
+            {
+                "title": "데이터 기반 의사결정 체계",
+                "items": [
+                    "실시간 품질 데이터 수집 및 분석 기반 구축",
+                    "예측 보전으로 설비 가동률 향상"
+                ]
+            }
+        ],
+        "value_propositions": [
+            {
+                "title": "표준화된 데이터 수집 체계",
+                "description": "OPC UA 기반 통합 데이터 수집\n다양한 PLC 프로토콜 자동 변환"
+            },
+            {
+                "title": "실시간 품질 모니터링",
+                "description": "SPC 기반 실시간 품질 이상 감지\n공정 파라미터 자동 추적"
+            },
+            {
+                "title": "예측 보전 시스템",
+                "description": "설비 진동/온도 데이터 기반 고장 예측\n부품 교체 시기 자동 알림"
+            }
+        ],
+        "roles": [
+            "제조 데이터 수집 및 통합 아키텍처 설계",
+            "MES/SCADA 시스템 구축 및 연동",
+            "품질 관리 대시보드 개발",
+            "예측 보전 알고리즘 적용",
+            "현장 엔지니어 교육 및 운영 가이드 제공"
+        ],
+        "expectations": [
+            "설비 가동률 5% 이상 향상",
+            "품질 불량률 30% 감소",
+            "비계획 정지시간 50% 절감",
+            "데이터 기반 의사결정 체계 확립"
+        ],
+        "conclusion": {
+            "slogan": "\"데이터가 말하는 공장,\n현장 엔지니어가 운영하는 스마트팩토리\"",
+            "description": "스마트팩토리 구축 Task가 만들어가는 미래입니다."
+        }
+    },
+    "enablers": [
+        {
+            "id": "enabler_1",
+            "name": "설비 데이터 통합 플랫폼",
+            "name_en": "Equipment Data Integration Platform",
+            "description": "PLC/센서 프로토콜 통합, OPC UA 기반 데이터 수집, 엣지 컴퓨팅 처리",
+            "priority": 1,
+            "skills": [
+                {
+                    "skill_id": "SF_001",
+                    "esco_uri": "http://data.europa.eu/esco/skill/6468e5fb-f3be-4025-87be-4b6556755c61",
+                    "label_ko": "PLC 프로그래밍",
+                    "label_en": "programmable logic controller",
+                    "type": "knowledge",
+                    "importance": 5,
+                    "target_proficiency": "Expert",
+                    "priority_rank": 1,
+                    "match_type": "exact",
+                    "notes": "현장 설비 제어의 핵심"
+                },
+                {
+                    "skill_id": "SF_002",
+                    "esco_uri": "http://data.europa.eu/esco/skill/6fa1c2c0-a012-4ca0-9642-e01569ba322c",
+                    "label_ko": "ICT 시스템 통합",
+                    "label_en": "ICT system integration",
+                    "type": "knowledge",
+                    "importance": 5,
+                    "target_proficiency": "Expert",
+                    "priority_rank": 2,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "SF_003",
+                    "esco_uri": "http://data.europa.eu/esco/skill/2180bd8c-86de-4889-8165-adac902eee9d",
+                    "label_ko": "임베디드 시스템 개발",
+                    "label_en": "embedded systems",
+                    "type": "knowledge",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 8,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "SF_004",
+                    "esco_uri": "http://data.europa.eu/esco/skill/0e8d16c9-e2db-4862-ac06-1567f01ef806",
+                    "label_ko": "빌딩/설비 모니터링 기술",
+                    "label_en": "building systems monitoring technology",
+                    "type": "knowledge",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 9,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "SF_005",
+                    "esco_uri": "http://data.europa.eu/esco/skill/bf6c5ed4-84af-440f-abcc-7fa5ba19c738",
+                    "label_ko": "실시간 컴퓨팅",
+                    "label_en": "real-time computing",
+                    "type": "knowledge",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 10,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "SF_006",
+                    "esco_uri": null,
+                    "custom_uri": "http://smartfactory.escon/skill/opc-ua",
+                    "label_ko": "OPC UA 프로토콜 구현",
+                    "label_en": "OPC UA protocol implementation",
+                    "type": "skill/competence",
+                    "importance": 5,
+                    "target_proficiency": "Expert",
+                    "priority_rank": 3,
+                    "match_type": "custom",
+                    "notes": "산업 통신 표준, ESCO에 직접 매핑 없음"
+                },
+                {
+                    "skill_id": "SF_007",
+                    "esco_uri": "http://data.europa.eu/esco/skill/4f5ccaad-0e4f-4e9f-8246-47765564387d",
+                    "label_ko": "펌웨어 업그레이드",
+                    "label_en": "upgrade firmware",
+                    "type": "skill/competence",
+                    "importance": 3,
+                    "target_proficiency": "Intermediate",
+                    "priority_rank": 18,
+                    "match_type": "exact"
+                }
+            ]
+        },
+        {
+            "id": "enabler_2",
+            "name": "AI 기반 예측 보전",
+            "name_en": "AI-based Predictive Maintenance",
+            "description": "설비 진동/온도/전류 데이터 분석, 고장 예측 모델링, 보전 계획 자동화",
+            "priority": 2,
+            "skills": [
+                {
+                    "skill_id": "SF_008",
+                    "esco_uri": "http://data.europa.eu/esco/skill/3a2d5b45-56e4-4f5a-a55a-4a4a65afdc43",
+                    "label_ko": "기계학습",
+                    "label_en": "machine learning",
+                    "type": "knowledge",
+                    "importance": 5,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 4,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "SF_009",
+                    "esco_uri": "http://data.europa.eu/esco/skill/25f0ea33-b4a2-4f31-b7b4-7d20e827b180",
+                    "label_ko": "데이터 마이닝",
+                    "label_en": "data mining",
+                    "type": "knowledge",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 11,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "SF_010",
+                    "esco_uri": "http://data.europa.eu/esco/skill/382c11ed-20d5-4ae7-b60e-15fec527fa6c",
+                    "label_ko": "통계 분석 기법 적용",
+                    "label_en": "apply statistical analysis techniques",
+                    "type": "skill/competence",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 12,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "SF_011",
+                    "esco_uri": "http://data.europa.eu/esco/skill/737f8895-46df-4283-8f38-13f3f0fc3b77",
+                    "label_ko": "디지털 트윈 기술",
+                    "label_en": "digital twin technology",
+                    "type": "knowledge",
+                    "importance": 3,
+                    "target_proficiency": "Intermediate",
+                    "priority_rank": 15,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "SF_012",
+                    "esco_uri": null,
+                    "custom_uri": "http://smartfactory.escon/skill/vibration-analysis",
+                    "label_ko": "진동 분석 및 진단",
+                    "label_en": "vibration analysis and diagnostics",
+                    "type": "skill/competence",
+                    "importance": 5,
+                    "target_proficiency": "Expert",
+                    "priority_rank": 5,
+                    "match_type": "custom",
+                    "notes": "설비 진단 특화 스킬"
+                }
+            ]
+        },
+        {
+            "id": "enabler_3",
+            "name": "품질 관리 자동화",
+            "name_en": "Quality Management Automation",
+            "description": "SPC 기반 실시간 품질 모니터링, 불량 원인 자동 추적, 공정 최적화",
+            "priority": 3,
+            "skills": [
+                {
+                    "skill_id": "SF_013",
+                    "esco_uri": "http://data.europa.eu/esco/skill/0550431f-9c8b-4204-9c45-59bc5feacf06",
+                    "label_ko": "지속적 개선 철학 (TQM/Six Sigma)",
+                    "label_en": "continuous improvement philosophies",
+                    "type": "knowledge",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 6,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "SF_014",
+                    "esco_uri": "http://data.europa.eu/esco/skill/13f22eb5-e3a8-405a-9d89-c8124d4a239a",
+                    "label_ko": "GMP (우수 제조 기준)",
+                    "label_en": "good manufacturing practices",
+                    "type": "knowledge",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 7,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "SF_015",
+                    "esco_uri": "http://data.europa.eu/esco/skill/05c00631-b864-4842-b47e-06710c197c7a",
+                    "label_ko": "제조 생산 활동 조정",
+                    "label_en": "coordinate manufacturing production activities",
+                    "type": "skill/competence",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 13,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "SF_016",
+                    "esco_uri": "http://data.europa.eu/esco/skill/6c315001-d329-4930-9294-9cf2c7afb672",
+                    "label_ko": "품질 관리 시스템 문서 개정",
+                    "label_en": "revise quality control systems documentation",
+                    "type": "skill/competence",
+                    "importance": 3,
+                    "target_proficiency": "Intermediate",
+                    "priority_rank": 16,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "SF_017",
+                    "esco_uri": null,
+                    "custom_uri": "http://smartfactory.escon/skill/spc-analysis",
+                    "label_ko": "SPC 통계적 공정 관리",
+                    "label_en": "statistical process control analysis",
+                    "type": "skill/competence",
+                    "importance": 5,
+                    "target_proficiency": "Expert",
+                    "priority_rank": 14,
+                    "match_type": "custom",
+                    "notes": "제조 품질 특화 분석 기법"
+                }
+            ]
+        }
+    ]
+}

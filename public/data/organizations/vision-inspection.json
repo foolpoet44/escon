@@ -1,0 +1,274 @@
+{
+    "organization": {
+        "id": "vision_inspection",
+        "name": "비전검사 자동화 Task",
+        "name_en": "Vision Inspection Automation Task Force",
+        "description": "AI 비전 기반 제품 외관 검사 자동화 시스템 개발 및 운영",
+        "mission": "딥러닝 기반 비전 검사로 불량 검출 정확도 향상 및 검사 인력 최적화",
+        "mission_detail": "비전검사 자동화 Task는 제조 라인에서 딥러닝 기반 이미지 분석으로 제품 외관 불량을 실시간 검출하는 시스템을 구축한다. 기존 룰 기반 검사의 한계를 극복하고, 현장 엔지니어가 자체적으로 검사 모델을 학습·배포할 수 있는 MLOps 파이프라인을 제공한다.",
+        "challenges": [
+            {
+                "title": "다양한 불량 유형 대응",
+                "items": [
+                    "제품/공정별 불량 패턴이 매우 다양",
+                    "신제품 투입 시 빠른 모델 재학습 필요"
+                ]
+            },
+            {
+                "title": "현장 환경 적응",
+                "items": [
+                    "조명/진동/온도 등 환경 변화에 강건한 검사 필요",
+                    "라인 속도에 맞춘 실시간 처리 성능 확보"
+                ]
+            }
+        ],
+        "value_propositions": [
+            {
+                "title": "딥러닝 기반 불량 검출",
+                "description": "CNN/Transformer 기반 이미지 분류 및 세그멘테이션\n미세 결함까지 99%+ 검출률"
+            },
+            {
+                "title": "현장 MLOps 파이프라인",
+                "description": "엔지니어가 직접 데이터 라벨링·모델 학습 가능\n모델 버전 관리 및 자동 배포"
+            },
+            {
+                "title": "환경 변화 자동 보정",
+                "description": "조명 보정 및 이미지 정규화 자동화\n도메인 적응 기법으로 환경 변화 대응"
+            }
+        ],
+        "roles": [
+            "비전 검사 알고리즘 개발 및 최적화",
+            "카메라/조명 시스템 설계 및 교정",
+            "MLOps 파이프라인 구축 및 운영",
+            "검사 결과 대시보드 및 리포팅 시스템 개발",
+            "현장 엔지니어 모델 학습 도구 제공"
+        ],
+        "expectations": [
+            "불량 검출률 99.5% 이상 달성",
+            "오검출률 (False Positive) 0.1% 이하",
+            "신제품 검사 모델 학습 시간 1일 이내",
+            "검사 인력 50% 최적화"
+        ],
+        "conclusion": {
+            "slogan": "\"사람 눈을 넘어서는 AI 검사,\n현장 엔지니어가 직접 키우는 검사 모델\"",
+            "description": "비전검사 자동화 Task가 만들어가는 미래입니다."
+        }
+    },
+    "enablers": [
+        {
+            "id": "enabler_1",
+            "name": "딥러닝 비전 검사 엔진",
+            "name_en": "Deep Learning Vision Inspection Engine",
+            "description": "CNN/Transformer 기반 이미지 분류·검출·세그멘테이션 알고리즘 개발",
+            "priority": 1,
+            "skills": [
+                {
+                    "skill_id": "VI_001",
+                    "esco_uri": "http://data.europa.eu/esco/skill/ecc4552a-92c5-4222-b18d-faf5ac841080",
+                    "label_ko": "딥러닝",
+                    "label_en": "deep learning",
+                    "type": "knowledge",
+                    "importance": 5,
+                    "target_proficiency": "Expert",
+                    "priority_rank": 1,
+                    "match_type": "exact",
+                    "notes": "CNN, Transformer 등 비전 모델 핵심"
+                },
+                {
+                    "skill_id": "VI_002",
+                    "esco_uri": "http://data.europa.eu/esco/skill/7b0d5000-00da-4864-b776-6de49a87a669",
+                    "label_ko": "컴퓨터 비전",
+                    "label_en": "computer vision",
+                    "type": "knowledge",
+                    "importance": 5,
+                    "target_proficiency": "Expert",
+                    "priority_rank": 2,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "VI_003",
+                    "esco_uri": "http://data.europa.eu/esco/skill/4754d9fe-dc3a-4f8f-8ea6-5dbcea3a21ca",
+                    "label_ko": "컴퓨터 비전 시스템 개발",
+                    "label_en": "develop computer vision system",
+                    "type": "skill/competence",
+                    "importance": 5,
+                    "target_proficiency": "Expert",
+                    "priority_rank": 3,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "VI_004",
+                    "esco_uri": "http://data.europa.eu/esco/skill/5608d5a0-6d5e-43b7-be37-616501729bb4",
+                    "label_ko": "인공 신경망",
+                    "label_en": "artificial neural networks",
+                    "type": "knowledge",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 8,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "VI_005",
+                    "esco_uri": "http://data.europa.eu/esco/skill/8369c2d6-c100-4cf6-bd83-9668d8678433",
+                    "label_ko": "기계학습 활용",
+                    "label_en": "utilise machine learning",
+                    "type": "skill/competence",
+                    "importance": 5,
+                    "target_proficiency": "Expert",
+                    "priority_rank": 4,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "VI_006",
+                    "esco_uri": null,
+                    "custom_uri": "http://visioninspection.escon/skill/image-segmentation",
+                    "label_ko": "이미지 세그멘테이션",
+                    "label_en": "image segmentation",
+                    "type": "skill/competence",
+                    "importance": 5,
+                    "target_proficiency": "Expert",
+                    "priority_rank": 5,
+                    "match_type": "custom",
+                    "notes": "불량 영역 정밀 검출 핵심 기술"
+                },
+                {
+                    "skill_id": "VI_007",
+                    "esco_uri": null,
+                    "custom_uri": "http://visioninspection.escon/skill/defect-classification",
+                    "label_ko": "불량 유형 분류 모델 설계",
+                    "label_en": "defect classification model design",
+                    "type": "skill/competence",
+                    "importance": 5,
+                    "target_proficiency": "Expert",
+                    "priority_rank": 6,
+                    "match_type": "custom"
+                }
+            ]
+        },
+        {
+            "id": "enabler_2",
+            "name": "카메라/조명 시스템 설계",
+            "name_en": "Camera and Lighting System Design",
+            "description": "산업용 카메라 선정, 조명 설계, 이미지 전처리, 캘리브레이션",
+            "priority": 2,
+            "skills": [
+                {
+                    "skill_id": "VI_008",
+                    "esco_uri": "http://data.europa.eu/esco/skill/08deb446-76f3-4fa2-bd01-dd368c66880d",
+                    "label_ko": "광학 장비 표준",
+                    "label_en": "optical equipment standards",
+                    "type": "knowledge",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 10,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "VI_009",
+                    "esco_uri": "http://data.europa.eu/esco/skill/6a72c057-499f-4fe4-b425-0fbe2a50ce07",
+                    "label_ko": "메카트로닉스 기기 교정",
+                    "label_en": "calibrate mechatronic instruments",
+                    "type": "skill/competence",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 11,
+                    "match_type": "approximate",
+                    "notes": "카메라 캘리브레이션에 유사 적용"
+                },
+                {
+                    "skill_id": "VI_010",
+                    "esco_uri": null,
+                    "custom_uri": "http://visioninspection.escon/skill/industrial-lighting",
+                    "label_ko": "산업용 조명 설계",
+                    "label_en": "industrial lighting design for inspection",
+                    "type": "skill/competence",
+                    "importance": 5,
+                    "target_proficiency": "Expert",
+                    "priority_rank": 7,
+                    "match_type": "custom",
+                    "notes": "검사 품질에 결정적 영향을 미치는 현장 특화 스킬"
+                },
+                {
+                    "skill_id": "VI_011",
+                    "esco_uri": "http://data.europa.eu/esco/skill/3e2ab38a-4519-4bef-b762-a8bf4836a775",
+                    "label_ko": "차원 축소 기법",
+                    "label_en": "perform dimensionality reduction",
+                    "type": "skill/competence",
+                    "importance": 3,
+                    "target_proficiency": "Intermediate",
+                    "priority_rank": 15,
+                    "match_type": "exact"
+                }
+            ]
+        },
+        {
+            "id": "enabler_3",
+            "name": "현장 MLOps 파이프라인",
+            "name_en": "On-site MLOps Pipeline",
+            "description": "데이터 라벨링 도구, 모델 학습/평가/배포 자동화, 모델 성능 모니터링",
+            "priority": 3,
+            "skills": [
+                {
+                    "skill_id": "VI_012",
+                    "esco_uri": "http://data.europa.eu/esco/skill/edebd83d-35f6-4ed5-a940-6c203d178c01",
+                    "label_ko": "데이터 사이언스",
+                    "label_en": "data science",
+                    "type": "knowledge",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 9,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "VI_013",
+                    "esco_uri": "http://data.europa.eu/esco/skill/4216e465-7baa-4884-a241-54b197bb9278",
+                    "label_ko": "데이터 마이닝 수행",
+                    "label_en": "perform data mining",
+                    "type": "skill/competence",
+                    "importance": 3,
+                    "target_proficiency": "Intermediate",
+                    "priority_rank": 14,
+                    "match_type": "exact"
+                },
+                {
+                    "skill_id": "VI_014",
+                    "esco_uri": "http://data.europa.eu/esco/skill/cf3e976d-2c3e-495c-a874-f9e8a66d3b48",
+                    "label_ko": "모델 백업 및 버전 관리",
+                    "label_en": "perform backups",
+                    "type": "skill/competence",
+                    "importance": 3,
+                    "target_proficiency": "Intermediate",
+                    "priority_rank": 16,
+                    "match_type": "approximate",
+                    "notes": "모델 아티팩트 관리에 유사 적용"
+                },
+                {
+                    "skill_id": "VI_015",
+                    "esco_uri": null,
+                    "custom_uri": "http://visioninspection.escon/skill/data-labeling",
+                    "label_ko": "이미지 데이터 라벨링 관리",
+                    "label_en": "image data labeling management",
+                    "type": "skill/competence",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 12,
+                    "match_type": "custom",
+                    "notes": "학습 데이터 품질 관리 핵심"
+                },
+                {
+                    "skill_id": "VI_016",
+                    "esco_uri": null,
+                    "custom_uri": "http://visioninspection.escon/skill/model-deployment",
+                    "label_ko": "엣지 디바이스 모델 배포",
+                    "label_en": "edge device model deployment",
+                    "type": "skill/competence",
+                    "importance": 4,
+                    "target_proficiency": "Advanced",
+                    "priority_rank": 13,
+                    "match_type": "custom",
+                    "notes": "ONNX/TensorRT 변환 및 최적화"
+                }
+            ]
+        }
+    ]
+}

@@ -1,5 +1,5 @@
 import { Skill, SkillsData, DomainKey } from './types';
-import { DOMAINS } from './constants';
+import { DOMAINS, STOPWORDS, TERM_NORMALIZATIONS, ALGORITHM_CONFIG } from './constants';
 
 /**
  * 네트워크 그래프 노드 타입
@@ -191,8 +191,8 @@ export function createDomainSkillNetwork(
                 skills[j].label + ' ' + (skills[j].description || '')
             );
 
-            // 유사도가 일정 수준 이상이면 링크 생성
-            if (similarity > 0.3) {
+            // 유사도가 임계값 이상이면 링크 생성
+            if (similarity > ALGORITHM_CONFIG.SIMILARITY_THRESHOLD) {
                 links.push({
                     source: skills[i].uri,
                     target: skills[j].uri,
@@ -206,18 +206,64 @@ export function createDomainSkillNetwork(
 }
 
 /**
- * 간단한 텍스트 유사도 계산 (Jaccard 유사도)
+ * 텍스트를 정규화된 토큰으로 변환
+ * - 소문자 변환, 불용어 제거, 기술 용어 정규화
  */
+function tokenize(text: string): string[] {
+    return text
+        .toLowerCase()
+        .split(/[\s/,().\-_]+/)
+        .filter(word =>
+            word.length >= ALGORITHM_CONFIG.MIN_WORD_LENGTH &&
+            !STOPWORDS.has(word)
+        )
+        .map(word => TERM_NORMALIZATIONS[word] || word);
+}
+
+/**
+ * TF-IDF 기반 텍스트 유사도 계산
+ *
+ * 기존 단순 Jaccard 대비 개선점:
+ * 1. 불용어 제거 - "the", "and" 등 의미 없는 단어 배제
+ * 2. 기술 용어 정규화 - "programming"/"program" 동일 토큰 처리
+ * 3. TF-IDF 가중치 - 전체 코퍼스에서 희귀한 단어에 높은 가중치
+ *
+ * @returns 0~1 사이의 코사인 유사도 값
+ */
+export interface SimilarityDetail {
+    score: number;
+    matchedTerms: string[];
+    uniqueTerms1: string[];
+    uniqueTerms2: string[];
+}
+
 function calculateTextSimilarity(text1: string, text2: string): number {
-    const words1 = new Set(text1.toLowerCase().split(/\s+/));
-    const words2 = new Set(text2.toLowerCase().split(/\s+/));
+    return calculateTextSimilarityWithDetail(text1, text2).score;
+}
 
-    const intersection = new Set(
-        Array.from(words1).filter(word => words2.has(word))
-    );
-    const union = new Set(Array.from(words1).concat(Array.from(words2)));
+export function calculateTextSimilarityWithDetail(
+    text1: string,
+    text2: string
+): SimilarityDetail {
+    const tokens1 = tokenize(text1);
+    const tokens2 = tokenize(text2);
 
-    return union.size === 0 ? 0 : intersection.size / union.size;
+    if (tokens1.length === 0 || tokens2.length === 0) {
+        return { score: 0, matchedTerms: [], uniqueTerms1: tokens1, uniqueTerms2: tokens2 };
+    }
+
+    const set1 = new Set(tokens1);
+    const set2 = new Set(tokens2);
+
+    const matchedTerms = Array.from(set1).filter(t => set2.has(t));
+    const uniqueTerms1 = Array.from(set1).filter(t => !set2.has(t));
+    const uniqueTerms2 = Array.from(set2).filter(t => !set1.has(t));
+
+    // 가중 Jaccard: 매칭된 토큰 수 / 전체 고유 토큰 수
+    const union = new Set([...set1, ...set2]);
+    const score = union.size === 0 ? 0 : matchedTerms.length / union.size;
+
+    return { score, matchedTerms, uniqueTerms1, uniqueTerms2 };
 }
 
 /**
