@@ -6,8 +6,8 @@ import Navigation from './components/Navigation'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'ESCO Skills Ontology',
-  description: 'Interactive visualization of ESCO digital skills and competencies',
+  title: 'ESCON: Robotics Tech for Smart Factory',
+  description: 'Robotics-focused skill map for Smart Factory (robotics, control, integration, safety, and more).',
 }
 
 export default function RootLayout({

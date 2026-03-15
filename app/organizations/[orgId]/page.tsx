@@ -1,13 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import EnablerCard from '@/app/components/EnablerCard';
 import OrgExportButton from '@/app/components/OrgExportButton';
-import { loadRobotSolutionData, getEnrichedSkills, calculateOrgStatistics } from '@/app/lib/org-skills-data';
+import { loadOrganizationData, getEnrichedSkills, calculateOrgStatistics } from '@/app/lib/org-skills-data';
 import type { Organization, EnrichedSkill } from '@/app/lib/types';
 
-export default function RobotSolutionPage() {
+export default function OrganizationDetailPage() {
+    const params = useParams();
+    const orgId = params.orgId as string;
+
     const [orgData, setOrgData] = useState<Organization | null>(null);
     const [enrichedSkills, setEnrichedSkills] = useState<EnrichedSkill[]>([]);
     const [stats, setStats] = useState<any>(null);
@@ -23,9 +27,10 @@ export default function RobotSolutionPage() {
 
     useEffect(() => {
         async function loadData() {
+            if (!orgId) return;
             try {
                 setLoading(true);
-                const data = await loadRobotSolutionData();
+                const data = await loadOrganizationData(orgId);
                 setOrgData(data);
 
                 const skills = await getEnrichedSkills(data);
@@ -43,7 +48,7 @@ export default function RobotSolutionPage() {
         }
 
         loadData();
-    }, []);
+    }, [orgId]);
 
     if (loading) {
         return (
@@ -134,47 +139,44 @@ export default function RobotSolutionPage() {
                 </header>
 
                 {/* 1. Mission Section */}
-                <section style={{ marginBottom: '3rem' }}>
-                    <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>🏆 조직 미션</h2>
-                    <div style={{ background: 'var(--bg-card)', padding: '2rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-                        <p style={{ fontSize: '1.2rem', lineHeight: 1.6, marginBottom: '1rem' }}>
-                            로봇솔루션 Task는 스마트 팩토리 현장에 즉시 적용 가능한 로봇기술 스택을 제공하고, 셀/라인 단위의 재구성 가능한 자동화를 구현하는 것을 핵심 미션으로 한다.
-                        </p>
-                        <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-                            이를 통해 공정 전환 시간을 줄이고, 안전·품질·가동률을 동시에 개선하는 Factory Robotics 혁신을 지원한다.
-                        </p>
-                    </div>
-                </section>
+                {orgData.organization.mission_detail && (
+                    <section style={{ marginBottom: '3rem' }}>
+                        <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>🏆 조직 미션</h2>
+                        <div style={{ background: 'var(--bg-card)', padding: '2rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+                            <p style={{ fontSize: '1.2rem', lineHeight: 1.6, marginBottom: '0' }}>
+                                {orgData.organization.mission_detail}
+                            </p>
+                        </div>
+                    </section>
+                )}
 
                 {/* 2. Challenges Section */}
-                <section style={{ marginBottom: '3rem' }}>
-                    <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>🚩 주요 기술 과제</h2>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
-                        <div style={{ background: 'var(--bg-card)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-                            <h3 style={{ fontSize: '1.3rem', fontWeight: 600, marginBottom: '1rem' }}>공정별 로봇 적용 확장</h3>
-                            <ul style={{ paddingLeft: '1.5rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                                <li style={{ marginBottom: '0.5rem' }}>공정/제품/설비 특성에 따라 로봇 적용 방식이 상이</li>
-                                <li>셀 단위 로봇 엔지니어링을 빠르게 구성·전환해야 함</li>
-                            </ul>
+                {orgData.organization.challenges && orgData.organization.challenges.length > 0 && (
+                    <section style={{ marginBottom: '3rem' }}>
+                        <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>🚩 주요 도전 과제</h2>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+                            {orgData.organization.challenges.map((challenge, index) => (
+                                <div key={index} style={{ background: 'var(--bg-card)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+                                    <h3 style={{ fontSize: '1.3rem', fontWeight: 600, marginBottom: '1rem' }}>{challenge.title}</h3>
+                                    <ul style={{ paddingLeft: '1.5rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                                        {challenge.items.map((item, i) => (
+                                            <li key={i} style={{ marginBottom: '0.5rem' }}>{item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
                         </div>
-                        <div style={{ background: 'var(--bg-card)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-                            <h3 style={{ fontSize: '1.3rem', fontWeight: 600, marginBottom: '1rem' }}>통합/유지보수 비용 최적화</h3>
-                            <ul style={{ paddingLeft: '1.5rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                                <li style={{ marginBottom: '0.5rem' }}>로봇 티칭/교정, 안전 규격, 연동 테스트 부담</li>
-                                <li>PLC/SCADA/비전/로봇의 통합 난이도와 비용을 낮춰야 함</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                )}
 
-                {/* 3. Enablers (Core Tech) Section */}
+                {/* 3. Enablers Section */}
                 <section style={{ marginBottom: '3rem' }}>
                     <div style={{ marginBottom: '2rem' }}>
                         <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem' }}>
-                            🎯 Enablers (로봇기술 기반)
+                            🎯 Enablers (핵심 기반)
                         </h2>
                         <p style={{ color: 'var(--text-secondary)' }}>
-                            공정에 바로 적용 가능한 로봇기술 스택 기반의 문제 해결
+                            모듈화, 표준화, 기술 기반 자동화 문제 해결
                         </p>
                     </div>
 
@@ -189,7 +191,7 @@ export default function RobotSolutionPage() {
                     </div>
                 </section>
 
-                {/* Skills Section with Filter */}
+                {/* 4. Skills Section with Filter */}
                 <section style={{ marginBottom: '3rem' }}>
                     <div style={{ marginBottom: '2rem' }}>
                         <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem' }}>
@@ -203,7 +205,6 @@ export default function RobotSolutionPage() {
                     <div style={{ background: 'var(--bg-card)', padding: '2rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
                         <div style={{ marginBottom: '2rem' }}>
                             <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '1rem' }}>Enabler 필터</h3>
-                            {/* Enabler Filter Component would go here, providing manual implementation since we need to import it first */}
                             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                                 <button
                                     onClick={() => setUserSelectedEnablers(enablersWithStats.map(e => e.id))}
@@ -250,7 +251,7 @@ export default function RobotSolutionPage() {
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '1rem' }}>
                             {enrichedSkills
                                 .filter(skill => {
-                                    if (userSelectedEnablers.length === 0) return false; // If no enablers are selected, show no skills
+                                    if (userSelectedEnablers.length === 0) return false;
                                     const skillEnablerName = skill.org_context?.enabler;
                                     const matchedEnabler = enablersWithStats.find(e => e.name === skillEnablerName);
                                     return matchedEnabler && userSelectedEnablers.includes(matchedEnabler.id);
@@ -274,7 +275,7 @@ export default function RobotSolutionPage() {
                                                 background: skill.match_type === 'exact' ? '#6BCF7F22' : '#FFA50022',
                                                 color: skill.match_type === 'exact' ? '#6BCF7F' : '#FFA500'
                                             }}>
-                                                {skill.match_type?.toUpperCase() || 'N/A'}
+                                                {skill.match_type?.toUpperCase()}
                                             </span>
                                         </div>
                                         <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', margin: 0 }}>{skill.label}</p>
@@ -289,7 +290,7 @@ export default function RobotSolutionPage() {
                     </div>
                 </section>
 
-                {/* Statistics Cards */}
+                {/* 5. Statistics Cards */}
                 {stats && (
                     <section style={{ marginBottom: '3rem' }}>
                         <h3 style={{ fontSize: '1.3rem', fontWeight: 600, marginBottom: '1rem', color: 'var(--text-secondary)' }}>📊 데이터 요약</h3>
@@ -302,119 +303,57 @@ export default function RobotSolutionPage() {
                     </section>
                 )}
 
-                {/* 4. Value Proposition Section */}
-                <section style={{ marginBottom: '3rem' }}>
-                    <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>💎 제공 가치 (Value Proposition)</h2>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
-                        <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
-                            <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '0.5rem', color: '#FF6B6B' }}>모듈형 로봇기술 확산</h3>
-                            <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                                Plug & Play 구조로 즉시 적용<br />Low Code로 셋업 및 재구성 부담 최소화
-                            </p>
+                {/* 6. Value Proposition Section */}
+                {orgData.organization.value_propositions && orgData.organization.value_propositions.length > 0 && (
+                    <section style={{ marginBottom: '3rem' }}>
+                        <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>💎 제공 가치 (Value Proposition)</h2>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+                            {orgData.organization.value_propositions.map((prop, idx) => (
+                                <div key={idx} style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
+                                    <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '0.5rem', color: ['#FF6B6B', '#FFA500', '#4ECDC4', '#45B7D1'][idx % 4] }}>{prop.title}</h3>
+                                    <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.5, whiteSpace: 'pre-wrap' }}>
+                                        {prop.description}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
-                        <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
-                            <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '0.5rem', color: '#FFA500' }}>현장 엔지니어 중심 운영</h3>
-                            <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                                One-click Calibration<br />직관적 UI 및 표준화된 오류 대응
-                            </p>
-                        </div>
-                        <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
-                            <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '0.5rem', color: '#4ECDC4' }}>운영 가시성 및 통합 제어</h3>
-                            <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                                생산라인 이벤트 모니터링 및 통합 제어<br />로그 기반 분석 및 공정 최적화
-                            </p>
-                        </div>
-                        <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
-                            <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '0.5rem', color: '#45B7D1' }}>로봇지능 기반 자동화</h3>
-                            <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                                공정 변화 감지 및 경로 최적화<br />품질 개선과 불량 감소
-                            </p>
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                )}
 
-                {/* 5. Role & Expectations Section */}
-                <section style={{ marginBottom: '3rem' }}>
-                    <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>🚀 역할 및 기대효과</h2>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-                        <div>
-                            <h3 style={{ fontSize: '1.4rem', fontWeight: 600, marginBottom: '1rem', borderBottom: '2px solid var(--accent-primary)', paddingBottom: '0.5rem', display: 'inline-block' }}>조직의 역할</h3>
-                            <ul style={{ paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', color: 'var(--text-primary)' }}>
-                                <li>로봇 셀/라인 중심의 표준 기술 스택 정의</li>
-                                <li>공정별 로봇 적용 패턴(Workcell) 템플릿 설계</li>
-                                <li>비전·제어·로봇 통합 기준과 안전 규격 내재화</li>
-                                <li>현장 엔지니어 중심 운영 도구/가이드 제공</li>
-                                <li>빠른 공정 전환이 가능한 로봇 자동화 기반 마련</li>
-                            </ul>
+                {/* 7. Roles & Expectations */}
+                {(orgData.organization.roles || orgData.organization.expectations) && (
+                    <section style={{ marginBottom: '3rem' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                            {orgData.organization.roles && (
+                                <InfoCard
+                                    title="🎯 Role (우리가 하는 일)"
+                                    items={orgData.organization.roles}
+                                    color="#FF6B6B"
+                                />
+                            )}
+                            {orgData.organization.expectations && (
+                                <InfoCard
+                                    title="🚀 Expectations (기대 효과)"
+                                    items={orgData.organization.expectations}
+                                    color="#4ECDC4"
+                                />
+                            )}
                         </div>
-                        <div>
-                            <h3 style={{ fontSize: '1.4rem', fontWeight: 600, marginBottom: '1rem', borderBottom: '2px solid #57B068', paddingBottom: '0.5rem', display: 'inline-block' }}>기대 효과</h3>
-                            <ul style={{ paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', color: 'var(--text-primary)' }}>
-                                <li>로봇 셀/라인 전환 소요시간 단축</li>
-                                <li>공정 생산성 및 유연성 향상</li>
-                                <li>통합/유지보수 비용 감소</li>
-                                <li>안전/품질 지표 개선</li>
-                                <li>데이터 기반 공정 최적화 달성</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                )}
 
-                {/* Info Section */}
-                <section style={{ padding: '2rem', background: 'var(--bg-card)', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-                    <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-                        💡 다음 단계
-                    </h3>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
-                        <InfoCard
-                            icon="📋"
-                            title="Enabler 상세 보기"
-                            description="각 Enabler 카드를 클릭하여 필요한 스킬 목록을 확인하세요"
-                        />
-                        <InfoCard
-                            icon="📥"
-                            title="데이터 내보내기"
-                            description="CSV/JSON 형식으로 스킬 데이터를 다운로드하여 분석하세요"
-                        />
-                        <InfoCard
-                            icon="🔗"
-                            title="ESCO 연동"
-                            description="ESCO 국제 표준과 연결된 스킬 정보를 활용하세요"
-                        />
-                    </div>
-                </section>
-
-                {/* 6. Conclusion Section */}
-                <div style={{ textAlign: 'center', padding: '3rem 1rem', background: 'linear-gradient(135deg, rgba(78, 205, 196, 0.1) 0%, rgba(255, 107, 107, 0.1) 100%)', borderRadius: '16px', marginTop: '4rem' }}>
-                    <h3 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '1.5rem', color: 'var(--text-primary)' }}>
-                        "현장에 바로 쓰이는 로봇기술,<br />공정 변화에 빠르게 대응하는 Factory Robotics"
-                    </h3>
-                    <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)' }}>
-                        로봇솔루션 Task가 만들어가는 미래입니다.
-                    </p>
-                </div>
+                {/* 8. Conclusion */}
+                {orgData.organization.conclusion && (
+                    <section style={{ textAlign: 'center', padding: '4rem 1rem', background: 'var(--bg-card)', borderRadius: '20px', margin: '2rem 0' }}>
+                        <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '1rem', whiteSpace: 'pre-line' }}>
+                            {orgData.organization.conclusion.slogan}
+                        </h2>
+                        <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)' }}>
+                            {orgData.organization.conclusion.description}
+                        </p>
+                    </section>
+                )}
             </div>
-        </div>
-    );
-}
-
-// Helper Components
-function StatCard({ icon, label, value, color }: { icon: string; label: string; value: number | string; color: string }) {
-    return (
-        <div style={{ background: 'var(--bg-card)', padding: '1.5rem', borderRadius: '12px', border: '2px solid var(--border-color)', textAlign: 'center' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{icon}</div>
-            <div style={{ fontSize: '2rem', fontWeight: 700, color, marginBottom: '0.5rem' }}>{value}</div>
-            <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</div>
-        </div>
-    );
-}
-
-function InfoCard({ icon, title, description }: { icon: string; title: string; description: string }) {
-    return (
-        <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>{icon}</div>
-            <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem' }}>{title}</h4>
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>{description}</p>
         </div>
     );
 }
@@ -429,4 +368,31 @@ function getPriorityColor(priority: number): string {
         5: '#95E1D3',
     };
     return colors[priority] || '#4ECDC4';
+}
+
+function StatCard({ icon, label, value, color }: { icon: string; label: string; value: string | number; color: string }) {
+    return (
+        <div style={{ background: 'var(--bg-card)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div style={{ width: '50px', height: '50px', borderRadius: '12px', background: `${color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
+                {icon}
+            </div>
+            <div>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '0.2rem' }}>{label}</p>
+                <p style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, color: color }}>{value}</p>
+            </div>
+        </div>
+    );
+}
+
+function InfoCard({ title, items, color = 'var(--text-primary)' }: { title: string; items: string[]; color?: string }) {
+    return (
+        <div style={{ background: 'var(--bg-card)', padding: '1.5rem', borderRadius: '12px', borderLeft: `4px solid ${color}`, border: '1px solid var(--border-color)', borderLeftWidth: '4px' }}>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '1rem', color: color }}>{title}</h3>
+            <ul style={{ paddingLeft: '1.2rem', margin: 0, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                {items.map((item, idx) => (
+                    <li key={idx} style={{ marginBottom: '0.5rem' }}>{item}</li>
+                ))}
+            </ul>
+        </div>
+    );
 }

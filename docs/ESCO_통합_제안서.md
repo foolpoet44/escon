@@ -2,7 +2,7 @@
 
 > **작성일**: 2026-02-08  
 > **대상 프로젝트**: ESCO Skills Ontology Explorer  
-> **목적**: 로봇솔루션 스킬 매칭 시스템과 기존 Physical AI 온톨로지의 효율적 통합
+> **목적**: 로봇솔루션 스킬 매칭 시스템과 기존 Factory Robotics 온톨로지의 효율적 통합
 
 ---
 
@@ -13,7 +13,7 @@
 #### ✅ **기존 프로젝트 (ESCO Skills Ontology Explorer)**
 - **기술 스택**: Next.js 13 (App Router) + TypeScript + React
 - **데이터 소스**: ESCO 공식 데이터 (public/data/skills.json)
-- **도메인**: Physical AI 중심 (10개 도메인, 약 5,000+ 스킬)
+- **도메인**: Factory Robotics 중심 (10개 도메인, 약 5,000+ 스킬)
 - **기능**: 도메인별 탐색, 검색, 시각화 (Mermaid, Recharts, D3)
 - **상태**: Phase 1 MVP 완료, Phase 2 진행 중
 
@@ -114,7 +114,7 @@ interface OrganizationSkillMapping {
 ```
 
 #### **전략 2: Virtual Domain 생성**
-기존 10개 Physical AI 도메인 + **"로봇솔루션"** 가상 도메인 추가
+기존 10개 Factory Robotics 도메인 + **"로봇솔루션"** 가상 도메인 추가
 
 ```typescript
 // constants.ts 확장
@@ -1090,7 +1090,7 @@ export default function OrgAnalyticsPage({ params }: { params: { orgId: string }
 
 ✨ **"ESCO 기반 위에 조직 레이어를 덧씌우는 방식"**
 
-- 기존 Physical AI 온톨로지 Explorer 유지
+- 기존 Factory Robotics 온톨로지 Explorer 유지
 - 로봇솔루션 스킬을 **가상 도메인**으로 추가
 - ESCO URI로 기존 스킬과 연결
 - 조직 특화 메타데이터(중요도, Enabler) 별도 관리

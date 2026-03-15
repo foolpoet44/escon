@@ -1,7 +1,7 @@
 # ESCON: 엔지니어링 스킬 네트워크 매칭 시스템
 
-**ESCON (Engineering Skill Network)**은 조직 내 직무 역량(Enabler)과 스킬(Skill) 간의 관계를 분석하고 시각화하는 웹 애플리케이션입니다.
-로봇 솔루션, AI/ML 등 다양한 도메인의 스킬셋을 ESCO 표준과 매핑하여 체계적으로 관리하고, 도메인 간의 유사도를 비교 분석합니다.
+**ESCON (Engineering Skill Network)**은 **Robotics Tech for Smart Factory** 구현에 필요한 직무 역량(Enabler)과 스킬(Skill) 간의 관계를 분석하고 시각화하는 웹 애플리케이션입니다.
+로봇기술(Robot Tech Stack), 제어, 센싱/인지, 통합, 안전 등 스마트 팩토리 핵심 도메인의 스킬셋을 ESCO 표준과 매핑하여 체계적으로 관리하고, 도메인 간의 적용 시너지를 분석합니다.
 
 ![Project Banner](https://via.placeholder.com/1200x400?text=ESCON+Skill+Network+System)
 

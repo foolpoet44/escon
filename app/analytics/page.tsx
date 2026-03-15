@@ -185,7 +185,7 @@ export default function AnalyticsPage() {
             <p>
               With <strong>{stats.totalDomains}</strong> specialized domains covering{' '}
               <strong>{stats.totalSkills.toLocaleString()}</strong> skills, the ontology provides
-              comprehensive coverage of Physical AI competencies
+                comprehensive coverage of factory robotics competencies
             </p>
           </div>
         </div>
