@@ -1,14 +1,15 @@
-import { GoogleGenAI } from '@google/genai';
+/**
+ * AI 스킬 매칭 API
+ *
+ * LLM 추상화 레이어(llm-client.ts)를 통해 호출하므로
+ * 모델 제공자 변경 시 이 파일은 수정 불필요.
+ * 환경변수 LLM_PROVIDER / LLM_MODEL 만 바꾸면 된다.
+ */
+
 import { NextRequest, NextResponse } from 'next/server';
+import { callLLMForJSON, LLMMessage } from '@/app/lib/llm-client';
 
-const getAI = () => {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    throw new Error('GEMINI_API_KEY environment variable is not set');
-  }
-  return new GoogleGenAI({ apiKey });
-};
-
+// 스킬 진단 흐름에서 참고하는 도메인별 기초 스킬 목록
 const SKILLS_DATABASE = [
   { id: 'python', name: 'Python', category: 'programming', domain: ['ai_ml', 'robotics'] },
   { id: 'ros', name: 'ROS (Robot Operating System)', category: 'robotics', domain: ['robotics', 'navigation'] },
@@ -22,6 +23,26 @@ const SKILLS_DATABASE = [
   { id: 'safety', name: 'Functional Safety', category: 'safety', domain: ['safety', 'integration'] },
 ];
 
+interface SkillMatchResult {
+  recommendedSkills: {
+    skillName: string;
+    escoCode?: string;
+    category: string;
+    priority: 'high' | 'medium' | 'low';
+    reason: string;
+  }[];
+  skillGap: {
+    skillName: string;
+    importance: string;
+    learningResources: string[];
+  }[];
+  careerPath: {
+    shortTerm: string[];
+    midTerm: string[];
+    longTerm: string[];
+  };
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { jobDescription, currentSkills = [] } = await req.json();
@@ -33,16 +54,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const prompt = `
-당신은 ESCO(European Skills, Competences, and Occupations) 기반 스킬 매칭 전문가입니다.
-
+    // LLM 추상화 레이어 사용 — 제공자와 무관한 호출
+    const messages: LLMMessage[] = [
+      {
+        role: 'system',
+        content: '당신은 ESCO(European Skills, Competences, and Occupations) 기반 스킬 매칭 전문가입니다. 반드시 JSON 형식으로만 응답하세요.',
+      },
+      {
+        role: 'user',
+        content: `
 [직무 설명]
 ${jobDescription}
 
 [현재 보유 스킬]
 ${currentSkills.length > 0 ? currentSkills.join(', ') : '없음'}
 
-다음 형식으로 JSON 응답을 제공해주세요:
+다음 JSON 형식으로 응답해주세요:
 
 {
   "recommendedSkills": [
@@ -69,33 +96,22 @@ ${currentSkills.length > 0 ? currentSkills.join(', ') : '없음'}
 }
 
 ESCO 표준을 참고하여 가장 관련성 높은 스킬을 추천해주세요.
-`;
-
-    const ai = getAI();
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: prompt,
-      config: {
-        temperature: 0.2,
-        maxOutputTokens: 2048,
+        `.trim(),
       },
+    ];
+
+    const result = await callLLMForJSON<SkillMatchResult>(messages, {
+      temperature: 0.2,
+      maxTokens: 2048,
     });
-
-    const responseText = response.text || '';
-    
-    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      throw new Error('Invalid JSON response from Gemini');
-    }
-
-    const result = JSON.parse(jsonMatch[0]);
 
     return NextResponse.json({
       success: true,
       data: result,
       analysis: {
         timestamp: new Date().toISOString(),
-        model: 'gemini-2.5-flash',
+        model: process.env.LLM_MODEL || 'gemini-2.5-flash',
+        provider: process.env.LLM_PROVIDER || 'gemini',
         inputLength: jobDescription.length,
       },
     });
@@ -103,9 +119,9 @@ ESCO 표준을 참고하여 가장 관련성 높은 스킬을 추천해주세요
   } catch (error) {
     console.error('AI Skill Matching Error:', error);
     return NextResponse.json(
-      { 
+      {
         error: 'Failed to analyze skills',
-        details: error instanceof Error ? error.message : 'Unknown error'
+        details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );
