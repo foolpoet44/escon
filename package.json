@@ -12,10 +12,12 @@
     "test:coverage": "jest --coverage",
     "pre-deploy": "bash scripts/pre-deploy.sh",
     "migrate:tkg": "node scripts/migrate-tkg.js",
+    "setup-database": "node scripts/setup-database.js",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@google/genai": "^1.40.0",
+    "@sentry/nextjs": "^8.0.0",
     "@supabase/supabase-js": "^2.95.3",
     "bufferutil": "^4.1.0",
     "d3": "^7.9.0",

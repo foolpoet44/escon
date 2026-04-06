@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Navigation from './components/Navigation'
+import SentryInit from './components/SentryInit'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
+        <SentryInit />
         <a href="#main-content" className="skip-link">
           메인 콘텐츠로 바로가기
         </a>
