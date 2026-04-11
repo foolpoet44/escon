@@ -387,7 +387,7 @@ export default function RobotSolutionPage() {
                 {/* 6. Conclusion Section */}
                 <div style={{ textAlign: 'center', padding: '3rem 1rem', background: 'linear-gradient(135deg, rgba(78, 205, 196, 0.1) 0%, rgba(255, 107, 107, 0.1) 100%)', borderRadius: '16px', marginTop: '4rem' }}>
                     <h3 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '1.5rem', color: 'var(--text-primary)' }}>
-                        "현장에 바로 쓰이는 로봇기술,<br />공정 변화에 빠르게 대응하는 Factory Robotics"
+                        &quot;현장에 바로 쓰이는 로봇기술,<br />공정 변화에 빠르게 대응하는 Factory Robotics&quot;
                     </h3>
                     <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)' }}>
                         로봇솔루션 Task가 만들어가는 미래입니다.

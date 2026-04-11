@@ -4,6 +4,7 @@
 // Swagger UI를 사용하여 API를 시각적으로 문서화합니다.
 // ============================================================================
 
+/* eslint-disable @next/next/no-sync-scripts */
 import Head from 'next/head';
 
 export const metadata = {

@@ -65,9 +65,9 @@ export default function CoachingDashboard({ enablers }: { enablers: SimpleEnable
         <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '20px' }}>
           <h3 style={{ fontSize: '0.95rem', fontWeight: 600, marginBottom: '12px', color: '#334155' }}>💡 코칭 팁</h3>
           <ul style={{ fontSize: '0.85rem', color: '#64748b', lineHeight: 1.6, paddingLeft: '20px', margin: 0 }}>
-            <li><i>"내 기술적 공백을 요약해줘"</i></li>
-            <li><i>"1순위로 채워야 할 기술을 어떻게 공부해?"</i></li>
-            <li><i>"단기 프로젝트 아이디어 추천해줘"</i></li>
+            <li><i>&quot;내 기술적 공백을 요약해줘&quot;</i></li>
+            <li><i>&quot;1순위로 채워야 할 기술을 어떻게 공부해?&quot;</i></li>
+            <li><i>&quot;단기 프로젝트 아이디어 추천해줘&quot;</i></li>
           </ul>
         </div>
       </div>
