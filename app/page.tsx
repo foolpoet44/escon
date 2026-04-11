@@ -30,11 +30,16 @@ export default function Home() {
             </div>
 
             <div className="features-grid">
-                <Link href="/organizations" className="feature-card featured">
+                <Link href="/coach" className="feature-card featured" style={{ gridColumn: 'span 2', background: 'linear-gradient(135deg, #e0e7ff 0%, #f1f5f9 100%)', border: '2px solid #6366f1' }}>
+                    <div className="feature-icon">🤖</div>
+                    <h3>AI 역량 코칭 데스크 (Gap Analysis)</h3>
+                    <p>목표 직무(Enabler)를 설정하고 실시간 AI 코치와 함께 부족한 스킬(Gap)을 가장 빠르게 메우는 학습 플랜을 상담하세요.</p>
+                    <span className="feature-badge" style={{background: '#6366f1'}}>Step 3 Engine</span>
+                </Link>
+                <Link href="/organizations" className="feature-card">
                     <div className="feature-icon">🏢</div>
                     <h3>로봇 기술 역량 매칭</h3>
                     <p>조직/셀 단위 Enabler와 로봇기술 스킬 매칭 시스템</p>
-                    <span className="feature-badge">NEW</span>
                 </Link>
                 <Link href="/domains" className="feature-card">
                     <div className="feature-icon">🎯</div>
