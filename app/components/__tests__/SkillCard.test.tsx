@@ -4,26 +4,27 @@ import SkillCard from '../SkillCard'
 
 describe('SkillCard 컴포넌트', () => {
   it('스킬 카드가 올바르게 렌더링되어야 함', () => {
-    const mockSkill = {
-      id: '1',
-      name: '로봇 프로그래밍',
+    const mockSkill: any = {
+      uri: 'http://example.com/skill/1',
+      label: '로봇 프로그래밍',
       description: 'ROS 기반 로봇 제어 기술',
-      proficiency: 'Advanced',
+      type: '기술',
     }
 
     render(<SkillCard skill={mockSkill} />)
 
     // 스킬 이름이 표시되어야 함
-    expect(screen.getByText(mockSkill.name)).toBeInTheDocument()
+    expect(screen.getByText(mockSkill.label)).toBeInTheDocument()
   })
 
   it('필수 속성이 없을 때 에러를 처리해야 함', () => {
     const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
 
-    const emptySkill = {
-      id: '1',
-      name: '',
+    const emptySkill: any = {
+      uri: '',
+      label: '',
       description: '',
+      type: '기술',
     }
 
     render(<SkillCard skill={emptySkill} />)
