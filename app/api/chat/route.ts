@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+export const dynamic = 'force-dynamic'
+
 import { loadSkillContext } from '../../lib/skillContextLoader'
 import { GoogleGenAI } from '@google/genai'
 

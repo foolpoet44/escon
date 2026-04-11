@@ -9,6 +9,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { callLLMForJSON, LLMMessage } from '@/app/lib/llm-client';
 
+export const dynamic = 'force-dynamic';
+
 // 스킬 진단 흐름에서 참고하는 도메인별 기초 스킬 목록
 const SKILLS_DATABASE = [
   { id: 'python', name: 'Python', category: 'programming', domain: ['ai_ml', 'robotics'] },

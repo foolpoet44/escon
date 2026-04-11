@@ -1,6 +1,8 @@
 import CoachingDashboard from './CoachingDashboard'
 import { supabase } from '../lib/supabase'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'AI 스킬 코칭 및 갭 분석 | ESCON',
   description: 'AI가 직무 목표를 분석하여 최우선 학습 스킬과 갭을 코칭합니다.',
