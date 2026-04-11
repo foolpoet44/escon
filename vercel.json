@@ -1,42 +1,8 @@
 {
   "projectSettings": {
     "name": "escon",
-    "buildCommand": "npm run build",
-    "outputDirectory": ".next",
-    "rootDirectory": "."
+    "framework": "nextjs"
   },
-  "env": [
-    {
-      "key": "NEXT_PUBLIC_SUPABASE_URL",
-      "description": "Supabase 프로젝트 URL",
-      "value": "@supabase_url"
-    },
-    {
-      "key": "NEXT_PUBLIC_SUPABASE_ANON_KEY",
-      "description": "Supabase 익명 키",
-      "value": "@supabase_anon_key"
-    },
-    {
-      "key": "SUPABASE_SERVICE_ROLE_KEY",
-      "description": "Supabase 서비스 역할 키",
-      "value": "@supabase_service_role_key"
-    },
-    {
-      "key": "LLM_PROVIDER",
-      "description": "LLM 제공자 (gemini, claude, openai)",
-      "value": "@llm_provider"
-    },
-    {
-      "key": "LLM_MODEL",
-      "description": "LLM 모델 이름",
-      "value": "@llm_model"
-    },
-    {
-      "key": "LLM_API_KEY",
-      "description": "LLM API 키",
-      "value": "@llm_api_key"
-    }
-  ],
   "buildHook": {
     "enabled": true,
     "requiresApproval": false
