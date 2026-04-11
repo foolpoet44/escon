@@ -126,5 +126,20 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
 };
+const { withSentryConfig } = require("@sentry/nextjs");
 
-module.exports = nextConfig;
+module.exports = withSentryConfig(
+  nextConfig,
+  {
+    silent: true,
+    org: "escon",
+    project: "escon",
+  },
+  {
+    widenClientFileUpload: true,
+    transpileClientSDK: true,
+    tunnelRoute: "/monitoring",
+    hideSourceMaps: true,
+    disableLogger: true,
+  }
+);
