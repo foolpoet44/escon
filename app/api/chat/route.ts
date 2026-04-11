@@ -3,10 +3,8 @@ import { loadSkillContext } from '../../lib/skillContextLoader'
 import { GoogleGenAI } from '@google/genai'
 
 // 환경변수 로드
-const apiKey = process.env.GEMINI_API_KEY || process.env.LLM_API_KEY || ''
+const getApiKey = () => process.env.GEMINI_API_KEY || process.env.LLM_API_KEY || ''
 const modelName = process.env.LLM_MODEL || 'gemini-1.5-flash'
-
-const genAI = new GoogleGenAI({ apiKey })
 
 const ESCON_BASE_SYSTEM = `당신은 ESCON(Engineering Skill Competency Navigator)입니다.
 엔지니어의 스킬 성장 경로를 함께 설계하는 전문 코치입니다.
@@ -46,6 +44,7 @@ export async function POST(req: NextRequest) {
     }));
 
     // 3. Gemini 호출 (스트리밍) - 시스템 프롬프트를 명확히 격리(systemInstruction)
+    const genAI = new GoogleGenAI({ apiKey: getApiKey() })
     const responseStream = await genAI.models.generateContentStream({
       model: modelName,
       contents: formattedContents,
