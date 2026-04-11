@@ -56,8 +56,8 @@ export function initSentryClient() {
         event.request.cookies = undefined;
         event.request.headers = {
           ...event.request.headers,
-          Authorization: undefined,
         };
+        delete event.request.headers.Authorization;
       }
 
       return event;

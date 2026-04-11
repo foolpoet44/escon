@@ -21,22 +21,11 @@ export default function DocsPage() {
           href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui.css"
         />
       </Head>
-      <div id="swagger-ui" className="swagger-ui-container" />
-      <style jsx>{`
-        .swagger-ui-container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 20px;
-        }
-
-        :global(.swagger-ui) {
-          font-family: sans-serif;
-        }
-
-        :global(.swagger-ui .topbar) {
-          background-color: #1a1a1a;
-        }
-      `}</style>
+      <div id="swagger-ui" style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }} />
+      <style dangerouslySetInnerHTML={{__html: `
+        .swagger-ui { font-family: sans-serif; }
+        .swagger-ui .topbar { background-color: #1a1a1a; }
+      `}} />
       <script
         dangerouslySetInnerHTML={{
           __html: `

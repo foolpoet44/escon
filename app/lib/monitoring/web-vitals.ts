@@ -7,7 +7,7 @@
 
 'use client';
 
-import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals';
+import { onCLS, onINP, onFCP, onLCP, onTTFB } from 'web-vitals';
 import { logMessageWithSentry } from '../sentry/sentry.client.config';
 
 // ============================================================================
@@ -15,7 +15,7 @@ import { logMessageWithSentry } from '../sentry/sentry.client.config';
 // ============================================================================
 const THRESHOLDS = {
   LCP: 2500, // Largest Contentful Paint (ms)
-  FID: 100, // First Input Delay (ms)
+  INP: 200, // Interaction to Next Paint (ms)
   CLS: 0.1, // Cumulative Layout Shift
   FCP: 1800, // First Contentful Paint (ms)
   TTFB: 600, // Time to First Byte (ms)
@@ -49,8 +49,6 @@ function reportMetric(
   value: number,
   rating: 'good' | 'needs-improvement' | 'poor'
 ) {
-  // Vercel Analytics에 자동으로 전송됨 (Next.js 내장)
-
   // Sentry에 전송
   if (rating === 'poor' || rating === 'needs-improvement') {
     logMessageWithSentry(
@@ -79,32 +77,27 @@ function reportMetric(
 export function initWebVitals() {
   if (typeof window === 'undefined') return;
 
-  // LCP (Largest Contentful Paint)
-  getLCP((metric) => {
+  onLCP((metric) => {
     const rating = getMetricRating('LCP', metric.value);
     reportMetric('LCP', metric.value, rating);
   });
 
-  // FID (First Input Delay)
-  getFID((metric) => {
-    const rating = getMetricRating('FID', metric.value);
-    reportMetric('FID', metric.value, rating);
+  onINP((metric) => {
+    const rating = getMetricRating('INP', metric.value);
+    reportMetric('INP', metric.value, rating);
   });
 
-  // CLS (Cumulative Layout Shift)
-  getCLS((metric) => {
-    const rating = getMetricRating('CLS', metric.value * 1000); // CLS는 0-1 범위
+  onCLS((metric) => {
+    const rating = getMetricRating('CLS', metric.value * 1000); 
     reportMetric('CLS', metric.value * 1000, rating);
   });
 
-  // FCP (First Contentful Paint)
-  getFCP((metric) => {
+  onFCP((metric) => {
     const rating = getMetricRating('FCP', metric.value);
     reportMetric('FCP', metric.value, rating);
   });
 
-  // TTFB (Time to First Byte)
-  getTTFB((metric) => {
+  onTTFB((metric) => {
     const rating = getMetricRating('TTFB', metric.value);
     reportMetric('TTFB', metric.value, rating);
   });

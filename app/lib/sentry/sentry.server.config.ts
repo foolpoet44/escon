@@ -24,16 +24,9 @@ export function initSentryServer() {
     tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
 
     // ============================================================================
-    // 통합
+    // 통합 (v8에서 자동 적용됨)
     // ============================================================================
-    integrations: [
-      // 데이터베이스 쿼리 성능 추적 (선택사항)
-      new Sentry.Integrations.Postgres(),
-      // HTTP 요청 추적
-      new Sentry.Integrations.Http({
-        tracing: true,
-      }),
-    ],
+    // integrations: [],
 
     // ============================================================================
     // 필터링
@@ -44,9 +37,9 @@ export function initSentryServer() {
         event.request.cookies = undefined;
         event.request.headers = {
           ...event.request.headers,
-          Authorization: undefined,
-          Cookie: undefined,
         };
+        delete event.request.headers.Authorization;
+        delete event.request.headers.Cookie;
       }
 
       // 요청 본문에서 민감한 정보 제거

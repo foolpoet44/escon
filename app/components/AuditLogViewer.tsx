@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useRecordHistory } from '@/lib/hooks/useAuditLogs'
-import type { AuditLog } from '@/lib/hooks/useAuditLogs'
+import { useRecordHistory } from '../lib/hooks/useAuditLogs'
+import type { AuditLog } from '../lib/hooks/useAuditLogs'
 import styles from './AuditLogViewer.module.css'
 
 interface AuditLogViewerProps {
