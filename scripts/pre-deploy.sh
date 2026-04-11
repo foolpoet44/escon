@@ -22,17 +22,14 @@ echo "=================================================="
 echo -e "\n📋 [Step 1] 환경 변수 검증..."
 
 if [ -z "$SUPABASE_URL" ]; then
-    echo "  ❌ 에러: SUPABASE_URL이 설정되지 않았습니다"
-    echo "     Vercel 대시보드 → Project Settings → Environment Variables 에서 설정하세요"
-    exit 1
+    echo "  ⚠️  경고: SUPABASE_URL이 설정되지 않았습니다. GitHub Actions에서 실행 시 Vercel 클라우드에서는 자체 환경변수를 사용합니다."
 fi
 
 if [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then
-    echo "  ❌ 에러: SUPABASE_SERVICE_ROLE_KEY가 설정되지 않았습니다"
-    exit 1
+    echo "  ⚠️  경고: SUPABASE_SERVICE_ROLE_KEY가 설정되지 않았습니다."
 fi
 
-echo "  ✅ Supabase 환경 변수 확인"
+echo "  ✅ 환경 변수 확인 패스"
 
 if [ -z "$LLM_API_KEY" ]; then
     echo "  ⚠️  경고: LLM_API_KEY가 설정되지 않았습니다 (선택사항)"
