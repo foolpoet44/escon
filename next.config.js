@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const { withSentryConfig } = require("@sentry/nextjs");
+
 const nextConfig = {
   // 빌드 시 타입 에러 및 린트 에러 무시 (Vercel 배포 안정성 우선)
   typescript: {
@@ -126,20 +128,20 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
 };
-const { withSentryConfig } = require("@sentry/nextjs");
 
-module.exports = withSentryConfig(
-  nextConfig,
-  {
+// SENTRY_AUTH_TOKEN이 없으면 Sentry CLI가 빌드를 중단시킴.
+// 토큰이 없는 환경(CI, preview)에서는 withSentryConfig를 완전히 우회.
+if (!process.env.SENTRY_AUTH_TOKEN) {
+  module.exports = nextConfig;
+} else {
+  module.exports = withSentryConfig(nextConfig, {
     silent: true,
-    org: "escon",
-    project: "escon",
-  },
-  {
+    org: process.env.SENTRY_ORG || "escon",
+    project: process.env.SENTRY_PROJECT || "escon",
     widenClientFileUpload: true,
-    transpileClientSDK: true,
+    // transpileClientSDK: v7 전용 옵션. @sentry/nextjs v8에서 제거됨 → 삭제
     tunnelRoute: "/monitoring",
     hideSourceMaps: true,
     disableLogger: true,
-  }
-);
+  });
+}
