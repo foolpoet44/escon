@@ -1,78 +1,26 @@
 // ============================================================================
-// Sentry 클라이언트 설정
+// Sentry 클라이언트 유틸리티 (클라이언트 전용)
 //
-// 프론트엔드에서 발생하는 JavaScript 에러, 성능 이슈를 추적합니다.
-// 사용자의 세션, 네비게이션, 상호작용 정보를 포함합니다.
+// [중요] 이 파일은 클라이언트 컴포넌트(SentryInit.tsx 등)에서 import됩니다.
+// @sentry/nextjs 는 서버 런타임에서 opentelemetry, require-in-the-middle 등
+// 노드 전용 모듈을 함께 번들링하여 클라이언트 빌드에 Critical dependency 경고를
+// 유발합니다.
+//
+// → Sentry 초기화는 루트 sentry.client.config.ts (withSentryConfig 자동 주입)
+//   에서 전담하며, 이 파일은 초기화 이후 호출되는 유틸 함수만 export합니다.
+//   initSentryClient()는 no-op으로 유지해 기존 호출부의 하위 호환성을 보장합니다.
 // ============================================================================
 
-import * as Sentry from '@sentry/nextjs';
+// 클라이언트 안전 import: @sentry/core는 브라우저/서버 공용 패키지이며
+// 노드 전용 모듈을 포함하지 않습니다.
+import * as Sentry from '@sentry/core';
 
+/**
+ * @deprecated Sentry 초기화는 루트 sentry.client.config.ts에서
+ * withSentryConfig가 자동으로 수행합니다. 이 함수는 하위 호환을 위해 유지됩니다.
+ */
 export function initSentryClient() {
-  const dsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
-
-  if (!dsn) {
-    console.warn('⚠️  SENTRY_DSN이 설정되지 않았습니다. 에러 추적이 비활성화됩니다.');
-    return;
-  }
-
-  Sentry.init({
-    dsn,
-    environment: process.env.NEXT_PUBLIC_VERCEL_ENV || 'development',
-
-    // ============================================================================
-    // 성능 모니터링
-    // ============================================================================
-    tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
-
-    // ============================================================================
-    // 리플레이 캡처 (사용자 문제 재현)
-    // ============================================================================
-    replaysSessionSampleRate: 0.1,
-    replaysOnErrorSampleRate: 1.0, // 에러 발생 시 항상 캡처
-
-    // ============================================================================
-    // 필터링 및 제외
-    // ============================================================================
-    denyUrls: [
-      // 브라우저 확장 프로그램 에러 무시
-      /^chrome:\/\//i,
-      /^moz-extension:\/\//i,
-    ],
-    ignoreErrors: [
-      // 일반적인 에러 무시
-      'top.GLOBALS',
-      'chrome-extension://',
-      'moz-extension://',
-      // 외부 스크립트 에러
-      /^Non-Error promise rejection captured/,
-    ],
-
-    // ============================================================================
-    // 보안
-    // ============================================================================
-    beforeSend(event, hint) {
-      // 민감한 정보 제거
-      if (event.request) {
-        event.request.cookies = undefined;
-        event.request.headers = {
-          ...event.request.headers,
-        };
-        delete event.request.headers.Authorization;
-      }
-
-      return event;
-    },
-  });
-
-  // ============================================================================
-  // 사용자 정보 설정 (선택사항)
-  // ============================================================================
-  if (typeof window !== 'undefined') {
-    const userId = sessionStorage.getItem('userId');
-    if (userId) {
-      Sentry.setUser({ id: userId });
-    }
-  }
+  // no-op: 초기화는 withSentryConfig → sentry.client.config.ts 에서 처리
 }
 
 // ============================================================================
@@ -80,7 +28,7 @@ export function initSentryClient() {
 // ============================================================================
 export function logErrorWithSentry(
   error: Error,
-  context?: Record<string, any>
+  context?: Record<string, unknown>
 ) {
   Sentry.captureException(error, {
     contexts: {
@@ -95,7 +43,7 @@ export function logErrorWithSentry(
 export function logMessageWithSentry(
   message: string,
   level: 'info' | 'warning' | 'error' = 'info',
-  context?: Record<string, any>
+  context?: Record<string, unknown>
 ) {
   Sentry.captureMessage(message, {
     level,
