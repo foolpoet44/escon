@@ -23,7 +23,7 @@ import {
   gapCoverageDomain,
   proficiencyMismatchEnabler,
   redundantEnabler,
-} from './fixtures'
+} from '../fixtures'
 
 // ============================================================================
 // MappingConsistencyRule 테스트
